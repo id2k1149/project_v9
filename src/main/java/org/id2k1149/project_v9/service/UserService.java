@@ -24,14 +24,13 @@ public class UserService  {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+    public User findByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username);
+    }
+
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setRole(Role.USER);
         userRepository.save(user);
-    }
-
-    public User findByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username);
-
     }
 }
