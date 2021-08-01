@@ -1,4 +1,4 @@
-package org.id2k1149.project_v9.service;
+package org.id2k1149.project_v9.security;
 
 public interface SecurityService {
     String findLoggedInUsername();

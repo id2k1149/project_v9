@@ -1,14 +1,16 @@
 package org.id2k1149.project_v9.web;
 
 import org.id2k1149.project_v9.model.User;
-import org.id2k1149.project_v9.service.SecurityService;
+import org.id2k1149.project_v9.security.SecurityService;
+import org.id2k1149.project_v9.security.UserValidator;
 import org.id2k1149.project_v9.service.UserService;
-import org.id2k1149.project_v9.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class UserController {
