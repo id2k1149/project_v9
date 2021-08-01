@@ -13,15 +13,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class UserController {
-    @Autowired
-    private UserService userService;
+public class UserWebController {
+
+    private final UserService userService;
+    private final SecurityService securityService;
+    private final UserValidator userValidator;
 
     @Autowired
-    private SecurityService securityService;
-
-    @Autowired
-    private UserValidator userValidator;
+    public UserWebController(UserService userService,
+                             SecurityService securityService,
+                             UserValidator userValidator) {
+        this.userService = userService;
+        this.securityService = securityService;
+        this.userValidator = userValidator;
+    }
 
     @GetMapping("/registration")
     public String registration(Model model) {
