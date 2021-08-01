@@ -11,6 +11,13 @@
 
       <link href="${contextPath}/resources/static/css/bootstrap.min.css" rel="stylesheet">
       <link href="${contextPath}/resources/static/css/common.css" rel="stylesheet">
+      <style>
+          body {
+              background-color: #3e3e3e;
+              color: white;
+          }
+      </style>
+
   </head>
 
   <body>
@@ -43,6 +50,9 @@
             </spring:bind>
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+
+            <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="/login" class="fw-bold text-body"><u>Login here</u></a></p>
+
         </form:form>
 
     </div>

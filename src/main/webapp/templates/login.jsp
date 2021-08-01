@@ -12,6 +12,12 @@
 
       <link href="${contextPath}/resources/static/css/bootstrap.min.css" rel="stylesheet">
       <link href="${contextPath}/resources/static/css/common.css" rel="stylesheet">
+      <style>
+          body {
+              background-color: #3e3e3e;
+              color: white;
+          }
+      </style>
   </head>
 
   <body>
