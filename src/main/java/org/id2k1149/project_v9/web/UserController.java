@@ -12,20 +12,25 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class UserController {
-    @Autowired
-    private UserService userService;
+
+    private final UserService userService;
+    private final SecurityService securityService;
+    private final UserValidator userValidator;
 
     @Autowired
-    private SecurityService securityService;
-
-    @Autowired
-    private UserValidator userValidator;
+    public UserController(UserService userService,
+                          SecurityService securityService,
+                          UserValidator userValidator) {
+        this.userService = userService;
+        this.securityService = securityService;
+        this.userValidator = userValidator;
+    }
 
     @GetMapping("/registration")
     public String registration(Model model) {
         model.addAttribute("userForm", new User());
 
-        return "templates/registration";
+        return "registration";
     }
 
     @PostMapping("/registration")
