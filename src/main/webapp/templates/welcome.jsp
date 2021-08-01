@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8">
     <title>Create an account</title>
-    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${contextPath}/resources/static/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
   <div class="container">
@@ -20,6 +20,6 @@
     </c:if>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+  <script src="${contextPath}/resources/static/js/bootstrap.min.js"></script>
 </body>
 </html>
