@@ -16,6 +16,7 @@ public class User {
     @Transient
     private String passwordConfirm;
 
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     public Long getId() {
