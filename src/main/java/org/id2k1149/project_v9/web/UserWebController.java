@@ -44,7 +44,8 @@ public class UserWebController {
             return "templates/registration";
         }
 
-        userService.save(userForm);
+//        userService.save(userForm);
+        userService.addUser(userForm);
 
         securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
 
