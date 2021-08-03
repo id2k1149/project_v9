@@ -1,5 +1,6 @@
 package org.id2k1149.project_v9.service;
 
+import org.id2k1149.project_v9.exception.BadRequestException;
 import org.id2k1149.project_v9.model.Role;
 import org.id2k1149.project_v9.model.User;
 import org.id2k1149.project_v9.repository.UserRepository;
@@ -16,6 +17,7 @@ import java.util.List;
 public class UserService {
 
     private final static String NOT_FOUND = "user with name %s is not found";
+
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -30,11 +32,11 @@ public class UserService {
         return userRepository.findUserByUsername(username);
     }
 
-    public void save(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRole(Role.USER);
-        userRepository.save(user);
-    }
+//    public void save(User user) {
+//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+//        user.setRole(Role.USER);
+//        userRepository.save(user);
+//    }
 
     public List<User> getUsers() {
         return userRepository.findAll();
@@ -44,20 +46,21 @@ public class UserService {
         User user = userRepository.findUserById(userId);
         if (user == null) {
             throw new IllegalStateException(
-                    "appUser with id " + userId + " does not exist");
+                    "user with id " + userId + " does not exist");
         } else return user;
     }
 
     public void addUser(User newUser) {
-        User user = userRepository
-                .findUserByUsername(newUser.getUsername());
+        Boolean usernameExists = userRepository.usernameExists(newUser.getUsername());
 
-        if (user != null) {
-            throw new IllegalStateException("this username is already used");
+        if (usernameExists) {
+            throw new BadRequestException("The name " + newUser.getUsername() + " is already used");
         }
 
         String encodedPassword = bCryptPasswordEncoder.encode(newUser.getPassword());
         newUser.setPassword(encodedPassword);
+
+        newUser.setRole(Role.USER);
 
         userRepository.save(newUser);
     }
