@@ -1,6 +1,7 @@
 package org.id2k1149.project_v9.service;
 
 import org.id2k1149.project_v9.exception.BadRequestException;
+import org.id2k1149.project_v9.exception.UserNotFoundException;
 import org.id2k1149.project_v9.model.Role;
 import org.id2k1149.project_v9.model.User;
 import org.id2k1149.project_v9.repository.UserRepository;
@@ -31,12 +32,6 @@ public class UserService {
     public User findByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findUserByUsername(username);
     }
-
-//    public void save(User user) {
-//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-//        user.setRole(Role.USER);
-//        userRepository.save(user);
-//    }
 
     public List<User> getUsers() {
         return userRepository.findAll();
@@ -102,10 +97,9 @@ public class UserService {
     }
 
     public void deleteUser(Long userId) {
-        boolean exists = userRepository.existsById(userId);
-        if (!exists) {
-            throw new IllegalStateException(
-                    "user with id " + userId + " does not exist");
+        if(!userRepository.existsById(userId)) {
+            throw new UserNotFoundException(
+                    "User with id " + userId + " does not exists");
         }
         userRepository.deleteById(userId);
     }

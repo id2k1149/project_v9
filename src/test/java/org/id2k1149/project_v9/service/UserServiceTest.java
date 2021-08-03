@@ -1,6 +1,7 @@
 package org.id2k1149.project_v9.service;
 
 import org.id2k1149.project_v9.exception.BadRequestException;
+import org.id2k1149.project_v9.exception.UserNotFoundException;
 import org.id2k1149.project_v9.model.User;
 import org.id2k1149.project_v9.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -112,9 +112,34 @@ class UserServiceTest {
 
     @Test
     void updateUser() {
+
     }
 
     @Test
     void deleteUser() {
+        // given
+        long id = 10;
+        given(testRepository.existsById(id))
+                .willReturn(true);
+        // when
+        testUserService.deleteUser(id);
+
+        // then
+        verify(testRepository).deleteById(id);
+    }
+
+    @Test
+    void cantDeleteIfStudentNotFound() {
+        // given
+        long id = 10;
+        given(testRepository.existsById(id))
+                .willReturn(false);
+        // when
+        // then
+        assertThatThrownBy(() -> testUserService.deleteUser(id))
+                .isInstanceOf(UserNotFoundException.class)
+                .hasMessageContaining("User with id " + id + " does not exists");
+
+        verify(testRepository, never()).deleteById(any());
     }
 }
