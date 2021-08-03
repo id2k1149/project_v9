@@ -3,9 +3,8 @@ package org.id2k1149.project_v9.rest;
 import org.id2k1149.project_v9.model.User;
 import org.id2k1149.project_v9.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +22,31 @@ public class UserController {
     @GetMapping
     public List<User> getUsers() {
         return userService.getUsers();
+    }
+
+    @GetMapping(path = "{userId}")
+    public User getUser(@PathVariable("userId") Long userId) {
+        return userService.getUser(userId);
+    }
+
+    @PostMapping
+    public void addUser(@RequestBody User newUser) {
+        userService.addUser(newUser);
+    }
+
+    @PutMapping(path = "{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void updateUser(
+            @PathVariable("userId") Long userId,
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String password
+    ) {
+        System.out.println(userId + " " + username + " " + password);
+        userService.updateUser(userId, username, password);
+    }
+
+    @DeleteMapping(path = "{userId}")
+    public void deleteUser(@PathVariable("userId") Long userId) {
+        userService.deleteUser(userId);
     }
 
 }
