@@ -8,7 +8,7 @@
 <html lang="en">
   <head>
       <meta charset="utf-8">
-      <title>Log in with your account</title>
+      <title>Log in</title>
 
       <link href="${contextPath}/resources/static/css/bootstrap.min.css" rel="stylesheet">
       <link href="${contextPath}/resources/static/css/common.css" rel="stylesheet">
@@ -33,6 +33,11 @@
             <input name="password" type="password" class="form-control" placeholder="Password"/>
             <span>${error}</span>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <div class="checkbox" mb-3>
+                <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+            </div>
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
             <h4 class="text-center"><a href="${contextPath}/registration">Create an account</a></h4>
