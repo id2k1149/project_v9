@@ -1,6 +1,7 @@
 package org.id2k1149.project_v9.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "user")
@@ -66,6 +67,30 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return getId().equals(
+                user.getId())
+                && getUsername().equals(user.getUsername())
+                && getPassword().equals(user.getPassword())
+                && Objects.equals(getPasswordConfirm(),
+                user.getPasswordConfirm())
+                && getRole() == user.getRole();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                getId(),
+                getUsername(),
+                getPassword(),
+                getPasswordConfirm(),
+                getRole());
     }
 
     @Override

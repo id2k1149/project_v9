@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @Transactional
@@ -28,7 +27,7 @@ public class UserService {
     }
 
     public User findByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username);
+        return userRepository.findUserByUsername(username);
     }
 
     public void save(User user) {
@@ -51,7 +50,7 @@ public class UserService {
 
     public void addUser(User newUser) {
         User user = userRepository
-                .findByUsername(newUser.getUsername());
+                .findUserByUsername(newUser.getUsername());
 
         if (user != null) {
             throw new IllegalStateException("this username is already used");
