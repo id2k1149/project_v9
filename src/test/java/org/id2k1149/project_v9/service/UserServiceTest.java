@@ -22,9 +22,13 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
+import com.github.javafaker.Faker;
+
 @DataJpaTest
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
+
+    private final Faker faker = new Faker();
 
     @Mock private UserRepository testRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -47,27 +51,52 @@ class UserServiceTest {
 
     @Test
     void getUsers() {
+        //given
+        User testUser1 = new User();
+        String testName1 = faker.name().username();
+        testUser1.setUsername(testName1);
+        String testPassword1 = faker.internet().password();
+        testUser1.setPassword(testPassword1);
+        testUserService.addUser(testUser1);
+
+        User testUser2 = new User();
+        String testName2 = faker.name().username();
+        testUser2.setUsername(testName2);
+        String testPassword2 = faker.internet().password();
+        testUser2.setPassword(testPassword2);
+        testUserService.addUser(testUser2);
+
         //when
         testUserService.getUsers();
+
         //then
         verify(testRepository).findAll();
+
     }
 
     @Test
     void getUser() {
         //given
-        User testUser1 = new User(
-                "tester1",
-                "test_password");
+        User testUser1 = new User();
+        String testName1 = faker.name().username();
+        testUser1.setUsername(testName1);
+        String testPassword1 = faker.internet().password();
+        testUser1.setPassword(testPassword1);
+        testUser1.setId(1L);
         testUserService.addUser(testUser1);
+        System.out.println(testUser1);
 
-        User testUser2 = new User(
-                "tester2",
-                "test_password");
+        User testUser2 = new User();
+        String testName2 = faker.name().username();
+        testUser2.setUsername(testName2);
+        String testPassword2 = faker.internet().password();
+        testUser2.setPassword(testPassword2);
+        testUser2.setId(2L);
         testUserService.addUser(testUser2);
+        System.out.println(testUser2);
 
         //when
-        User user = testUserService.getUser(testUser1.getId());
+        User user = testUserService.getUser(testUser2.getId());
 
         //then
         assertThat(user).isEqualTo(testUser1);
@@ -76,37 +105,50 @@ class UserServiceTest {
     @Test
     void addUser() {
         //given
-        User testUser = new User(
-                "tester",
-                "test_password");
+        User testUser1 = new User();
+        String testName1 = faker.name().username();
+        testUser1.setUsername(testName1);
+        String testPassword1 = faker.internet().password();
+        testUser1.setPassword(testPassword1);
 
         //when
-        testUserService.addUser(testUser);
+        testUserService.addUser(testUser1);
 
         //then
         ArgumentCaptor<User> testUserArgumentCaptor = ArgumentCaptor.forClass(User.class);
         verify(testRepository).save(testUserArgumentCaptor.capture());
         User captorUser = testUserArgumentCaptor.getValue();
-        assertThat(captorUser).isEqualTo(testUser);
+        assertThat(captorUser).isEqualTo(testUser1);
     }
 
     @Test
     void nameIsTaken() {
         //given
-        User testUser = new User(
-                "tester",
-                "test_password");
+        User testUser1 = new User();
+        String testName1 = faker.name().username();
+        testUser1.setUsername(testName1);
+        String testPassword1 = faker.internet().password();
+        testUser1.setPassword(testPassword1);
+        testUser1.setId(1L);
+        testUserService.addUser(testUser1);
+
+
+        User newUser = new User();
+        newUser.setUsername(testName1);
+        String testPassword2 = faker.internet().password();
+        newUser.setPassword(testPassword2);
+        newUser.setId(2L);
+        testUserService.addUser(newUser);
 
         given(testRepository.usernameExists(anyString()))
                 .willReturn(true);
 
         //when
         //then
-        assertThatThrownBy(() -> testUserService.addUser(testUser))
-                .isInstanceOf(BadRequestException.class)
-                .hasMessageContaining("The name " + testUser.getUsername() + " is already used");
+        assertThatThrownBy(() -> testUserService.addUser(newUser))
+                .isInstanceOf(BadRequestException.class);
 
-        verify(testRepository, never()).save(any());
+        verify(testRepository, never()).save(newUser);
 
     }
 
