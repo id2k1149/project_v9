@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -39,17 +40,21 @@ public class UserService {
     }
 
     public User getUser(Long userId) {
-        User user = userRepository.findUserById(userId);
-        if (user == null) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            return userRepository.findUserByUserId(userId);
+        } else {
             throw new IllegalStateException(
                     "user with id " + userId + " does not exist");
-        } else return user;
+        }
     }
 
     public void addUser(User newUser) {
-        Boolean usernameExists = userRepository.usernameExists(newUser.getUsername());
+        Optional<User> optionalUser = Optional.ofNullable(userRepository.findUserByUsername(newUser.getUsername()));
 
-        if (usernameExists) {
+//        Boolean usernameExists = userRepository.usernameExists(newUser.getUsername());
+
+        if (optionalUser.isPresent()) {
             throw new BadRequestException("The name " + newUser.getUsername() + " is already used");
         }
 
@@ -65,7 +70,7 @@ public class UserService {
     public void updateUser(User user,
                            Long userId
     ) {
-        User userToUpdate = userRepository.findUserById(userId);
+        User userToUpdate = userRepository.findUserByUserId(userId);
 
         if (userToUpdate == null) {
             throw new IllegalStateException(
@@ -78,7 +83,7 @@ public class UserService {
         }
 
         String newPassword = user.getPassword();
-        if (newPassword != null && newName.length() > 8 && !Objects.equals(userToUpdate.getPassword(), newPassword)) {
+        if (newPassword != null && newName.length() > 7 && !Objects.equals(userToUpdate.getPassword(), newPassword)) {
             String encodedPassword = bCryptPasswordEncoder.encode(newPassword);
             userToUpdate.setPassword(encodedPassword);
         }

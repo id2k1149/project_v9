@@ -8,7 +8,7 @@ import java.util.Objects;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userId;
 
     private String username;
 
@@ -20,12 +20,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public Long getId() {
-        return id;
+    public Long getUId() {
+        return userId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUId(Long id) {
+        this.userId = id;
     }
 
     public String getUsername() {
@@ -65,8 +65,8 @@ public class User {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return getId().equals(
-                user.getId())
+        return getUId().equals(
+                user.getUId())
                 && getUsername().equals(user.getUsername())
                 && getPassword().equals(user.getPassword())
                 && Objects.equals(getPasswordConfirm(),
@@ -77,7 +77,7 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(
-                getId(),
+                getUId(),
                 getUsername(),
                 getPassword(),
                 getPasswordConfirm(),
@@ -87,7 +87,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id=" + userId +
                 ", username='" + username + '\'' +
                 ", role=" + role +
                 '}';

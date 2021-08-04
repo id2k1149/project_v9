@@ -17,7 +17,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -82,7 +81,7 @@ class UserServiceTest {
         testUser1.setUsername(testName1);
         String testPassword1 = faker.internet().password();
         testUser1.setPassword(testPassword1);
-        testUser1.setId(1L);
+        testUser1.setUId(1L);
         testUserService.addUser(testUser1);
         System.out.println(testUser1);
 
@@ -91,11 +90,11 @@ class UserServiceTest {
         testUser2.setUsername(testName2);
         String testPassword2 = faker.internet().password();
         testUser2.setPassword(testPassword2);
-        testUser2.setId(2L);
+        testUser2.setUId(2L);
         testUserService.addUser(testUser2);
         System.out.println(testUser2);
 
-        System.out.println(testUserService.getUser(testUser2.getId()));
+        System.out.println(testUserService.getUser(testUser2.getUId()));
 
         //when
 //        User user = testUserService.getUser(testUser2.getId());
@@ -131,7 +130,7 @@ class UserServiceTest {
         testUser1.setUsername(testName1);
         String testPassword1 = faker.internet().password();
         testUser1.setPassword(testPassword1);
-        testUser1.setId(1L);
+        testUser1.setUId(1L);
         testUserService.addUser(testUser1);
 
 
@@ -139,11 +138,11 @@ class UserServiceTest {
         newUser.setUsername(testName1);
         String testPassword2 = faker.internet().password();
         newUser.setPassword(testPassword2);
-        newUser.setId(2L);
+        newUser.setUId(2L);
         testUserService.addUser(newUser);
 
-        given(testRepository.usernameExists(anyString()))
-                .willReturn(true);
+//        given(testRepository.usernameExists(anyString()))
+//                .willReturn(true);
 
         //when
         //then
