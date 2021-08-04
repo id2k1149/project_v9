@@ -1,70 +1,47 @@
 package org.id2k1149.project_v9.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import java.util.Objects;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Answer {
-    private @Id @GeneratedValue
-    Long id;
-
-    private String title;
-
-    @ManyToOne
-    private Question question;
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @Id
-    public Long getId() {
-        return id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long answerId;
+    private String answerTitle;
+    private boolean isActive;
+    @ManyToMany(mappedBy = "answers", fetch = FetchType.EAGER)
+    private List<Question> questions;
+
+    public Long getAnswerId() {
+        return answerId;
     }
 
-    public String getTitle() {
-        return title;
+    public void setAnswerId(Long answerId) {
+        this.answerId = answerId;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getAnswerTitle() {
+        return answerTitle;
     }
 
-    public Question getQuestion() {
-        return question;
+    public void setAnswerTitle(String answerTitle) {
+        this.answerTitle = answerTitle;
     }
 
-    public void setQuestion(Question question) {
-        this.question = question;
+    public boolean isActive() {
+        return isActive;
     }
 
-    @Override
-    public String toString() {
-        return "Answer{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", question=" + question +
-                '}';
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Answer)) return false;
-        Answer answer = (Answer) o;
-        return getId().equals(answer.getId())
-                && getTitle().equals(answer.getTitle())
-                && getQuestion().equals(answer.getQuestion());
+    public List<Question> getQuestions() {
+        return questions;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(
-                getId(),
-                getTitle(),
-                getQuestion());
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
     }
 }

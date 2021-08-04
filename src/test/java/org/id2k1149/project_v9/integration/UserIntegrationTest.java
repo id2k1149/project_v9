@@ -16,7 +16,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -95,7 +94,7 @@ public class UserIntegrationTest {
 
         long id = users.stream()
                 .filter(u -> u.getUsername().equals(testUser.getUsername()))
-                .map(User::getId)
+                .map(User::getUId)
                 .findFirst()
                 .orElseThrow(() ->
                         new IllegalStateException(
