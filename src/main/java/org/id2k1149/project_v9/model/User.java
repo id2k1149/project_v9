@@ -20,15 +20,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public User() {
-    }
-
-    public User(String username,
-                String password) {
-        this.username = username;
-        this.password = password;
-    }
-
     public Long getId() {
         return id;
     }

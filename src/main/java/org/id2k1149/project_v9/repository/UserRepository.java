@@ -7,11 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Repository
 @Transactional(readOnly = true)
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query("" +
+    @Query(
             "SELECT CASE WHEN COUNT(u) > 0 THEN " +
             "TRUE ELSE FALSE END " +
             "FROM User u " +
@@ -21,4 +23,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findUserByUsername(String username);
     User findUserById(Long id);
+
 }

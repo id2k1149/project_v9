@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -61,39 +62,28 @@ public class UserService {
     }
 
     @Transactional
-    public User updateUser(Long userId,
-                           String username,
-                           String password
+    public void updateUser(User user,
+                           Long userId
     ) {
         User userToUpdate = userRepository.findUserById(userId);
 
-        System.out.println(userToUpdate);
-        System.out.println(username + " " + password);
-
         if (userToUpdate == null) {
             throw new IllegalStateException(
-                    "appUser with id " + userId + " does not exist");
+                    "user with id " + userId + " does not exist");
         }
 
-//        if (username != null && username.length() > 0 && !Objects.equals(userToUpdate.getUsername(), username)) {
-//            userToUpdate.setUsername(username);
-//        }
-//
-//        if (password != null && password.length() > 0 && !Objects.equals(userToUpdate.getPassword(), password)) {
-//            String encodedPassword = bCryptPasswordEncoder.encode(password);
-//            userToUpdate.setPassword(encodedPassword);
-//        }
+        String newName = user.getUsername();
+        if (newName != null && newName.length() > 0 && !Objects.equals(userToUpdate.getUsername(), newName)) {
+            userToUpdate.setUsername(newName);
+        }
 
-        userToUpdate.setUsername(username);
-
-        String encodedPassword = bCryptPasswordEncoder.encode(password);
-        userToUpdate.setPassword(encodedPassword);
-
-        System.out.println(userToUpdate);
+        String newPassword = user.getPassword();
+        if (newPassword != null && newName.length() > 8 && !Objects.equals(userToUpdate.getPassword(), newPassword)) {
+            String encodedPassword = bCryptPasswordEncoder.encode(newPassword);
+            userToUpdate.setPassword(encodedPassword);
+        }
 
         userRepository.save(userToUpdate);
-
-        return userToUpdate;
     }
 
     public void deleteUser(Long userId) {

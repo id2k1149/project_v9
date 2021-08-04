@@ -36,12 +36,10 @@ public class UserController {
 
     @PutMapping(path = "{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updateUser(
-            @PathVariable("userId") Long userId,
-            @RequestParam(required = false) String username,
-            @RequestParam(required = false) String password
+            @RequestBody User user,
+            @PathVariable("userId") Long userId
     ) {
-        System.out.println(userId + " " + username + " " + password);
-        userService.updateUser(userId, username, password);
+        userService.updateUser(user, userId);
     }
 
     @DeleteMapping(path = "{userId}")

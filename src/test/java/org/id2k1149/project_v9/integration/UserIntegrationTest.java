@@ -45,10 +45,11 @@ public class UserIntegrationTest {
     @Test
     void canRegisterNewUser() throws Exception {
         // given
+        User testUser = new User();
         String testName = faker.name().username();
+        testUser.setUsername(testName);
         String testPassword = faker.internet().password();
-
-        User testUser = new User(testName, testPassword);
+        testUser.setPassword(testPassword);
 
         // when
         ResultActions resultActions = mockMvc
@@ -66,10 +67,11 @@ public class UserIntegrationTest {
     @Test
     void canDeleteUser() throws Exception {
         // given
+        User testUser = new User();
         String testName = faker.name().username();
+        testUser.setUsername(testName);
         String testPassword = faker.internet().password();
-
-        User testUser = new User(testName, testPassword);
+        testUser.setPassword(testPassword);
 
         mockMvc.perform(post("/api/v1/students")
                 .contentType(MediaType.APPLICATION_JSON)
