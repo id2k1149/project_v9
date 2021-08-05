@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 @Transactional(readOnly = true)
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
+    Answer findAnswerById(Long id);
 //    List<Answer> findAnswerByAnswerTitle(String answerTitle);
 }

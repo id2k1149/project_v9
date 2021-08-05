@@ -49,6 +49,8 @@ public class QuestionService {
 
         newQuestion.setDatePublished(today);
 
+        questionRepository.save(newQuestion);
+
 
     }
 }
