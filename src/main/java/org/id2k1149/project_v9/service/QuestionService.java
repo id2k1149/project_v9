@@ -2,14 +2,12 @@ package org.id2k1149.project_v9.service;
 
 import org.id2k1149.project_v9.exception.BadRequestException;
 import org.id2k1149.project_v9.model.Question;
-import org.id2k1149.project_v9.model.User;
 import org.id2k1149.project_v9.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,13 +26,13 @@ public class QuestionService {
         return questionRepository.findAll();
     }
 
-    public Question getQuestion(Long questionId) {
-        Optional<Question> optionalQuestion = questionRepository.findById(questionId);
+    public Question getQuestion(Long id) {
+        Optional<Question> optionalQuestion = questionRepository.findById(id);
         if (optionalQuestion.isPresent()) {
-            return questionRepository.findQuestionByQuestionId(questionId);
+            return questionRepository.findQuestionById(id);
         } else {
             throw new IllegalStateException(
-                    "Question with id " + questionId + " does not exist");
+                    "Question with id " + id + " does not exist");
         }
     }
 

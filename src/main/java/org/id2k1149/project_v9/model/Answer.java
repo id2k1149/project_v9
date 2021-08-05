@@ -1,24 +1,24 @@
 package org.id2k1149.project_v9.model;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long answerId;
+    private Long id;
     private String answerTitle;
     private boolean isActive;
     @ManyToMany(mappedBy = "answers", fetch = FetchType.EAGER)
-    private List<Question> questions;
+    private Set<Question> questions;
 
-    public Long getAnswerId() {
-        return answerId;
+    public Long getId() {
+        return id;
     }
 
-    public void setAnswerId(Long answerId) {
-        this.answerId = answerId;
+    public void setId(Long answerId) {
+        this.id = answerId;
     }
 
     public String getAnswerTitle() {
@@ -37,11 +37,11 @@ public class Answer {
         isActive = active;
     }
 
-    public List<Question> getQuestions() {
+    public Set<Question> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(List<Question> questions) {
+    public void setQuestions(Set<Question> questions) {
         this.questions = questions;
     }
 }

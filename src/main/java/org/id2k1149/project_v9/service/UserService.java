@@ -39,13 +39,13 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User getUser(Long userId) {
-        Optional<User> optionalUser = userRepository.findById(userId);
+    public User getUser(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
-            return userRepository.findUserByUserId(userId);
+            return userRepository.findUserById(id);
         } else {
             throw new IllegalStateException(
-                    "user with id " + userId + " does not exist");
+                    "user with id " + id + " does not exist");
         }
     }
 
@@ -68,13 +68,13 @@ public class UserService {
 
     @Transactional
     public void updateUser(User user,
-                           Long userId
+                           Long id
     ) {
-        User userToUpdate = userRepository.findUserByUserId(userId);
+        User userToUpdate = userRepository.findUserById(id);
 
         if (userToUpdate == null) {
             throw new IllegalStateException(
-                    "user with id " + userId + " does not exist");
+                    "user with id " + id + " does not exist");
         }
 
         String newName = user.getUsername();
@@ -91,11 +91,11 @@ public class UserService {
         userRepository.save(userToUpdate);
     }
 
-    public void deleteUser(Long userId) {
-        if(!userRepository.existsById(userId)) {
+    public void deleteUser(Long id) {
+        if(!userRepository.existsById(id)) {
             throw new UserNotFoundException(
-                    "User with id " + userId + " does not exists");
+                    "User with id " + id + " does not exists");
         }
-        userRepository.deleteById(userId);
+        userRepository.deleteById(id);
     }
 }

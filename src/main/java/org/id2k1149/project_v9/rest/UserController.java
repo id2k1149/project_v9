@@ -24,9 +24,9 @@ public class UserController {
         return userService.getUsers();
     }
 
-    @GetMapping(path = "{userId}")
-    public User getUser(@PathVariable("userId") Long userId) {
-        return userService.getUser(userId);
+    @GetMapping(path = "{id}")
+    public User getUser(@PathVariable("id") Long id) {
+        return userService.getUser(id);
     }
 
     @PostMapping
@@ -34,17 +34,17 @@ public class UserController {
         userService.addUser(newUser);
     }
 
-    @PutMapping(path = "{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updateUser(
             @RequestBody User user,
-            @PathVariable("userId") Long userId
+            @PathVariable("id") Long id
     ) {
-        userService.updateUser(user, userId);
+        userService.updateUser(user, id);
     }
 
-    @DeleteMapping(path = "{userId}")
-    public void deleteUser(@PathVariable("userId") Long userId) {
-        userService.deleteUser(userId);
+    @DeleteMapping(path = "{id}")
+    public void deleteUser(@PathVariable("id") Long id) {
+        userService.deleteUser(id);
     }
 
 }
