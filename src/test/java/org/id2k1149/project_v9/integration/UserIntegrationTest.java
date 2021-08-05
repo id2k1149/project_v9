@@ -94,7 +94,7 @@ public class UserIntegrationTest {
 
         long id = users.stream()
                 .filter(u -> u.getUsername().equals(testUser.getUsername()))
-                .map(User::getUId)
+                .map(User::getId)
                 .findFirst()
                 .orElseThrow(() ->
                         new IllegalStateException(

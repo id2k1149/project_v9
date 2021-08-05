@@ -22,11 +22,11 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public Long getUId() {
+    public Long getId() {
         return id;
     }
 
-    public void setUId(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -67,8 +67,8 @@ public class User {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return getUId().equals(
-                user.getUId())
+        return getId().equals(
+                user.getId())
                 && getUsername().equals(user.getUsername())
                 && getPassword().equals(user.getPassword())
                 && Objects.equals(getPasswordConfirm(),
@@ -79,7 +79,7 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(
-                getUId(),
+                getId(),
                 getUsername(),
                 getPassword(),
                 getPasswordConfirm(),
