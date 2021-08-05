@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>welcome</title>
+    <title>questions</title>
     <link href="${contextPath}/resources/static/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -17,8 +17,6 @@
         </form>
 
         <h2>Welcome ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
-
-
     </c:if>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

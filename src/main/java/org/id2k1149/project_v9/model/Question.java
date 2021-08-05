@@ -1,6 +1,7 @@
 package org.id2k1149.project_v9.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long questionId;
     private String questionTitle;
-    private Date datePublished;
+    private LocalDate datePublished;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Answer> answers;
     private String result;
@@ -32,11 +33,11 @@ public class Question {
         this.questionTitle = questionTitle;
     }
 
-    public Date getDatePublished() {
+    public LocalDate getDatePublished() {
         return datePublished;
     }
 
-    public void setDatePublished(Date datePublished) {
+    public void setDatePublished(LocalDate datePublished) {
         this.datePublished = datePublished;
     }
 
