@@ -18,6 +18,10 @@ public class Answer {
     public Answer() {
     }
 
+    public Answer(Long id) {
+        this.id = id;
+    }
+
     public Answer(String answerTitle) {
         this.answerTitle = answerTitle;
     }
@@ -52,5 +56,14 @@ public class Answer {
 
     public void setQuestions(Set<Question> questions) {
         this.questions = questions;
+    }
+
+    @Override
+    public String toString() {
+        return "Answer{" +
+                "id=" + id +
+                ", answerTitle='" + answerTitle + '\'' +
+                ", isActive=" + isActive +
+                '}';
     }
 }

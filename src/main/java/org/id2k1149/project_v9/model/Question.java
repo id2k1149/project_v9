@@ -14,7 +14,8 @@ public class Question {
     private Long id;
     private String questionTitle = "Where to have a lunch?";
     private LocalDate datePublished = LocalDate.now();
-    @ManyToMany(fetch = FetchType.EAGER)
+
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<Answer> answers = new HashSet<>();
     private String result;
 
@@ -65,5 +66,19 @@ public class Question {
 
     public void addAnswer(Answer answer) {
         this.answers.add(answer);
+    }
+
+    public void removeAnswer(Answer answer) {
+        this.answers.remove(answer);
+    }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", questionTitle='" + questionTitle + '\'' +
+                ", datePublished=" + datePublished +
+                ", result='" + result + '\'' +
+                '}';
     }
 }
