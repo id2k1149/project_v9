@@ -23,9 +23,9 @@ public class QuestionController {
         return questionService.getQuestions();
     }
 
-    @GetMapping(path = "{questionId}")
-    public Question getQuestion(@PathVariable("questionId") Long questionId) {
-        return questionService.getQuestion(questionId);
+    @GetMapping(path = "{id}")
+    public Question getQuestion(@PathVariable("id") Long id) {
+        return questionService.getQuestion(id);
     }
 
     @PostMapping

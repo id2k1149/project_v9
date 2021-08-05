@@ -8,7 +8,7 @@ import java.util.Objects;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long id;
 
     private String username;
 
@@ -21,11 +21,11 @@ public class User {
     private Role role;
 
     public Long getUId() {
-        return userId;
+        return id;
     }
 
     public void setUId(Long id) {
-        this.userId = id;
+        this.id = id;
     }
 
     public String getUsername() {
@@ -87,7 +87,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + userId +
+                "id=" + id +
                 ", username='" + username + '\'' +
                 ", role=" + role +
                 '}';

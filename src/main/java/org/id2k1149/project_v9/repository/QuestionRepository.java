@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 @Transactional(readOnly = true)
 public interface QuestionRepository extends JpaRepository<Question, Long> {
-    Question findQuestionByQuestionId(Long questionId);
+    Question findQuestionById(Long id);
 
     Question findQuestionByQuestionTitleAndDatePublished(String questionTitle, LocalDate datePublished);
 
