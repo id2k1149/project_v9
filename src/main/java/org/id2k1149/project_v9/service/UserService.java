@@ -1,7 +1,7 @@
 package org.id2k1149.project_v9.service;
 
 import org.id2k1149.project_v9.exception.BadRequestException;
-import org.id2k1149.project_v9.exception.UserNotFoundException;
+import org.id2k1149.project_v9.exception.NotFoundException;
 import org.id2k1149.project_v9.model.Role;
 import org.id2k1149.project_v9.model.User;
 import org.id2k1149.project_v9.repository.UserRepository;
@@ -93,7 +93,7 @@ public class UserService {
 
     public void deleteUser(Long id) {
         if(!userRepository.existsById(id)) {
-            throw new UserNotFoundException(
+            throw new NotFoundException(
                     "User with id " + id + " does not exists");
         }
         userRepository.deleteById(id);

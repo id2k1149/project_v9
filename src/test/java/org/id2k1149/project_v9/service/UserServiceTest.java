@@ -1,7 +1,7 @@
 package org.id2k1149.project_v9.service;
 
 import org.id2k1149.project_v9.exception.BadRequestException;
-import org.id2k1149.project_v9.exception.UserNotFoundException;
+import org.id2k1149.project_v9.exception.NotFoundException;
 import org.id2k1149.project_v9.model.User;
 import org.id2k1149.project_v9.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -180,7 +180,7 @@ class UserServiceTest {
         // when
         // then
         assertThatThrownBy(() -> testUserService.deleteUser(id))
-                .isInstanceOf(UserNotFoundException.class)
+                .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("User with id " + id + " does not exists");
 
         verify(testRepository, never()).deleteById(any());
