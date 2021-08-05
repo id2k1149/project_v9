@@ -48,7 +48,7 @@ public class QuestionRepositoryTest {
     @Test
     public void createNewQuestionWithTwoAnswers() {
         Answer answerDiner1 = entityManager.find(Answer.class, 3L);
-        Answer answerDiner2 = entityManager.find(Answer.class, 4L);
+        Answer answerDiner2 = entityManager.find(Answer.class, 1L);
         Question newQuestion = new Question();
         newQuestion.addAnswer(answerDiner1);
         newQuestion.addAnswer(answerDiner2);
@@ -58,14 +58,14 @@ public class QuestionRepositoryTest {
 
     @Test
     public void addAnswerToQuestion() {
-        Question question = questionRepository.findById(10L).get();
-        Answer answerDiner3 = entityManager.find(Answer.class, 5L);
+        Question question = questionRepository.findById(4L).get();
+        Answer answerDiner3 = entityManager.find(Answer.class, 1L);
         question.addAnswer(answerDiner3);
     }
 
     @Test
     public void removeAnswerFromQuestion() {
-        Question question = questionRepository.findById(8L).get();
+        Question question = questionRepository.findById(6L).get();
         Answer answer = answerRepository.getById(3L);
         question.removeAnswer(answer);
     }
@@ -80,13 +80,13 @@ public class QuestionRepositoryTest {
 
     @Test
     public void getQuestion() {
-        Question question = questionRepository.findById(10L).get();
+        Question question = questionRepository.findById(4L).get();
         System.out.println(question.getAnswers());
     }
 
     @Test
     public void deleteQuestion() {
-        questionRepository.deleteById(8L);
+        questionRepository.deleteById(5L);
     }
 
 }

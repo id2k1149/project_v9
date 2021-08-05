@@ -2,24 +2,65 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
-<!DOCTYPE html>
 <html lang="en">
+<jsp:include page="fragments/head.jsp"/>
 <head>
-    <meta charset="utf-8">
-    <title>questions</title>
-    <link href="${contextPath}/resources/static/css/bootstrap.min.css" rel="stylesheet">
+    <title>Questions for today</title>
 </head>
 <body>
-  <div class="container">
-    <c:if test="${pageContext.request.userPrincipal.name != null}">
-        <form id="logoutForm" method="POST" action="${contextPath}/logout">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form>
+    <jsp:include page="fragments/header.jsp"/>
 
-        <h2>Welcome ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
-    </c:if>
-  </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script src="${contextPath}/resources/static/js/bootstrap.min.js"></script>
+    <div class="container text-center">
+        <c:if test="${pageContext.request.userPrincipal.name != null}">
+            <form id="logoutForm" method="POST" action="${contextPath}/logout">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form>
+
+            <h2>${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
+        </c:if>
+        <div>
+            <h1>Questions</h1>
+        </div>
+        <div>
+            <h3> <a href="/questions/new">Create new Question</a> </h3>
+        </div>
+        <div>
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Question</th>
+                    <th>Answers</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <c:forEach items="${questionsList}" var="question">
+                    <jsp:useBean id="question" type="org.id2k1149.project_v9.model.Question"/>
+                    <tr id="${question.id}">
+                        <td><c:out value="${question.id}"/></td>
+                        <td>${question.datePublished}</td>
+                        <td>${question.questionTitle}</td>
+                        <td>${question.answers}</td>
+                        <td><a><span class="fa fa-pencil"></span></a></td>
+                        <td><a class="delete"><span class="fa fa-remove"></span></a></td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <jsp:include page="fragments/footer.jsp"/>
+
 </body>
 </html>
