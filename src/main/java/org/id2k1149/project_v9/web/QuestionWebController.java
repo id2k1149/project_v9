@@ -1,6 +1,8 @@
 package org.id2k1149.project_v9.web;
 
+import org.id2k1149.project_v9.model.Answer;
 import org.id2k1149.project_v9.model.Question;
+import org.id2k1149.project_v9.repository.AnswerRepository;
 import org.id2k1149.project_v9.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,9 +16,13 @@ public class QuestionWebController {
 
     private final QuestionRepository questionRepository;
 
+    private final AnswerRepository answerRepository;
+
     @Autowired
-    public QuestionWebController(QuestionRepository questionRepository) {
+    public QuestionWebController(QuestionRepository questionRepository,
+                                 AnswerRepository answerRepository) {
         this.questionRepository = questionRepository;
+        this.answerRepository = answerRepository;
     }
 
     @GetMapping({"/questions"})
@@ -26,8 +32,11 @@ public class QuestionWebController {
         return "WEB-INF/jsp/questions";
     }
 
-    @GetMapping({"/questions/new"})
+    @GetMapping({"/new"})
     public String newQuestionForm(Model model) {
+        List<Answer> answersList = answerRepository.findAll();
+        model.addAttribute("answersList", answersList);
+        model.addAttribute("question", new Question());
 
         return "WEB-INF/jsp/question_form";
     }
