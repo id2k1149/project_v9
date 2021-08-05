@@ -1,6 +1,7 @@
 package org.id2k1149.project_v9.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -9,9 +10,17 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String answerTitle;
-    private boolean isActive;
+    private boolean isActive = true;
+
     @ManyToMany(mappedBy = "answers", fetch = FetchType.EAGER)
-    private Set<Question> questions;
+    private Set<Question> questions = new HashSet<>();
+
+    public Answer() {
+    }
+
+    public Answer(String answerTitle) {
+        this.answerTitle = answerTitle;
+    }
 
     public Long getId() {
         return id;

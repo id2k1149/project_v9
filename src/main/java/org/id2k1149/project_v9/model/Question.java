@@ -2,6 +2,7 @@ package org.id2k1149.project_v9.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -9,12 +10,18 @@ public class Question {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String questionTitle;
-    private LocalDate datePublished;
+    private String questionTitle = "Where to have a lunch?";
+    private LocalDate datePublished = LocalDate.now();
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Answer> answers;
+    private Set<Answer> answers = new HashSet<>();
     private String result;
+
+    public Question() {
+    }
+
+
 
     public Long getId() {
         return id;
@@ -54,5 +61,9 @@ public class Question {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public void addAnswer(Answer answer) {
+        this.answers.add(answer);
     }
 }
