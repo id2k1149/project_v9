@@ -5,12 +5,12 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <html lang="en">
-<jsp:include page="fragments/head.jsp"/>
+<jsp:include page="../fragments/head.jsp"/>
 <head>
     <title>Create Question</title>
 </head>
 <body>
-<jsp:include page="fragments/header.jsp"/>
+<jsp:include page="../fragments/header.jsp"/>
 <%--page content--%>
 <div class="container text-center">
     <div><h1>Questions</h1></div>
@@ -20,7 +20,7 @@
 
 <%--    <jsp:useBean id="question" type="org.id2k1149.project_v9.model.Question" scope="request"/>--%>
 
-    <form method="post" action="questions/save" style="max-width: 600px; margin: 0 auto">
+    <form method="post" action="${contextPath}/admin/questions/save" style="max-width: 600px; margin: 0 auto">
         <input type="hidden" name="id" value="${question.id}">
         <div class="m-3">
             <div class="form-group row">
@@ -62,7 +62,7 @@
     </div>
 </div>
 <%--page content--%>
-<jsp:include page="fragments/footer.jsp"/>
+<jsp:include page="../fragments/footer.jsp"/>
 
 </body>
 </html>
