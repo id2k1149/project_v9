@@ -9,10 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
 @Controller
+@RequestMapping("/admin")
 public class QuestionWebController {
 
     private final QuestionRepository questionRepository;
@@ -30,7 +32,7 @@ public class QuestionWebController {
     public String questions(Model model) {
         List<Question> questionsList = questionRepository.findAll();
         model.addAttribute("questionsList", questionsList);
-        return "WEB-INF/jsp/questions";
+        return "WEB-INF/jsp/admin/questions";
     }
 
     @GetMapping("/new")
@@ -39,13 +41,13 @@ public class QuestionWebController {
         model.addAttribute("answersList", answersList);
         model.addAttribute("question", new Question());
 
-        return "WEB-INF/jsp/questionForm";
+        return "WEB-INF/jsp/admin/questionForm";
     }
 
     @PostMapping("/questions/save")
     public String saveQuestion(Question question) {
         questionRepository.save(question);
-        return "redirect:/questions";
+        return "redirect:/admin/questions";
 
     }
 

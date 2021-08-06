@@ -32,7 +32,7 @@ public class UserWebController {
     public String registration(Model model) {
         model.addAttribute("userForm", new User());
 
-        return "WEB-INF/jsp/registration";
+        return "WEB-INF/jsp/auth/registration";
     }
 
     @PostMapping("/registration")
@@ -41,7 +41,7 @@ public class UserWebController {
         userValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "WEB-INF/jsp/registration";
+            return "WEB-INF/jsp/auth/registration";
         }
 
         userService.addUser(userForm);
@@ -59,11 +59,16 @@ public class UserWebController {
         if (logout != null)
             model.addAttribute("message", "You have been logged out successfully.");
 
-        return "WEB-INF/jsp/login";
+        return "WEB-INF/jsp/auth/login";
     }
 
-    @GetMapping({"/", "/welcome"})
+    @GetMapping({"/welcome"})
     public String welcome(Model model) {
         return "WEB-INF/jsp/welcome";
+    }
+
+    @GetMapping({"/", "/index"})
+    public String home(Model model) {
+        return "WEB-INF/jsp/index";
     }
 }
