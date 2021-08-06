@@ -35,9 +35,6 @@ public class Description {
 
     @Override
     public String toString() {
-        return "Description{" +
-                "id=" + id +
-                ", item='" + item + '\'' +
-                '}';
+        return item;
     }
 }
