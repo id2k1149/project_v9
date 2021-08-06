@@ -86,7 +86,7 @@ public class QuestionRepositoryTest {
 
     @Test
     public void deleteQuestion() {
-        questionRepository.deleteById(5L);
+        questionRepository.deleteById(9L);
     }
 
 }
