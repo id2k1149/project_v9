@@ -1,24 +1,20 @@
 package org.id2k1149.project_v9.model;
 
 import javax.persistence.*;
-import java.text.DecimalFormat;
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 @Entity
 public class AnswerInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private LocalDate datePublished = LocalDate.now();
+    private LocalDate dateOfInfo = LocalDate.now();
     @ManyToOne
     private Answer answer;
     @ManyToOne
     private Description description;
-    private DecimalFormat decimalInfo;
+    private BigDecimal digital;
 
     public Long getId() {
         return id;
@@ -28,12 +24,12 @@ public class AnswerInfo {
         this.id = id;
     }
 
-    public LocalDate getDatePublished() {
-        return datePublished;
+    public LocalDate getDateOfInfo() {
+        return dateOfInfo;
     }
 
-    public void setDatePublished(LocalDate datePublished) {
-        this.datePublished = datePublished;
+    public void setDateOfInfo(LocalDate dateOfInfo) {
+        this.dateOfInfo = dateOfInfo;
     }
 
     public Answer getAnswer() {
@@ -52,21 +48,11 @@ public class AnswerInfo {
         this.description = description;
     }
 
-    public DecimalFormat getDecimalInfo() {
-        return decimalInfo;
+    public BigDecimal getDigital() {
+        return digital;
     }
 
-    public void setDecimalInfo(DecimalFormat decimalInfo) {
-        this.decimalInfo = decimalInfo;
+    public void setDigital(BigDecimal digital) {
+        this.digital = digital;
     }
-
-    public String getAnswerTitle() {
-        return answerTitle;
-    }
-
-    public void setAnswerTitle(String answerTitle) {
-        this.answerTitle = answerTitle;
-    }
-
-    private String answerTitle;
 }

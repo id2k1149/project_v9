@@ -1,14 +1,18 @@
 package org.id2k1149.project_v9.repository;
 
-import org.id2k1149.project_v9.model.Answer;
 import org.id2k1149.project_v9.model.Description;
-import org.id2k1149.project_v9.model.Question;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
@@ -29,9 +33,52 @@ public class DescriptionRepositoryTest {
             String food = "Food #" + (i + 1);
             Description description = new Description(food);
             entityManager.persist(description);
-
         }
     }
+
+
+    @Test
+    public void makeMap() {
+        Map<Description, BigDecimal> descriptionMap = new HashMap<>();
+        List<Description> allDescription = descriptionRepository.findAll();
+
+        Random random = new Random();
+        int max = 5;
+        int min = 2;
+        int numberOfElements = random.nextInt((max - min) + 1) + min;
+
+        for (int i = 0; i < numberOfElements; i++) {
+            int randomIndex = random.nextInt(allDescription.size());
+            Description randomDescription = allDescription.get(randomIndex);
+            allDescription.remove(randomIndex);
+
+            int maxPrice = 10000;
+            int minPrice = 100;
+            int r = random.nextInt((maxPrice - minPrice) + 1) + minPrice;
+
+            BigDecimal digitalInfo = BigDecimal.valueOf(r / 100.);
+
+            descriptionMap.put(randomDescription, digitalInfo);
+        }
+
+        for (Map.Entry<Description, BigDecimal> pair : descriptionMap.entrySet()) {
+            System.out.println(pair.getKey() + " : " + pair.getValue());
+        }
+
+
+    }
+
+//    Random random = new Random();
+//    int leftLimit = 97; // letter 'a'
+//    int rightLimit = 122; // letter 'z'
+//    int targetStringLength = 6;
+//
+//
+//    String testName = random.ints(leftLimit, rightLimit + 1)
+//            .limit(targetStringLength)
+//            .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+//            .toString();
+
 //
 //    @Test
 //    public void createNewQuestionWithOneAnswer() {
