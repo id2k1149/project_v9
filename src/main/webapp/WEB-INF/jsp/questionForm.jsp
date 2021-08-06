@@ -18,7 +18,7 @@
 
     <h2>${param.action == 'create' ? 'Create question' : 'Edit question'}</h2>
 
-    <jsp:useBean id="question" type="org.id2k1149.project_v9.model.Question" scope="request"/>
+<%--    <jsp:useBean id="question" type="org.id2k1149.project_v9.model.Question" scope="request"/>--%>
 
     <form method="post" action="questions/save" style="max-width: 600px; margin: 0 auto">
         <input type="hidden" name="id" value="${question.id}">
@@ -34,12 +34,16 @@
                 <label class="col-form-label col-sm-4">Answers:</label>
                 <div class="col-sm-8 text-left">
 
-                    <c:forEach items="${answersList}" var="answer">
+                    <c:forEach items="${answersList}" var="answer" >
+
                         <div>
+                            <h1>${answer.id}</h1>
+                            <h1>${answer.answerTitle}</h1>
+
                             <input type="checkbox"
-                                   value="${question.id}"
+                                   value="${answer.id}"
                                    id="answer"
-                                   name="${answer.answerTitle}"
+                                   name="answers"
                             />
                             <label for="answer">${answer.answerTitle}</label><h3>${answer.id}</h3>
                         </div>
