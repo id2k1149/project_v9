@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class QuestionWebController {
@@ -97,9 +98,7 @@ public class QuestionWebController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-
         String error_message = null;
-
         boolean voted = false;
 //        boolean voted = true;
 
@@ -110,10 +109,16 @@ public class QuestionWebController {
         } else {
             Question question = questionRepository.findById((long) id).get();
             model.addAttribute("question", question);
+            Set<Answer> answersList = question.getAnswers();
+            model.addAttribute("answersList", answersList);
+
         }
-
-
         return "WEB-INF/jsp/show";
+    }
+
+    @PostMapping("/questions/vote")
+    public String vote() {
+        return "redirect:/welcome";
     }
 
 
