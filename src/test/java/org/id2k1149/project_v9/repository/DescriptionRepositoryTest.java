@@ -1,6 +1,6 @@
 package org.id2k1149.project_v9.repository;
 
-import org.id2k1149.project_v9.model.DescriptionInInfo;
+import org.id2k1149.project_v9.model.Description;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -31,7 +31,7 @@ public class DescriptionRepositoryTest {
     public void createDescriptions() {
         for (int i = 0; i < 25; i++) {
             String food = "Food #" + (i + 1);
-            DescriptionInInfo description = new DescriptionInInfo(food);
+            Description description = new Description(food);
             entityManager.persist(description);
         }
     }
@@ -39,8 +39,8 @@ public class DescriptionRepositoryTest {
 
     @Test
     public void makeMap() {
-        Map<DescriptionInInfo, BigDecimal> descriptionMap = new HashMap<>();
-        List<DescriptionInInfo> allDescription = descriptionRepository.findAll();
+        Map<Description, BigDecimal> descriptionMap = new HashMap<>();
+        List<Description> allDescription = descriptionRepository.findAll();
 
         Random random = new Random();
         int max = 5;
@@ -49,7 +49,7 @@ public class DescriptionRepositoryTest {
 
         for (int i = 0; i < numberOfElements; i++) {
             int randomIndex = random.nextInt(allDescription.size());
-            DescriptionInInfo randomDescription = allDescription.get(randomIndex);
+            Description randomDescription = allDescription.get(randomIndex);
             allDescription.remove(randomIndex);
 
             int maxPrice = 100;
@@ -61,7 +61,7 @@ public class DescriptionRepositoryTest {
             descriptionMap.put(randomDescription, digitalInfo);
         }
 
-        for (Map.Entry<DescriptionInInfo, BigDecimal> pair : descriptionMap.entrySet()) {
+        for (Map.Entry<Description, BigDecimal> pair : descriptionMap.entrySet()) {
             System.out.println(pair.getKey() + " : " + pair.getValue());
         }
 

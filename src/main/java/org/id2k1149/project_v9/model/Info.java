@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.Map;
 
 @Entity
-public class AdditionalInfoForAnswer {
+public class Info {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

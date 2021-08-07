@@ -1,6 +1,6 @@
 package org.id2k1149.project_v9.service;
 
-import org.id2k1149.project_v9.model.DescriptionInInfo;
+import org.id2k1149.project_v9.model.Description;
 import org.id2k1149.project_v9.repository.DescriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,13 +23,13 @@ public class DescriptionService {
         this.descriptionRepository = descriptionRepository;
     }
 
-    public List<DescriptionInInfo> getDescriptions() {
+    public List<Description> getDescriptions() {
         return descriptionRepository.findAll();
     }
 
-    public Map<DescriptionInInfo, BigDecimal> makeMap() {
-        Map<DescriptionInInfo, BigDecimal> descriptionMap = new HashMap<>();
-        List<DescriptionInInfo> allDescription = getDescriptions();
+    public Map<Description, BigDecimal> makeMap() {
+        Map<Description, BigDecimal> descriptionMap = new HashMap<>();
+        List<Description> allDescription = getDescriptions();
 
         Random random = new Random();
         int max = 5;
@@ -38,7 +38,7 @@ public class DescriptionService {
 
         for (int i = 0; i < numberOfElements; i++) {
             int randomIndex = random.nextInt(allDescription.size());
-            DescriptionInInfo randomDescription = allDescription.get(randomIndex);
+            Description randomDescription = allDescription.get(randomIndex);
             allDescription.remove(randomIndex);
 
             BigDecimal digitalInfo = BigDecimal.valueOf((random.nextInt((100 - 1) + 1) + 1) / 100);
