@@ -53,7 +53,13 @@
                     <td><c:out value="${question.id}"/></td>
                     <td>${question.datePublished}</td>
                     <td>${question.questionTitle}</td>
-                    <td>${question.answers}</td>
+                    <td>
+                        <c:forEach items="${question.answers}" var="answer" >
+                            <div>
+                                ${answer.answerTitle}
+                            </div>
+                        </c:forEach>
+                    </td>
                     <td><a><span class="fa fa-pencil"></span></a></td>
                     <td><a class="delete"><span class="fa fa-remove"></span></a></td>
                 </tr>

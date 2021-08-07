@@ -27,13 +27,15 @@ public class QuestionRepositoryTest {
 
     @Test
     public void createAnswers() {
-        Answer diner_1 = new Answer("Diner #1");
-        Answer diner_2 = new Answer("Diner #2");
-        Answer diner_3 = new Answer("Diner #3");
+        for (int i = 0; i < 5; i++) {
+            Answer diner = new Answer("Diner #" + (i + 1));
+            entityManager.persist(diner);
+        }
+    }
 
-        entityManager.persist(diner_1);
-        entityManager.persist(diner_2);
-        entityManager.persist(diner_3);
+    @Test
+    public void deleteAllAnswers() {
+        answerRepository.deleteAll();
     }
 
     @Test
