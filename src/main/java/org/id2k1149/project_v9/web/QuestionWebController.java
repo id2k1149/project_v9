@@ -50,8 +50,20 @@ public class QuestionWebController {
 //        return "WEB-INF/jsp/questionForm";
 //    }
 
+    @GetMapping("/confirmation")
+    public String confirmation(){
+        List<Question> questionsList = questionRepository.findByDatePublished(LocalDate.now());
+        if (questionsList.size() > 0) {
+            return "WEB-INF/jsp/confirmation";
+        } else {
+            return "WEB-INF/jsp/questionForm";
+        }
+    }
+
     @GetMapping("/new")
     public String newQuestionForm(Model model) {
+
+
 
         model.addAttribute("question", new Question());
         List<Info> infoList = infoRepository.findByDateOfInfo(LocalDate.now());
