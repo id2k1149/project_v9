@@ -1,7 +1,7 @@
 package org.id2k1149.project_v9.repository;
 
 import org.id2k1149.project_v9.model.Answer;
-import org.id2k1149.project_v9.model.Description;
+import org.id2k1149.project_v9.model.Info;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -9,7 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 
-import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.*;
 
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
@@ -33,13 +33,64 @@ public class InfoRepositoryTest {
 
     @Test
     public void createInfo() {
+    }
 
+    @Test
+    public void findByDate() {
+        LocalDate today = LocalDate.now();
+        List<Info> optionalInfo = infoRepository.findByDateOfInfo(today);
     }
 
 
+
     @Test
-    public void makeMap() {
-        // today check
+    public void getRandomInfo() {
+        // today info check
+        LocalDate today = LocalDate.now().minusDays(1);
+
+        List<Info> optionalInfo = infoRepository.findByDateOfInfo(today);
+
+
+        if (optionalInfo.size() > 0) {
+            return;
+        } else {
+            Random random = new Random();
+
+            List<Answer> allAnswers = answerRepository.findAll();
+            int max = allAnswers.size();
+            int min = 2;
+            int numberOfElements = random.nextInt((max - min) + 1) + min;
+
+            List<Answer> todayAnswers = new ArrayList<>();
+            for (int i = 0; i < numberOfElements; i++) {
+                int randomIndex = random.nextInt(allAnswers.size());
+                Answer randomAnswer = allAnswers.get(randomIndex);
+                allAnswers.remove(randomIndex);
+                todayAnswers.add(randomAnswer);
+            }
+
+            for (Answer todayAnswer : todayAnswers) {
+                Info newInfo = new Info();
+                newInfo.setDateOfInfo(today);
+                newInfo.setAnswer(todayAnswer);
+                infoRepository.save(newInfo);
+            }
+        }
+    }
+
+
+
+
+
+    @Test
+    public void deleteAllInfo() {
+        infoRepository.deleteAll();
+    }
+
+
+
+
+        /*
         Map<String, BigDecimal> descriptionMap = new HashMap<>();
         List<Description> allDescriptions = descriptionRepository.findAll();
         List<String> items = new ArrayList<>();
@@ -76,6 +127,8 @@ public class InfoRepositoryTest {
         min = 1;
         int randomInt = random.nextInt((max - min) + 1) + min;
         Answer randomAnswer = answerRepository.findById(4L).get();
+
+         */
 
 
 
@@ -174,4 +227,4 @@ public class InfoRepositoryTest {
 //        questionRepository.deleteById(9L);
 //    }
 
-}
+
