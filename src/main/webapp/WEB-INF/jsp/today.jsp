@@ -50,11 +50,6 @@
 
     <hr>
 
-
-
-
-
-
 </div>
 <%--page content--%>
 <jsp:include page="fragments/footer.jsp"/>

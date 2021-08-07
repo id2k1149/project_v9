@@ -1,7 +1,6 @@
 package org.id2k1149.project_v9.model;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 public class VotesCounter {
@@ -11,10 +10,10 @@ public class VotesCounter {
     private Long id;
 
     @ManyToOne
-    private Answer answer;
+    private Question question;
 
     @ManyToOne
-    private Question question;
+    private Answer answer;
 
     private Integer votes;
 
@@ -26,20 +25,20 @@ public class VotesCounter {
         this.id = id;
     }
 
-    public Answer getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(Answer answer) {
-        this.answer = answer;
-    }
-
     public Question getQuestion() {
         return question;
     }
 
     public void setQuestion(Question question) {
         this.question = question;
+    }
+
+    public Answer getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
     }
 
     public Integer getVotes() {
