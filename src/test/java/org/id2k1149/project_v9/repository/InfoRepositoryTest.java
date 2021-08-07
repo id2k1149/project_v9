@@ -1,5 +1,6 @@
 package org.id2k1149.project_v9.repository;
 
+import org.id2k1149.project_v9.model.Answer;
 import org.id2k1149.project_v9.model.DescriptionInInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,38 +10,42 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = NONE)
 @Rollback(false)
-public class DescriptionRepositoryTest {
+public class InfoRepositoryTest {
+
+    @Autowired
+    private InfoRepository infoRepository;
 
     @Autowired
     private DescriptionRepository descriptionRepository;
 
     @Autowired
+    private AnswerRepository answerRepository;
+
+    @Autowired
     private TestEntityManager entityManager;
 
     @Test
-    public void createDescriptions() {
-        for (int i = 0; i < 25; i++) {
-            String food = "Food #" + (i + 1);
-            DescriptionInInfo description = new DescriptionInInfo(food);
-            entityManager.persist(description);
-        }
+    public void createInfo() {
+
     }
 
 
     @Test
     public void makeMap() {
-        Map<DescriptionInInfo, BigDecimal> descriptionMap = new HashMap<>();
-        List<DescriptionInInfo> allDescription = descriptionRepository.findAll();
+        // today check
+        Map<String, BigDecimal> descriptionMap = new HashMap<>();
+        List<DescriptionInInfo> allDescriptions = descriptionRepository.findAll();
+        List<String> items = new ArrayList<>();
+        for (DescriptionInInfo allDescription : allDescriptions) {
+            items.add(allDescription.getItem());
+        }
 
         Random random = new Random();
         int max = 5;
@@ -48,22 +53,59 @@ public class DescriptionRepositoryTest {
         int numberOfElements = random.nextInt((max - min) + 1) + min;
 
         for (int i = 0; i < numberOfElements; i++) {
-            int randomIndex = random.nextInt(allDescription.size());
-            DescriptionInInfo randomDescription = allDescription.get(randomIndex);
-            allDescription.remove(randomIndex);
+            int randomIndex = random.nextInt(items.size());
+            String randomItem = items.get(randomIndex);
+            items.remove(randomIndex);
 
-            int maxPrice = 100;
-            int minPrice = 1;
+            int maxPrice = 10000;
+            int minPrice = 100;
             int r = random.nextInt((maxPrice - minPrice) + 1) + minPrice;
 
-            BigDecimal digitalInfo = BigDecimal.valueOf(r / 1.);
+            BigDecimal digitalInfo = BigDecimal.valueOf(r / 100.);
 
-            descriptionMap.put(randomDescription, digitalInfo);
+            descriptionMap.put(randomItem, digitalInfo);
         }
 
-        for (Map.Entry<DescriptionInInfo, BigDecimal> pair : descriptionMap.entrySet()) {
+        for (Map.Entry<String, BigDecimal> pair : descriptionMap.entrySet()) {
             System.out.println(pair.getKey() + " : " + pair.getValue());
         }
+
+
+        List<Answer> allAnswers = answerRepository.findAll();
+        max = allAnswers.size();
+        min = 1;
+        int randomInt = random.nextInt((max - min) + 1) + min;
+        Answer randomAnswer = answerRepository.findById(4L).get();
+
+
+
+
+
+//        List<String> allAnswers = new ArrayList<>();
+//        for (int i = 0; i < answers.size(); i++) {
+//            String answer = answers.get(i).getAnswerTitle();
+//            items.add(i, answer);
+//        }
+//
+//
+//        max = allAnswers.size();
+//        min = 2;
+//        numberOfElements = random.nextInt((max - min) + 1) + min;
+//
+//        List<String> todayAnswers = new ArrayList<>();
+//
+//        for (int i = 0; i < numberOfElements; i++) {
+//            int randomIndex = random.nextInt(allAnswers.size());
+//            String randomAnswer = allAnswers.get(randomIndex);
+//            allAnswers.remove(randomIndex);
+//            todayAnswers.add(randomAnswer);
+
+
+
+
+
+
+
 
     }
 

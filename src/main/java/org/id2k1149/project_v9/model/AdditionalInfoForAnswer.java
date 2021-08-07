@@ -3,18 +3,23 @@ package org.id2k1149.project_v9.model;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Map;
 
 @Entity
-public class AnswerInfo {
+public class AdditionalInfoForAnswer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private LocalDate dateOfInfo = LocalDate.now();
     @ManyToOne
     private Answer answer;
-    @ManyToOne
-    private Description description;
-    private BigDecimal digital;
+
+    @ElementCollection
+    @CollectionTable(name = "info_description_mapping",
+                    joinColumns = {@JoinColumn(name = "info_id",
+                    referencedColumnName = "id")})
+    @MapKeyColumn(name = "description_item")
+    private Map<String, BigDecimal> infoMap;
 
     public Long getId() {
         return id;
@@ -40,19 +45,11 @@ public class AnswerInfo {
         this.answer = answer;
     }
 
-    public Description getDescription() {
-        return description;
+    public Map<String, BigDecimal> getInfoMap() {
+        return infoMap;
     }
 
-    public void setDescription(Description description) {
-        this.description = description;
-    }
-
-    public BigDecimal getDigital() {
-        return digital;
-    }
-
-    public void setDigital(BigDecimal digital) {
-        this.digital = digital;
+    public void setInfoMap(Map<String, BigDecimal> infoMap) {
+        this.infoMap = infoMap;
     }
 }

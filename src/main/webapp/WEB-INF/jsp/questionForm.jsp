@@ -35,7 +35,6 @@
                 <div class="col-sm-8 text-left">
 
                     <c:forEach items="${answersList}" var="answer" >
-
                         <div>
                             <h1>${answer.id}</h1>
                             <h1>${answer.answerTitle}</h1>
