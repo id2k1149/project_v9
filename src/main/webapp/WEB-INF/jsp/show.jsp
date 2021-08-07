@@ -25,34 +25,16 @@
     <div>
         <h1>Today poll</h1>
     </div>
-    <hr>
 
-    <c:choose>
-        <c:when test="${questionsList.size() > 0}">
-            <c:forEach items="${questionsList}" var="question" >
-                <div>
-                    <h1>  ${question.id} </h1>
-
-                    <a href="/${question.id}">
-                        <h1>  ${question.questionTitle} </h1>
-                    </a>
-
-                </div>
-            </c:forEach>
-        </c:when>
-        <c:otherwise>
-            <p>
-            <h1>Sorry,</h1>
-            <h1>there are no questions for today</h1>
-            </p>
-        </c:otherwise>
-    </c:choose>
-
-    <hr>
+    <h1> ${question.id} </h1>
+    <h1> ${question.questionTitle} </h1>
 
 
+<c:if test="${error_message != null}">
 
+    <p><strong>${error_message}</strong></p>
 
+</c:if>
 
 
 </div>

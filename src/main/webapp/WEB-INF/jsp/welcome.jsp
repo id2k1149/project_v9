@@ -22,10 +22,10 @@
 
         <div class="container text-center">
             <div class="p-2">
-                <a class="h2" href="/questions">QUESTIONS</a>
+                <a class="h2" href="${contextPath}/questions">QUESTIONS</a>
             </div>
             <div class="p-2">
-                <a class="h2" href="/questions/new">Create question</a>
+                <a class="h2" href="${contextPath}/questions/new">Create question</a>
             </div>
 
         </div>

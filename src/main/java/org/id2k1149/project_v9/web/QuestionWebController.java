@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDate;
@@ -92,6 +93,27 @@ public class QuestionWebController {
         questionRepository.save(question);
         return "redirect:/questions";
 
+    }
+
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id") int id, Model model) {
+
+        String error_message = null;
+
+        boolean voted = false;
+//        boolean voted = true;
+
+        if (voted) {
+            error_message = "You already voted";
+            model.addAttribute("error_message", error_message);
+
+        } else {
+            Question question = questionRepository.findById((long) id).get();
+            model.addAttribute("question", question);
+        }
+
+
+        return "WEB-INF/jsp/show";
     }
 
 
