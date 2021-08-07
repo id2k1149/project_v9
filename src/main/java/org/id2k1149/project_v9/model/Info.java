@@ -10,7 +10,7 @@ public class Info {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private LocalDate dateOfInfo = LocalDate.now();
+    private LocalDate dateOfInfo;
     @ManyToOne
     private Answer answer;
 
