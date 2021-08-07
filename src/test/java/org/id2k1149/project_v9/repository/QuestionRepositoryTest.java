@@ -82,7 +82,7 @@ public class QuestionRepositoryTest {
 
     @Test
     public void getQuestion() {
-        Question question = questionRepository.findById(4L).get();
+        Question question = questionRepository.findById(111L).get();
         System.out.println(question.getAnswers());
     }
 
