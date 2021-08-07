@@ -31,10 +31,32 @@
 
 
 <c:if test="${error_message != null}">
-
     <p><strong>${error_message}</strong></p>
-
 </c:if>
+
+    <form action="questions/vote" method="post">
+
+<c:forEach items="${answersList}" var="answer" >
+
+        <input type="radio"
+               name="answer"
+               value="{{ answer.id }}" />
+    ${answer.id}
+    ${answer.answerTitle}
+        <br>
+<%--        <ul>--%>
+<%--            {% for each_answer in answer.answer.description_set.all %}--%>
+<%--            <li>--%>
+<%--                {{ each_answer.text_info }} {{ each_answer.digital_info }}--%>
+<%--            </li>--%>
+<%--            {% endfor %}--%>
+<%--        </ul>--%>
+<%--        {% endfor %}--%>
+        <br>
+
+</c:forEach>
+        <input type="submit" class="btn btn-primary" value="Vote" />
+    </form>
 
 
 </div>
