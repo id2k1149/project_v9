@@ -141,11 +141,17 @@ public class QuestionWebController {
         newVote.setAnswer(answer);
         newVote.setVotes(votes);
         votesCounterRepository.save(newVote);
-        return "redirect:/result";
+        return "redirect:/result/{id}";
     }
 
-    @GetMapping("/result")
-    public String result() {
+    @GetMapping("/result/{id}")
+    public String result(@PathVariable("id") int id, Model model) {
+        Question question = questionRepository.findById((long) id).get();
+        List<VotesCounter> votesCounterList = new ArrayList<>();
+        votesCounterList = votesCounterRepository.findByQuestion(question);
+        model.addAttribute("votesCounterList", votesCounterList);
+
+
 
         return "WEB-INF/jsp/result";
 

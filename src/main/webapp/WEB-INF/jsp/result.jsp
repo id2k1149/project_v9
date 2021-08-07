@@ -18,10 +18,32 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
 
-        <h2>RESULTS ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
-
-
+        <h2>RESULTS ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+        </h2>
     </c:if>
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Question</th>
+                <th>Answers</th>
+                <th>Votes</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <c:forEach items="${votesCounterList}" var="result">
+                <tr>
+                    <td>${result.id}</td>
+                    <td>${result.question}</td>
+                    <td>${result.answer}</td>
+                    <td>${result.votes}</td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="${contextPath}/resources/static/js/bootstrap.min.js"></script>
