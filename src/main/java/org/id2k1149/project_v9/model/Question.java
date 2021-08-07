@@ -2,6 +2,7 @@ package org.id2k1149.project_v9.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,6 +18,10 @@ public class Question {
 
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<Answer> answers = new HashSet<>();
+
+    @OneToMany(mappedBy = "question")
+    private Collection<VotesCounter> votesCounter;
+
     private String result;
 
     public Question() {
@@ -72,6 +77,14 @@ public class Question {
         this.answers.remove(answer);
     }
 
+    public Collection<VotesCounter> getVotesCounter() {
+        return votesCounter;
+    }
+
+    public void setVotesCounter(Collection<VotesCounter> votesCounter) {
+        this.votesCounter = votesCounter;
+    }
+
     @Override
     public String toString() {
         return "Question{" +
@@ -81,4 +94,5 @@ public class Question {
                 ", result='" + result + '\'' +
                 '}';
     }
+
 }
