@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Controller
@@ -124,15 +125,22 @@ public class QuestionWebController {
 
     @PostMapping("/vote/{id}")
     public String vote(@PathVariable("id") int id, VotesCounter votesCounter) {
-        System.out.println("----------------------");
-        System.out.println("id= " + id);
         VotesCounter newVote = new VotesCounter();
-        Question question = questionRepository.findById((long) id).get();
-        newVote.setQuestion(question);
         Answer answer = votesCounter.getAnswer();
-        newVote.setAnswer(answer);
-        votesCounterRepository.save(newVote);
+        Question question = questionRepository.findById((long) id).get();
+        int votes = 0;
 
+        Optional<VotesCounter> optionalVotesCounter = votesCounterRepository.findByQuestionAndAnswer(question, answer);
+        if (optionalVotesCounter.isPresent())  {
+            newVote = optionalVotesCounter.get();
+            votes = newVote.getVotes();
+        }
+
+        votes += 1;
+        newVote.setQuestion(question);
+        newVote.setAnswer(answer);
+        newVote.setVotes(votes);
+        votesCounterRepository.save(newVote);
         return "redirect:/result";
     }
 
