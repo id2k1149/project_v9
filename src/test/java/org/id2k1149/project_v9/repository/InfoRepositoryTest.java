@@ -46,7 +46,8 @@ public class InfoRepositoryTest {
     @Test
     public void getRandomInfo() {
         // today info check
-        LocalDate today = LocalDate.now().minusDays(1);
+        LocalDate today = LocalDate.now();
+//        LocalDate today = LocalDate.now().minusDays(2);
 
         List<Info> optionalInfo = infoRepository.findByDateOfInfo(today);
 

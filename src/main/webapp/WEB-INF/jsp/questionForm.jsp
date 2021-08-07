@@ -36,15 +36,12 @@
 
                     <c:forEach items="${answersList}" var="answer" >
                         <div>
-                            <h1>${answer.id}</h1>
-                            <h1>${answer.answerTitle}</h1>
-
                             <input type="checkbox"
                                    value="${answer.id}"
                                    id="answer"
                                    name="answers"
                             />
-                            <label for="answer">${answer.answerTitle}</label><h3>${answer.id}</h3>
+                            <label for="answer">${answer.answerTitle}</label>
                         </div>
                     </c:forEach>
 
