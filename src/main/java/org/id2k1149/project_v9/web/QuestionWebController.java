@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +42,22 @@ public class QuestionWebController {
         return "WEB-INF/jsp/questions";
     }
 
+    @GetMapping("/today")
+    public String questionsForYou(Model model) {
+        List<Question> questionsList = questionRepository.findByDatePublished(LocalDate.now());
+        model.addAttribute("questionsList", questionsList);
+
+//        if (LocalDateTime.now().getHour() < 23) {
+//
+//            model.addAttribute("questionsList", questionsList);
+//            return "WEB-INF/jsp/today";
+//        } else {
+//            re
+//        }
+        return "WEB-INF/jsp/today";
+
+    }
+
 //    @GetMapping("/new")
 //    public String newQuestionForm(Model model) {
 //        List<Answer> answersList = answerRepository.findAll();
@@ -53,6 +70,7 @@ public class QuestionWebController {
     @GetMapping("/confirmation")
     public String confirmation(){
         List<Question> questionsList = questionRepository.findByDatePublished(LocalDate.now());
+        System.out.println("questionsList" + questionsList.size());
         if (questionsList.size() > 0) {
             return "WEB-INF/jsp/confirmation";
         } else {
@@ -62,8 +80,6 @@ public class QuestionWebController {
 
     @GetMapping("/new")
     public String newQuestionForm(Model model) {
-
-
 
         model.addAttribute("question", new Question());
         List<Info> infoList = infoRepository.findByDateOfInfo(LocalDate.now());
