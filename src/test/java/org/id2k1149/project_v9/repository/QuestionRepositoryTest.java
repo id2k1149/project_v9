@@ -91,4 +91,9 @@ public class QuestionRepositoryTest {
         questionRepository.deleteById(9L);
     }
 
+    @Test
+    public void deleteAll() {
+        questionRepository.deleteAll();
+    }
+
 }

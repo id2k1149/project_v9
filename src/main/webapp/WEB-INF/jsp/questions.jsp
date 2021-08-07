@@ -26,7 +26,7 @@
         <h1>Questions</h1>
     </div>
     <div>
-        <h3><a href="${contextPath}/confirmation">Create new Question</a></h3>
+        <h3><a href="${contextPath}/new">Create new Question</a></h3>
     </div>
 <%--    <h3 class="text-center"><spring:message code="question.questionTitle"/></h3>--%>
 <%--    <button class="btn btn-primary" onclick="add()">--%>
