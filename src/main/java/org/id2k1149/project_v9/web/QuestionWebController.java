@@ -3,9 +3,11 @@ package org.id2k1149.project_v9.web;
 import org.id2k1149.project_v9.model.Answer;
 import org.id2k1149.project_v9.model.Info;
 import org.id2k1149.project_v9.model.Question;
+import org.id2k1149.project_v9.model.VotesCounter;
 import org.id2k1149.project_v9.repository.AnswerRepository;
 import org.id2k1149.project_v9.repository.InfoRepository;
 import org.id2k1149.project_v9.repository.QuestionRepository;
+import org.id2k1149.project_v9.repository.VotesCounterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,13 +30,17 @@ public class QuestionWebController {
 
     private final InfoRepository infoRepository;
 
+    private final VotesCounterRepository votesCounterRepository;
+
     @Autowired
     public QuestionWebController(QuestionRepository questionRepository,
                                  AnswerRepository answerRepository,
-                                 InfoRepository infoRepository) {
+                                 InfoRepository infoRepository,
+                                 VotesCounterRepository votesCounterRepository) {
         this.questionRepository = questionRepository;
         this.answerRepository = answerRepository;
         this.infoRepository = infoRepository;
+        this.votesCounterRepository = votesCounterRepository;
     }
 
     @GetMapping("/questions")
@@ -116,9 +122,25 @@ public class QuestionWebController {
         return "WEB-INF/jsp/show";
     }
 
-    @PostMapping("/questions/vote")
-    public String vote() {
-        return "redirect:/welcome";
+    @PostMapping("/vote/{id}")
+    public String vote(@PathVariable("id") int id, VotesCounter votesCounter) {
+        System.out.println("----------------------");
+        System.out.println("id= " + id);
+        VotesCounter newVote = new VotesCounter();
+        Question question = questionRepository.findById((long) id).get();
+        newVote.setQuestion(question);
+        Answer answer = votesCounter.getAnswer();
+        newVote.setAnswer(answer);
+        votesCounterRepository.save(newVote);
+
+        return "redirect:/result";
+    }
+
+    @GetMapping("/result")
+    public String result() {
+
+        return "WEB-INF/jsp/result";
+
     }
 
 

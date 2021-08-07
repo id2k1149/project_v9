@@ -26,39 +26,37 @@
         <h1>Today poll</h1>
     </div>
 
-    <h1> ${question.id} </h1>
-    <h1> ${question.questionTitle} </h1>
+    <c:if test="${error_message != null}">
+        <p><strong>${error_message}</strong></p>
+    </c:if>
 
+    <form action="vote/${question.id}" method="post">
+        <h1> ${question.id} </h1>
+        <h1> ${question.questionTitle} </h1>
 
-<c:if test="${error_message != null}">
-    <p><strong>${error_message}</strong></p>
-</c:if>
+        <c:forEach items="${answersList}" var="answer">
 
-    <form action="questions/vote" method="post">
+            <input type="radio"
+                   id="answer"
+                   name="answer"
+                   value="${answer.id}"
+            />
+            <label for="answer">${answer.id} ${answer.answerTitle}</label>
 
-<c:forEach items="${answersList}" var="answer" >
+            <br>
+            <%--        <ul>--%>
+            <%--            {% for each_answer in answer.answer.description_set.all %}--%>
+            <%--            <li>--%>
+            <%--                {{ each_answer.text_info }} {{ each_answer.digital_info }}--%>
+            <%--            </li>--%>
+            <%--            {% endfor %}--%>
+            <%--        </ul>--%>
+            <%--        {% endfor %}--%>
+            <br>
 
-        <input type="radio"
-               name="answer"
-               value="{{ answer.id }}" />
-    ${answer.id}
-    ${answer.answerTitle}
-        <br>
-<%--        <ul>--%>
-<%--            {% for each_answer in answer.answer.description_set.all %}--%>
-<%--            <li>--%>
-<%--                {{ each_answer.text_info }} {{ each_answer.digital_info }}--%>
-<%--            </li>--%>
-<%--            {% endfor %}--%>
-<%--        </ul>--%>
-<%--        {% endfor %}--%>
-        <br>
-
-</c:forEach>
-        <input type="submit" class="btn btn-primary" value="Vote" />
+        </c:forEach>
+        <input type="submit" class="btn btn-primary" value="Vote"/>
     </form>
-
-
 </div>
 <%--page content--%>
 <jsp:include page="fragments/footer.jsp"/>
