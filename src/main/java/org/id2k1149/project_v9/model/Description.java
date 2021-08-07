@@ -4,16 +4,16 @@ import javax.persistence.*;
 
 
 @Entity
-public class DescriptionInInfo {
+public class Description {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String item;
 
-    public DescriptionInInfo() {
+    public Description() {
     }
 
-    public DescriptionInInfo(String item) {
+    public Description(String item) {
         this.item = item;
     }
 

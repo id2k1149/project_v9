@@ -1,7 +1,7 @@
 package org.id2k1149.project_v9.repository;
 
 import org.id2k1149.project_v9.model.Answer;
-import org.id2k1149.project_v9.model.DescriptionInInfo;
+import org.id2k1149.project_v9.model.Description;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -41,9 +41,9 @@ public class InfoRepositoryTest {
     public void makeMap() {
         // today check
         Map<String, BigDecimal> descriptionMap = new HashMap<>();
-        List<DescriptionInInfo> allDescriptions = descriptionRepository.findAll();
+        List<Description> allDescriptions = descriptionRepository.findAll();
         List<String> items = new ArrayList<>();
-        for (DescriptionInInfo allDescription : allDescriptions) {
+        for (Description allDescription : allDescriptions) {
             items.add(allDescription.getItem());
         }
 
