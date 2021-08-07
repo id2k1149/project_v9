@@ -44,18 +44,13 @@ public class QuestionWebController {
 
     @GetMapping("/today")
     public String questionsForYou(Model model) {
-        List<Question> questionsList = questionRepository.findByDatePublished(LocalDate.now());
+        List<Question> questionsList = new ArrayList<>();
+
+        if (LocalDateTime.now().getHour() < 23) {
+            questionsList = questionRepository.findByDatePublished(LocalDate.now());
+        }
         model.addAttribute("questionsList", questionsList);
-
-//        if (LocalDateTime.now().getHour() < 23) {
-//
-//            model.addAttribute("questionsList", questionsList);
-//            return "WEB-INF/jsp/today";
-//        } else {
-//            re
-//        }
         return "WEB-INF/jsp/today";
-
     }
 
 //    @GetMapping("/new")
