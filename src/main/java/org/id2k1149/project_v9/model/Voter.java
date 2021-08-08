@@ -10,7 +10,6 @@ public class Voter {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private LocalDate date;
     @ManyToOne
     private User user;
     @ManyToOne
@@ -24,14 +23,6 @@ public class Voter {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
     }
 
     public User getUser() {
