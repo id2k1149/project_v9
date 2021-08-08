@@ -20,7 +20,7 @@
 
 <%--    <jsp:useBean id="question" type="org.id2k1149.project_v9.model.Question" scope="request"/>--%>
 
-    <form method="post" action="questions/save" style="max-width: 600px; margin: 0 auto">
+    <form method="post" action="save" style="max-width: 600px; margin: 0 auto">
         <input type="hidden" name="id" value="${question.id}">
         <div class="m-3">
             <div class="form-group row">
