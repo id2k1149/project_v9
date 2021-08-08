@@ -18,12 +18,6 @@ public class Voter {
     @ManyToOne
     private Answer answer;
 
-//    public boolean voted_already(){
-//        List<User> userList =
-//        return
-//    }
-
-
     public Long getId() {
         return id;
     }

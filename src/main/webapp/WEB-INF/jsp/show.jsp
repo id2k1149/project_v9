@@ -30,6 +30,8 @@
         <p><strong>${error_message}</strong></p>
     </c:if>
 
+    <h1>${error_message}</h1>
+
     <form action="vote/${question.id}" method="post">
         <h1> ${question.id} </h1>
         <h1> ${question.questionTitle} </h1>
