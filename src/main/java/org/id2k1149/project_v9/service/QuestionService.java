@@ -52,8 +52,6 @@ public class QuestionService {
         newQuestion.setDatePublished(today);
 
         questionRepository.save(newQuestion);
-
-
     }
 
     public void deleteQuestion(Long id) {
@@ -62,5 +60,9 @@ public class QuestionService {
                     "Question with id " + id + " does not exists");
         }
         questionRepository.deleteById(id);
+    }
+
+    public void saveQuestion(Question question) {
+        questionRepository.save(question);
     }
 }
