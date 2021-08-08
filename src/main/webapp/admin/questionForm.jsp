@@ -5,12 +5,12 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <html lang="en">
-<jsp:include page="fragments/head.jsp"/>
+<jsp:include page="../fragments/head.jsp"/>
 <head>
     <title>Create Question</title>
 </head>
 <body>
-<jsp:include page="fragments/header.jsp"/>
+<jsp:include page="../fragments/header.jsp"/>
 <%--page content--%>
 <div class="container text-center">
     <div><h1>Questions</h1></div>
@@ -58,7 +58,7 @@
     </div>
 </div>
 <%--page content--%>
-<jsp:include page="fragments/footer.jsp"/>
+<jsp:include page="../fragments/footer.jsp"/>
 
 </body>
 </html>
