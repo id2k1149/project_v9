@@ -12,27 +12,33 @@
 </head>
 
 <body>
-  <div class="container">
-    <c:if test="${pageContext.request.userPrincipal.name != null}">
-        <form id="logoutForm" method="POST" action="${contextPath}/logout">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form>
+<div class="container">
 
-        <h2>Welcome ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
+    <img src="${contextPath}/resources/static/images/undraw_investing_7u74.svg%}"
+         alt="Image"
+         class="img-fluid img-absolute">
 
-        <div class="container text-center">
-            <div class="p-2">
-                <a class="h2" href="${contextPath}/questions">QUESTIONS</a>
+    <div class="row mb-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="col-lg-6 mr-auto">
+            <h1>Survey for your company</h1>
+            <p class="mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            <div>
+                <c:if test="${pageContext.request.userPrincipal.name != null}">
+                    <a href="${contextPath}/questions" class="btn btn-primary mr-2 mb-2">
+                        Vote
+                    </a>
+                </c:if>
+                <c:if test="${pageContext.request.userPrincipal.name == null}">
+                    <a href="${contextPath}/login" class="btn btn-primary mr-2 mb-2">
+                        Sign in
+                    </a>
+                </c:if>
             </div>
-            <div class="p-2">
-                <a class="h2" href="${contextPath}/questions/new">Create question</a>
-            </div>
-
         </div>
+    </div>
 
-    </c:if>
-  </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script src="${contextPath}/resources/static/js/bootstrap.min.js"></script>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="${contextPath}/resources/static/js/bootstrap.min.js"></script>
 </body>
 </html>

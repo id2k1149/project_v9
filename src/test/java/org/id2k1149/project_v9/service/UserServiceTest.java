@@ -142,8 +142,8 @@ class UserServiceTest {
         newUser.setId(2L);
         testUserService.addUser(newUser);
 
-        given(testRepository.usernameExists(anyString()))
-                .willReturn(true);
+//        given(testRepository.usernameExists(anyString()))
+//                .willReturn(true);
 
         //when
         //then

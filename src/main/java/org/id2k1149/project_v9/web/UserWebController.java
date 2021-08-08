@@ -48,7 +48,7 @@ public class UserWebController {
 
         securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
 
-        return "welcome";
+        return "questions";
     }
 
     @GetMapping("/login")
