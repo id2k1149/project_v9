@@ -37,6 +37,4 @@ public class QuestionController {
     public void deleteQuestion(@PathVariable("id") Long id) {
         questionService.deleteQuestion(id);
     }
-
-
 }

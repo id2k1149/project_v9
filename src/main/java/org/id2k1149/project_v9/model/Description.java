@@ -1,6 +1,7 @@
 package org.id2k1149.project_v9.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 
 @Entity
@@ -36,5 +37,19 @@ public class Description {
     @Override
     public String toString() {
         return item;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Description)) return false;
+        Description that = (Description) o;
+        return getId().equals(that.getId()) && getItem().equals(that.getItem());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(),
+                getItem());
     }
 }

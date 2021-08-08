@@ -2,9 +2,7 @@ package org.id2k1149.project_v9.service;
 
 import org.id2k1149.project_v9.model.Answer;
 import org.id2k1149.project_v9.model.Info;
-import org.id2k1149.project_v9.model.Question;
 import org.id2k1149.project_v9.repository.InfoRepository;
-import org.id2k1149.project_v9.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,19 +13,13 @@ import java.util.List;
 
 @Service
 @Transactional
-public class AdminService {
+public class InfoService {
 
-    private final QuestionRepository questionRepository;
     private final InfoRepository infoRepository;
 
     @Autowired
-    public AdminService(QuestionRepository questionRepository, InfoRepository infoRepository) {
-        this.questionRepository = questionRepository;
+    public InfoService(InfoRepository infoRepository) {
         this.infoRepository = infoRepository;
-    }
-
-    public List<Question> getQuestions() {
-        return questionRepository.findAll();
     }
 
     public List<Answer> getAnswers() {
@@ -37,9 +29,5 @@ public class AdminService {
             answersList.add(info.getAnswer());
         }
         return answersList;
-    }
-
-    public void addQuestion(Question question) {
-        questionRepository.save(question);
     }
 }

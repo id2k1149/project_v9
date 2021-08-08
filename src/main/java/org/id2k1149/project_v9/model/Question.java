@@ -11,7 +11,7 @@ public class Question {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
     private String questionTitle = "Where to have a lunch?";
     private LocalDate datePublished = LocalDate.now();
@@ -101,5 +101,4 @@ public class Question {
                 ", result='" + result + '\'' +
                 '}';
     }
-
 }

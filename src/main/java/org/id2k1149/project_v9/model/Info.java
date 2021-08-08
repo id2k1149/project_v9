@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.Objects;
 
 @Entity
 public class Info {
@@ -51,5 +52,35 @@ public class Info {
 
     public void setInfoMap(Map<String, BigDecimal> infoMap) {
         this.infoMap = infoMap;
+    }
+
+    @Override
+    public String toString() {
+        return "Info{" +
+                "id=" + id +
+                ", dateOfInfo=" + dateOfInfo +
+                ", answer=" + answer +
+                ", infoMap=" + infoMap +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Info)) return false;
+        Info info = (Info) o;
+        return getId().equals(info.getId())
+                && getDateOfInfo().equals(info.getDateOfInfo())
+                && getAnswer().equals(info.getAnswer())
+                && Objects.equals(getInfoMap(),
+                info.getInfoMap());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(),
+                getDateOfInfo(),
+                getAnswer(),
+                getInfoMap());
     }
 }

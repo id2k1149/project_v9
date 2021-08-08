@@ -2,6 +2,7 @@ package org.id2k1149.project_v9.model;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -52,5 +53,23 @@ public class Answer {
     @Override
     public String toString() {
         return answerTitle;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Answer)) return false;
+        Answer answer = (Answer) o;
+        return getId().equals(answer.getId())
+                && getAnswerTitle().equals(answer.getAnswerTitle())
+                && Objects.equals(getQuestions(),
+                answer.getQuestions());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(),
+                getAnswerTitle(),
+                getQuestions());
     }
 }

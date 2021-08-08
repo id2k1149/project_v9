@@ -1,20 +1,23 @@
 package org.id2k1149.project_v9.web;
 
 import org.id2k1149.project_v9.model.*;
-import org.id2k1149.project_v9.repository.*;
+import org.id2k1149.project_v9.repository.QuestionRepository;
+import org.id2k1149.project_v9.repository.UserRepository;
+import org.id2k1149.project_v9.repository.VoterRepository;
+import org.id2k1149.project_v9.repository.VotesCounterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static java.util.Comparator.comparing;
 
 @Controller
 public class QuestionWebController {
@@ -117,8 +120,7 @@ public class QuestionWebController {
     @GetMapping("/result/{id}")
     public String result(@PathVariable("id") int id, Model model) {
         Question question = questionRepository.findById((long) id).get();
-        List<VotesCounter> votesCounterList = new ArrayList<>();
-        votesCounterList = votesCounterRepository.findByQuestion(question);
+        List<VotesCounter> votesCounterList = votesCounterRepository.findByQuestion(question);
 
         List<VotesCounter> sortedList = votesCounterList.stream()
                 .sorted(Comparator.comparingInt(VotesCounter::getVotes).reversed())
@@ -138,10 +140,6 @@ public class QuestionWebController {
         model.addAttribute("question", question);
         model.addAttribute("maxVotes", maxVotes);
 
-
         return "result";
-
     }
-
-
 }
