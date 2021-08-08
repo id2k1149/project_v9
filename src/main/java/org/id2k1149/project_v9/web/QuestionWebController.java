@@ -1,5 +1,6 @@
 package org.id2k1149.project_v9.web;
 
+import javassist.bytecode.stackmap.TypeData;
 import org.id2k1149.project_v9.model.Answer;
 import org.id2k1149.project_v9.model.Info;
 import org.id2k1149.project_v9.model.Question;
@@ -15,12 +16,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.comparingInt;
 
 @Controller
 public class QuestionWebController {
@@ -149,7 +153,24 @@ public class QuestionWebController {
         Question question = questionRepository.findById((long) id).get();
         List<VotesCounter> votesCounterList = new ArrayList<>();
         votesCounterList = votesCounterRepository.findByQuestion(question);
-        model.addAttribute("votesCounterList", votesCounterList);
+
+        List<VotesCounter> sortedList = votesCounterList.stream()
+                .sorted(Comparator.comparingInt(VotesCounter::getVotes).reversed())
+                .collect(Collectors.toList());
+
+        VotesCounter bestResult= sortedList
+                .stream()
+                .max(Comparator.comparing(VotesCounter::getVotes))
+                .orElseThrow(NoSuchElementException::new);
+
+        int maxVotes = bestResult.getVotes();
+        String result = bestResult.getAnswer().toString();
+        question.setResult(result);
+        questionRepository.save(question);
+
+        model.addAttribute("sortedList", sortedList);
+        model.addAttribute("question", question);
+        model.addAttribute("maxVotes", maxVotes);
 
 
 
