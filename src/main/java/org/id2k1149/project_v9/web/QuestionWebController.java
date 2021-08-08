@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -22,10 +21,6 @@ public class QuestionWebController {
 
     private final QuestionRepository questionRepository;
 
-    private final AnswerRepository answerRepository;
-
-    private final InfoRepository infoRepository;
-
     private final VotesCounterRepository votesCounterRepository;
 
     private final VoterRepository voterRepository;
@@ -34,27 +29,16 @@ public class QuestionWebController {
 
     @Autowired
     public QuestionWebController(QuestionRepository questionRepository,
-                                 AnswerRepository answerRepository,
-                                 InfoRepository infoRepository,
                                  VotesCounterRepository votesCounterRepository,
                                  VoterRepository voterRepository,
                                  UserRepository userRepository) {
         this.questionRepository = questionRepository;
-        this.answerRepository = answerRepository;
-        this.infoRepository = infoRepository;
         this.votesCounterRepository = votesCounterRepository;
         this.voterRepository = voterRepository;
         this.userRepository = userRepository;
     }
 
     @GetMapping("/questions")
-    public String questions(Model model) {
-        List<Question> questionsList = questionRepository.findAll();
-        model.addAttribute("questionsList", questionsList);
-        return "WEB-INF/jsp/questions";
-    }
-
-    @GetMapping("/today")
     public String questionsForYou(Model model) {
         List<Question> questionsList = new ArrayList<>();
 
@@ -62,48 +46,7 @@ public class QuestionWebController {
             questionsList = questionRepository.findByDatePublished(LocalDate.now());
         }
         model.addAttribute("questionsList", questionsList);
-        return "WEB-INF/jsp/today";
-    }
-
-//    @GetMapping("/new")
-//    public String newQuestionForm(Model model) {
-//        List<Answer> answersList = answerRepository.findAll();
-//        model.addAttribute("answersList", answersList);
-//        model.addAttribute("question", new Question());
-//
-//        return "WEB-INF/jsp/questionForm";
-//    }
-
-    @GetMapping("/confirmation")
-    public String confirmation() {
-        List<Question> questionsList = questionRepository.findByDatePublished(LocalDate.now());
-        System.out.println("questionsList" + questionsList.size());
-        if (questionsList.size() > 0) {
-            return "WEB-INF/jsp/confirmation";
-        } else {
-            return "WEB-INF/jsp/questionForm";
-        }
-    }
-
-    @GetMapping("/new")
-    public String newQuestionForm(Model model) {
-
-        model.addAttribute("question", new Question());
-        List<Info> infoList = infoRepository.findByDateOfInfo(LocalDate.now());
-        List<Answer> answersList = new ArrayList<>();
-        for (Info info : infoList) {
-            answersList.add(info.getAnswer());
-        }
-        model.addAttribute("answersList", answersList);
-
-        return "WEB-INF/jsp/questionForm";
-    }
-
-    @PostMapping("/questions/save")
-    public String saveQuestion(Question question) {
-        questionRepository.save(question);
-        return "redirect:/questions";
-
+        return "questions";
     }
 
 
@@ -111,42 +54,13 @@ public class QuestionWebController {
     public String show(@PathVariable("id") int id, Model model) {
         String error_message;
         Question question = questionRepository.findById((long) id).get();
-
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
-
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
-
-
-        User user = userRepository.findUserByUsername(username);
-        System.out.println("name = " + username);
-
-        Voter voter = new Voter();
-        voter.setUser(user);
-        voter.setQuestion(question);
-
-        System.out.println("----------");
-        System.out.println(voter);
-        System.out.println("----------");
-
-
-        Optional<Voter> optionalVoter = voterRepository.findByUserAndQuestion(user, question);
-
-        if (optionalVoter.isPresent()) {
-            error_message = "You already voted";
-            model.addAttribute("error_message", error_message);
-
-        }
         model.addAttribute("question", question);
         Set<Answer> answersList = question.getAnswers();
         model.addAttribute("answersList", answersList);
-        return "WEB-INF/jsp/show";
+        return "question";
     }
 
+    /*
     @PostMapping("/vote/{id}")
     public String vote(@PathVariable("id") int id, VotesCounter votesCounter) {
         VotesCounter newVote = new VotesCounter();
@@ -171,7 +85,7 @@ public class QuestionWebController {
         }
 
         User user = userRepository.findUserByUsername(username);
-        System.out.println("name = " + username);
+
 
         Voter voter = new Voter();
         voter.setUser(user);
@@ -199,6 +113,62 @@ public class QuestionWebController {
         return "redirect:/result/{id}";
     }
 
+     */
+
+    @PostMapping("/vote/{id}")
+    public String vote2(@PathVariable("id") int id, VotesCounter votesCounter) {
+        VotesCounter newVotesCounter = new VotesCounter();
+        Question question = questionRepository.getById((long) id);
+        Answer newAnswer = votesCounter.getAnswer();
+        int votes = 0;
+
+        Optional<VotesCounter> optionalVotesCounter = votesCounterRepository
+                .findByQuestionAndAnswer(question, newAnswer);
+        if (optionalVotesCounter.isPresent()) {
+            newVotesCounter = optionalVotesCounter.get();
+            votes = newVotesCounter.getVotes();
+        }
+        votes += 1;
+        newVotesCounter.setQuestion(question);
+        newVotesCounter.setAnswer(newAnswer);
+        newVotesCounter.setVotes(votes);
+        votesCounterRepository.save(newVotesCounter);
+
+        Object principal = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        String username;
+
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+        User user = userRepository.findUserByUsername(username);
+
+        Voter voter = new Voter();
+        voter.setUser(user);
+        voter.setQuestion(question);
+
+        Optional<Voter> optionalVoter = voterRepository.findByUserAndQuestion(user, question);
+        if (optionalVoter.isPresent()) {
+            voter = optionalVoter.get();
+            Answer voterAnswer = voter.getAnswer();
+            VotesCounter oldVotesCounter = votesCounterRepository
+                    .findByQuestionAndAnswer(question, voterAnswer).get();
+            votes = oldVotesCounter.getVotes() - 1;
+            oldVotesCounter.setVotes(votes);
+            votesCounterRepository.save(oldVotesCounter);
+        }
+        voter.setAnswer(newAnswer);
+        voterRepository.save(voter);
+
+        return "redirect:/result/{id}";
+    }
+
+
     @GetMapping("/result/{id}")
     public String result(@PathVariable("id") int id, Model model) {
         Question question = questionRepository.findById((long) id).get();
@@ -224,7 +194,7 @@ public class QuestionWebController {
         model.addAttribute("maxVotes", maxVotes);
 
 
-        return "WEB-INF/jsp/result";
+        return "result";
 
     }
 
