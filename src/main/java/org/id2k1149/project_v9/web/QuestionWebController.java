@@ -1,30 +1,21 @@
 package org.id2k1149.project_v9.web;
 
-import javassist.bytecode.stackmap.TypeData;
-import org.id2k1149.project_v9.model.Answer;
-import org.id2k1149.project_v9.model.Info;
-import org.id2k1149.project_v9.model.Question;
-import org.id2k1149.project_v9.model.VotesCounter;
-import org.id2k1149.project_v9.repository.AnswerRepository;
-import org.id2k1149.project_v9.repository.InfoRepository;
-import org.id2k1149.project_v9.repository.QuestionRepository;
-import org.id2k1149.project_v9.repository.VotesCounterRepository;
+import org.id2k1149.project_v9.model.*;
+import org.id2k1149.project_v9.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Type;
+import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static java.util.Comparator.comparing;
-import static java.util.Comparator.comparingInt;
 
 @Controller
 public class QuestionWebController {
@@ -37,15 +28,23 @@ public class QuestionWebController {
 
     private final VotesCounterRepository votesCounterRepository;
 
+    private final VoterRepository voterRepository;
+
+    private final UserRepository userRepository;
+
     @Autowired
     public QuestionWebController(QuestionRepository questionRepository,
                                  AnswerRepository answerRepository,
                                  InfoRepository infoRepository,
-                                 VotesCounterRepository votesCounterRepository) {
+                                 VotesCounterRepository votesCounterRepository,
+                                 VoterRepository voterRepository,
+                                 UserRepository userRepository) {
         this.questionRepository = questionRepository;
         this.answerRepository = answerRepository;
         this.infoRepository = infoRepository;
         this.votesCounterRepository = votesCounterRepository;
+        this.voterRepository = voterRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/questions")
@@ -76,7 +75,7 @@ public class QuestionWebController {
 //    }
 
     @GetMapping("/confirmation")
-    public String confirmation(){
+    public String confirmation() {
         List<Question> questionsList = questionRepository.findByDatePublished(LocalDate.now());
         System.out.println("questionsList" + questionsList.size());
         if (questionsList.size() > 0) {
@@ -107,23 +106,44 @@ public class QuestionWebController {
 
     }
 
+
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        String error_message = null;
-        boolean voted = false;
-//        boolean voted = true;
+        String error_message;
+        Question question = questionRepository.findById((long) id).get();
 
-        if (voted) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+
+        User user = userRepository.findUserByUsername(username);
+        System.out.println("name = " + username);
+
+        Voter voter = new Voter();
+        voter.setUser(user);
+        voter.setQuestion(question);
+
+        System.out.println("----------");
+        System.out.println(voter);
+        System.out.println("----------");
+
+
+        Optional<Voter> optionalVoter = voterRepository.findByUserAndQuestion(user, question);
+
+        if (optionalVoter.isPresent()) {
             error_message = "You already voted";
             model.addAttribute("error_message", error_message);
 
-        } else {
-            Question question = questionRepository.findById((long) id).get();
-            model.addAttribute("question", question);
-            Set<Answer> answersList = question.getAnswers();
-            model.addAttribute("answersList", answersList);
-
         }
+        model.addAttribute("question", question);
+        Set<Answer> answersList = question.getAnswers();
+        model.addAttribute("answersList", answersList);
         return "WEB-INF/jsp/show";
     }
 
@@ -135,12 +155,43 @@ public class QuestionWebController {
         int votes = 0;
 
         Optional<VotesCounter> optionalVotesCounter = votesCounterRepository.findByQuestionAndAnswer(question, answer);
-        if (optionalVotesCounter.isPresent())  {
+        if (optionalVotesCounter.isPresent()) {
             newVote = optionalVotesCounter.get();
             votes = newVote.getVotes();
         }
-
         votes += 1;
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+        User user = userRepository.findUserByUsername(username);
+        System.out.println("name = " + username);
+
+        Voter voter = new Voter();
+        voter.setUser(user);
+        voter.setQuestion(question);
+
+        Optional<Voter> optionalVoter = voterRepository.findByUserAndQuestion(user, question);
+        if (optionalVoter.isPresent()) {
+            Voter voterToEdit = optionalVoter.get();
+            Answer answerToChange = answer;
+            VotesCounter votesCounterToChange = optionalVotesCounter.get();
+            int oldVotes = votesCounterToChange.getVotes();
+
+            oldVotes -= 1;
+            votesCounterToChange.setVotes(oldVotes);
+            votesCounterRepository.save(votesCounterToChange);
+
+        }
+        voter.setAnswer(answer);
+        voterRepository.save(voter);
+
         newVote.setQuestion(question);
         newVote.setAnswer(answer);
         newVote.setVotes(votes);
@@ -158,7 +209,7 @@ public class QuestionWebController {
                 .sorted(Comparator.comparingInt(VotesCounter::getVotes).reversed())
                 .collect(Collectors.toList());
 
-        VotesCounter bestResult= sortedList
+        VotesCounter bestResult = sortedList
                 .stream()
                 .max(Comparator.comparing(VotesCounter::getVotes))
                 .orElseThrow(NoSuchElementException::new);
@@ -171,7 +222,6 @@ public class QuestionWebController {
         model.addAttribute("sortedList", sortedList);
         model.addAttribute("question", question);
         model.addAttribute("maxVotes", maxVotes);
-
 
 
         return "WEB-INF/jsp/result";
