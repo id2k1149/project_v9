@@ -10,7 +10,6 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String answerTitle;
-    private boolean isActive = true;
 
     @ManyToMany(mappedBy = "answers", fetch = FetchType.EAGER)
     private Set<Question> questions = new HashSet<>();
@@ -40,14 +39,6 @@ public class Answer {
 
     public void setAnswerTitle(String answerTitle) {
         this.answerTitle = answerTitle;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
     }
 
     public Set<Question> getQuestions() {

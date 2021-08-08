@@ -22,12 +22,11 @@ public class Question {
     @OneToMany(mappedBy = "question")
     private Collection<VotesCounter> votesCounter;
 
+    private boolean isActive = false;
     private String result;
 
     public Question() {
     }
-
-
 
     public Long getId() {
         return id;
@@ -59,6 +58,14 @@ public class Question {
 
     public void setAnswers(Set<Answer> answers) {
         this.answers = answers;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     public String getResult() {

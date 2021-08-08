@@ -39,7 +39,6 @@ public class AnswerService {
     }
 
     public void addAnswer(Answer newAnswer) {
-        newAnswer.setActive(true);
         answerRepository.save(newAnswer);
     }
 }
