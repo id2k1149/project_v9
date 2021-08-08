@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -65,4 +67,15 @@ public class QuestionService {
     public void saveQuestion(Question question) {
         questionRepository.save(question);
     }
+
+    public List<Question> getQuestionsForUser() {
+        List<Question> questionsList = new ArrayList<>();
+
+        if (LocalDateTime.now().getHour() < 23) {
+            questionsList = questionRepository.findByDatePublished(LocalDate.now());
+        }
+        return questionsList;
+    }
+
+
 }
