@@ -11,6 +11,5 @@ import java.util.List;
 @Repository
 @Transactional(readOnly = true)
 public interface QuestionRepository extends JpaRepository<Question, Long> {
-    Question findQuestionById(Long id);
     List<Question> findByDatePublished(LocalDate date);
 }

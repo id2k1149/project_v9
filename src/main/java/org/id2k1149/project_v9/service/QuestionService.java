@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -27,9 +26,8 @@ public class QuestionService {
     }
 
     public Question getQuestion(Long id) {
-        Optional<Question> optionalQuestion = questionRepository.findById(id);
-        if (optionalQuestion.isPresent()) {
-            return questionRepository.findQuestionById(id);
+        if (questionRepository.findById(id).isPresent()) {
+            return questionRepository.findById(id).get();
         } else {
             throw new IllegalStateException(
                     "Question with id " + id + " does not exist");

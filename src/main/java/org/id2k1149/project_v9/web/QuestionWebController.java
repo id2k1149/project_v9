@@ -60,61 +60,6 @@ public class QuestionWebController {
         return "question";
     }
 
-    /*
-    @PostMapping("/vote/{id}")
-    public String vote(@PathVariable("id") int id, VotesCounter votesCounter) {
-        VotesCounter newVote = new VotesCounter();
-        Answer answer = votesCounter.getAnswer();
-        Question question = questionRepository.findById((long) id).get();
-        int votes = 0;
-
-        Optional<VotesCounter> optionalVotesCounter = votesCounterRepository.findByQuestionAndAnswer(question, answer);
-        if (optionalVotesCounter.isPresent()) {
-            newVote = optionalVotesCounter.get();
-            votes = newVote.getVotes();
-        }
-        votes += 1;
-
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
-
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
-
-        User user = userRepository.findUserByUsername(username);
-
-
-        Voter voter = new Voter();
-        voter.setUser(user);
-        voter.setQuestion(question);
-
-        Optional<Voter> optionalVoter = voterRepository.findByUserAndQuestion(user, question);
-        if (optionalVoter.isPresent()) {
-            Voter voterToEdit = optionalVoter.get();
-            Answer answerToChange = answer;
-            VotesCounter votesCounterToChange = optionalVotesCounter.get();
-            int oldVotes = votesCounterToChange.getVotes();
-
-            oldVotes -= 1;
-            votesCounterToChange.setVotes(oldVotes);
-            votesCounterRepository.save(votesCounterToChange);
-
-        }
-        voter.setAnswer(answer);
-        voterRepository.save(voter);
-
-        newVote.setQuestion(question);
-        newVote.setAnswer(answer);
-        newVote.setVotes(votes);
-        votesCounterRepository.save(newVote);
-        return "redirect:/result/{id}";
-    }
-
-     */
-
     @PostMapping("/vote/{id}")
     public String vote2(@PathVariable("id") int id, VotesCounter votesCounter) {
         VotesCounter newVotesCounter = new VotesCounter();
