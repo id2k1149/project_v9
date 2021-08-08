@@ -1,6 +1,7 @@
 package org.id2k1149.project_v9.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class VotesCounter {
@@ -47,5 +48,24 @@ public class VotesCounter {
 
     public void setVotes(Integer votes) {
         this.votes = votes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof VotesCounter)) return false;
+        VotesCounter that = (VotesCounter) o;
+        return getId().equals(that.getId())
+                && getQuestion().equals(that.getQuestion())
+                && getAnswer().equals(that.getAnswer())
+                && getVotes().equals(that.getVotes());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(),
+                getQuestion(),
+                getAnswer(),
+                getVotes());
     }
 }

@@ -22,21 +22,21 @@
         </h2>
     </c:if>
     <div>
+        <h2>${question.id} ${question.questionTitle}</h2>
+        <h2>${question.result} ${maxVotes}</h2>
         <table class="table table-bordered">
             <thead class="thead-dark">
             <tr>
                 <th>ID</th>
-                <th>Question</th>
                 <th>Answers</th>
                 <th>Votes</th>
             </tr>
             </thead>
             <tbody>
 
-            <c:forEach items="${votesCounterList}" var="result">
+            <c:forEach items="${sortedList}" var="result">
                 <tr>
                     <td>${result.id}</td>
-                    <td>${result.question}</td>
                     <td>${result.answer}</td>
                     <td>${result.votes}</td>
                 </tr>
