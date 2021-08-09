@@ -1,6 +1,8 @@
 package org.id2k1149.project_v9.web;
 
-import org.id2k1149.project_v9.model.*;
+import org.id2k1149.project_v9.model.Answer;
+import org.id2k1149.project_v9.model.Question;
+import org.id2k1149.project_v9.model.VotesCounter;
 import org.id2k1149.project_v9.repository.QuestionRepository;
 import org.id2k1149.project_v9.repository.VotesCounterRepository;
 import org.id2k1149.project_v9.service.MultiService;
@@ -12,9 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -42,7 +45,6 @@ public class QuestionWebController {
         model.addAttribute("questionsList", questionsList);
         return "questions";
     }
-
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {

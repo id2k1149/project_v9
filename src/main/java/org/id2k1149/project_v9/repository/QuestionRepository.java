@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 @Transactional(readOnly = true)
 public interface QuestionRepository extends JpaRepository<Question, Long> {
-    List<Question> findByDatePublished(LocalDate date);
+    List<Question> findByDatePublishedOrActiveTrue(LocalDate date);
 }
