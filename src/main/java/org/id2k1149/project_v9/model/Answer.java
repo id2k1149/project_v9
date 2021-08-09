@@ -12,7 +12,7 @@ public class Answer {
     private Long id;
     private String answerTitle;
 
-    @ManyToMany(mappedBy = "answers", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "answers", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Question> questions = new HashSet<>();
 
     public Answer() {

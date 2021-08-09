@@ -72,7 +72,7 @@ public class QuestionService {
         List<Question> questionsList = new ArrayList<>();
 
         if (LocalDateTime.now().getHour() < 23) {
-            questionsList = questionRepository.findByDatePublished(LocalDate.now());
+            questionsList = questionRepository.findByDatePublishedOrActiveTrue(LocalDate.now());
         }
         return questionsList;
     }
