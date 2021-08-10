@@ -42,7 +42,7 @@ public class UserService {
     public User getUser(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
-            return userRepository.findUserById(id);
+            return userRepository.getById(id);
         } else {
             throw new IllegalStateException(
                     "user with id " + id + " does not exist");
@@ -51,8 +51,6 @@ public class UserService {
 
     public void addUser(User newUser) {
         Optional<User> optionalUser = Optional.ofNullable(userRepository.findUserByUsername(newUser.getUsername()));
-
-//        Boolean usernameExists = userRepository.usernameExists(newUser.getUsername());
 
         if (optionalUser.isPresent()) {
             throw new BadRequestException("The name " + newUser.getUsername() + " is already used");
@@ -70,11 +68,13 @@ public class UserService {
     public void updateUser(User user,
                            Long id
     ) {
-        User userToUpdate = userRepository.findUserById(id);
-
-        if (userToUpdate == null) {
+        User userToUpdate;
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty()) {
             throw new IllegalStateException(
                     "user with id " + id + " does not exist");
+        } else {
+            userToUpdate = optionalUser.get();
         }
 
         String newName = user.getUsername();
@@ -83,9 +83,14 @@ public class UserService {
         }
 
         String newPassword = user.getPassword();
-        if (newPassword != null && newName.length() > 7 && !Objects.equals(userToUpdate.getPassword(), newPassword)) {
+        if (newPassword != null && newPassword.length() > 5) {
             String encodedPassword = bCryptPasswordEncoder.encode(newPassword);
             userToUpdate.setPassword(encodedPassword);
+        }
+
+        Role newRole = user.getRole();
+        if (newRole != null) {
+            userToUpdate.setRole(newRole);
         }
 
         userRepository.save(userToUpdate);
