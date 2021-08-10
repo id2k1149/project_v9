@@ -16,10 +16,14 @@ import java.util.Random;
 
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
+import com.github.javafaker.Faker;
+
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = NONE)
 @Rollback(false)
 public class DescriptionRepositoryTest {
+
+    private final Faker faker = new Faker();
 
     @Autowired
     private DescriptionRepository descriptionRepository;
@@ -30,12 +34,10 @@ public class DescriptionRepositoryTest {
     @Test
     public void createDescriptions() {
         for (int i = 0; i < 25; i++) {
-            String food = "Food #" + (i + 1);
-            Description description = new Description(food);
+            Description description = new Description(faker.food().dish());
             entityManager.persist(description);
         }
     }
-
 
     @Test
     public void makeMap() {
@@ -43,7 +45,7 @@ public class DescriptionRepositoryTest {
         List<Description> allDescription = descriptionRepository.findAll();
 
         Random random = new Random();
-        int max = 5;
+        int max = 4;
         int min = 2;
         int numberOfElements = random.nextInt((max - min) + 1) + min;
 
@@ -52,12 +54,12 @@ public class DescriptionRepositoryTest {
             Description randomDescription = allDescription.get(randomIndex);
             allDescription.remove(randomIndex);
 
-            int maxPrice = 100;
-            int minPrice = 1;
-            int r = random.nextInt((maxPrice - minPrice) + 1) + minPrice;
+//            int maxPrice = 10000;
+//            int minPrice = 100;
+//            int r = random.nextInt((maxPrice - minPrice) + 1) + minPrice;
+//            BigDecimal digitalInfo = BigDecimal.valueOf(r / 100.);
 
-            BigDecimal digitalInfo = BigDecimal.valueOf(r / 1.);
-
+            BigDecimal digitalInfo = BigDecimal.valueOf(Double.valueOf(faker.commerce().price(10, 100)));
             descriptionMap.put(randomDescription, digitalInfo);
         }
 

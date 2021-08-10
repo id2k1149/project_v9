@@ -1,5 +1,6 @@
 package org.id2k1149.project_v9.service;
 
+import org.id2k1149.project_v9.exception.NotFoundException;
 import org.id2k1149.project_v9.model.Description;
 import org.id2k1149.project_v9.repository.DescriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.github.javafaker.Faker;
+
 @Service
 @Transactional
 public class DescriptionService {
+
+    private final Faker faker = new Faker();
 
     private final DescriptionRepository descriptionRepository;
 
@@ -41,11 +46,36 @@ public class DescriptionService {
             Description randomDescription = allDescription.get(randomIndex);
             allDescription.remove(randomIndex);
 
-            BigDecimal digitalInfo = BigDecimal.valueOf((random.nextInt((100 - 1) + 1) + 1) / 100);
-
+            BigDecimal digitalInfo = BigDecimal.valueOf(Double.valueOf(faker.commerce().price(10, 100)));
             descriptionMap.put(randomDescription, digitalInfo);
         }
 
         return descriptionMap;
+    }
+
+    public List<Description> getAllDescription() {
+        return descriptionRepository.findAll();
+    }
+
+    public Description getDescription(Long id) {
+        if (descriptionRepository.findById(id).isEmpty()) {
+            throw new NotFoundException(id + " does not exist");
+        }
+        return descriptionRepository.getById(id);
+    }
+
+    public void addDescription(Description newDescription) {
+        descriptionRepository.save(newDescription);
+    }
+
+    public void updateDescription(Description description, Long id) {
+    }
+
+    public void deleteDescription(Long id) {
+        if (descriptionRepository.findById(id).isEmpty()) {
+            throw new NotFoundException(id + " does not exists");
+        }
+        descriptionRepository.deleteById(id);
+
     }
 }

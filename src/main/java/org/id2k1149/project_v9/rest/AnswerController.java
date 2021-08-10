@@ -14,7 +14,6 @@ public class AnswerController {
 
     private final AnswerService answerService;
 
-    @Autowired
     public AnswerController(AnswerService answerService) {
         this.answerService = answerService;
     }
@@ -35,7 +34,7 @@ public class AnswerController {
     }
 
     @PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateUser(
+    public void updateAnswer(
             @RequestBody Answer answer,
             @PathVariable("id") Long id
     ) {

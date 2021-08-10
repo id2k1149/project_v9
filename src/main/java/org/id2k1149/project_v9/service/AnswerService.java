@@ -20,7 +20,6 @@ public class AnswerService {
 
     private final AnswerRepository answerRepository;
 
-    @Autowired
     public AnswerService(AnswerRepository answerRepository) {
         this.answerRepository = answerRepository;
     }
