@@ -1,11 +1,11 @@
 package org.id2k1149.project_v9.repository;
 
-import org.id2k1149.project_v9.model.Description;
+import org.id2k1149.project_v9.model.Diner;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional(readOnly = true)
-public interface DescriptionRepository extends JpaRepository<Description, Long> {
+public interface DinerRepository extends JpaRepository<Diner, Long> {
 }

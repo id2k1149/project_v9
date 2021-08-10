@@ -1,44 +1,32 @@
 package org.id2k1149.project_v9.web;
 
-import org.id2k1149.project_v9.model.Answer;
-import org.id2k1149.project_v9.model.Question;
 import org.id2k1149.project_v9.model.VotesCounter;
-import org.id2k1149.project_v9.repository.QuestionRepository;
 import org.id2k1149.project_v9.repository.VotesCounterRepository;
 import org.id2k1149.project_v9.service.MultiService;
-import org.id2k1149.project_v9.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 @Controller
-public class QuestionWebController {
+public class WebController {
 
-    private final QuestionRepository questionRepository;
+
     private final VotesCounterRepository votesCounterRepository;
     private final MultiService multiService;
-    private final QuestionService questionService;
+
 
     @Autowired
-    public QuestionWebController(QuestionRepository questionRepository,
+    public WebController(
                                  VotesCounterRepository votesCounterRepository,
-                                 MultiService multiService,
-                                 QuestionService questionService) {
-        this.questionRepository = questionRepository;
+                                 MultiService multiService
+                                 ) {
         this.votesCounterRepository = votesCounterRepository;
         this.multiService = multiService;
-        this.questionService = questionService;
+
     }
 
+    /*
     @GetMapping("/questions")
     public String questionsForUser(Model model) {
         List<Question> questionsList = questionService.getQuestionsForUser();
@@ -46,16 +34,21 @@ public class QuestionWebController {
         return "questions";
     }
 
+     */
+
+    /*
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
 
         Question question = questionService.getQuestion((long)id);
         model.addAttribute("question", question);
 
-        Set<Answer> answersList = question.getAnswers();
+        Set<Diner> answersList = question.getAnswers();
         model.addAttribute("answersList", answersList);
         return "question";
     }
+
+     */
 
     @PostMapping("/vote/{id}")
     public String vote(@PathVariable("id") int id, VotesCounter votesCounter) {
@@ -63,6 +56,7 @@ public class QuestionWebController {
         return "redirect:/result/{id}";
     }
 
+    /*
     @GetMapping("/result/{id}")
     public String result(@PathVariable("id") int id, Model model) {
         Question question = questionRepository.findById((long) id).get();
@@ -88,4 +82,6 @@ public class QuestionWebController {
 
         return "result";
     }
+
+     */
 }

@@ -5,16 +5,16 @@ import java.util.Objects;
 
 
 @Entity
-public class Description {
+public class Dish {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String item;
 
-    public Description() {
+    public Dish() {
     }
 
-    public Description(String item) {
+    public Dish(String item) {
         this.item = item;
     }
 
@@ -39,17 +39,5 @@ public class Description {
         return item;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Description)) return false;
-        Description that = (Description) o;
-        return getId().equals(that.getId()) && getItem().equals(that.getItem());
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(),
-                getItem());
-    }
 }

@@ -1,6 +1,6 @@
 package org.id2k1149.project_v9.repository;
 
-import org.id2k1149.project_v9.model.Description;
+import org.id2k1149.project_v9.model.Dish;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -19,10 +19,10 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = NONE)
 @Rollback(false)
-public class DescriptionRepositoryTest {
+public class DishRepositoryTest {
 
     @Autowired
-    private DescriptionRepository descriptionRepository;
+    private DishRepository dishRepository;
 
     @Autowired
     private TestEntityManager entityManager;
@@ -31,16 +31,16 @@ public class DescriptionRepositoryTest {
     public void createDescriptions() {
         for (int i = 0; i < 25; i++) {
             String food = "Food #" + (i + 1);
-            Description description = new Description(food);
-            entityManager.persist(description);
+            Dish dish = new Dish(food);
+            entityManager.persist(dish);
         }
     }
 
 
     @Test
     public void makeMap() {
-        Map<Description, BigDecimal> descriptionMap = new HashMap<>();
-        List<Description> allDescription = descriptionRepository.findAll();
+        Map<Dish, BigDecimal> descriptionMap = new HashMap<>();
+        List<Dish> allDish = dishRepository.findAll();
 
         Random random = new Random();
         int max = 5;
@@ -48,9 +48,9 @@ public class DescriptionRepositoryTest {
         int numberOfElements = random.nextInt((max - min) + 1) + min;
 
         for (int i = 0; i < numberOfElements; i++) {
-            int randomIndex = random.nextInt(allDescription.size());
-            Description randomDescription = allDescription.get(randomIndex);
-            allDescription.remove(randomIndex);
+            int randomIndex = random.nextInt(allDish.size());
+            Dish randomDish = allDish.get(randomIndex);
+            allDish.remove(randomIndex);
 
             int maxPrice = 100;
             int minPrice = 1;
@@ -58,10 +58,10 @@ public class DescriptionRepositoryTest {
 
             BigDecimal digitalInfo = BigDecimal.valueOf(r / 1.);
 
-            descriptionMap.put(randomDescription, digitalInfo);
+            descriptionMap.put(randomDish, digitalInfo);
         }
 
-        for (Map.Entry<Description, BigDecimal> pair : descriptionMap.entrySet()) {
+        for (Map.Entry<Dish, BigDecimal> pair : descriptionMap.entrySet()) {
             System.out.println(pair.getKey() + " : " + pair.getValue());
         }
 
@@ -81,7 +81,7 @@ public class DescriptionRepositoryTest {
 //
 //    @Test
 //    public void createNewQuestionWithOneAnswer() {
-//        Answer answerDiner1 = entityManager.find(Answer.class, 3L);
+//        Diner answerDiner1 = entityManager.find(Diner.class, 3L);
 //        Question newQuestion = new Question();
 //        newQuestion.addAnswer(answerDiner1);
 //
@@ -90,8 +90,8 @@ public class DescriptionRepositoryTest {
 //
 //    @Test
 //    public void createNewQuestionWithTwoAnswers() {
-//        Answer answerDiner1 = entityManager.find(Answer.class, 3L);
-//        Answer answerDiner2 = entityManager.find(Answer.class, 1L);
+//        Diner answerDiner1 = entityManager.find(Diner.class, 3L);
+//        Diner answerDiner2 = entityManager.find(Diner.class, 1L);
 //        Question newQuestion = new Question();
 //        newQuestion.addAnswer(answerDiner1);
 //        newQuestion.addAnswer(answerDiner2);
@@ -102,20 +102,20 @@ public class DescriptionRepositoryTest {
 //    @Test
 //    public void addAnswerToQuestion() {
 //        Question question = questionRepository.findById(4L).get();
-//        Answer answerDiner3 = entityManager.find(Answer.class, 1L);
+//        Diner answerDiner3 = entityManager.find(Diner.class, 1L);
 //        question.addAnswer(answerDiner3);
 //    }
 //
 //    @Test
 //    public void removeAnswerFromQuestion() {
 //        Question question = questionRepository.findById(6L).get();
-//        Answer answer = answerRepository.getById(3L);
+//        Diner answer = answerRepository.getById(3L);
 //        question.removeAnswer(answer);
 //    }
 //
 //    @Test
 //    public void createNewQuestionWithNewAnswer() {
-//        Answer answer = new Answer("Diner #4");
+//        Diner answer = new Diner("Diner #4");
 //        Question question = new Question();
 //        question.addAnswer(answer);
 //        questionRepository.save(question);

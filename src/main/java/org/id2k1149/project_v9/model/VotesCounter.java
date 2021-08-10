@@ -1,7 +1,7 @@
 package org.id2k1149.project_v9.model;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.time.LocalDate;
 
 @Entity
 public class VotesCounter {
@@ -10,11 +10,10 @@ public class VotesCounter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Question question;
+    private LocalDate voteDate = LocalDate.now();
 
     @ManyToOne
-    private Answer answer;
+    private Diner diner;
 
     private Integer votes;
 
@@ -26,20 +25,20 @@ public class VotesCounter {
         this.id = id;
     }
 
-    public Question getQuestion() {
-        return question;
+    public LocalDate getVoteDate() {
+        return voteDate;
     }
 
-    public void setQuestion(Question question) {
-        this.question = question;
+    public void setVoteDate(LocalDate voteDate) {
+        this.voteDate = voteDate;
     }
 
-    public Answer getAnswer() {
-        return answer;
+    public Diner getDiner() {
+        return diner;
     }
 
-    public void setAnswer(Answer answer) {
-        this.answer = answer;
+    public void setDiner(Diner diner) {
+        this.diner = diner;
     }
 
     public Integer getVotes() {
@@ -48,24 +47,5 @@ public class VotesCounter {
 
     public void setVotes(Integer votes) {
         this.votes = votes;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof VotesCounter)) return false;
-        VotesCounter that = (VotesCounter) o;
-        return getId().equals(that.getId())
-                && getQuestion().equals(that.getQuestion())
-                && getAnswer().equals(that.getAnswer())
-                && getVotes().equals(that.getVotes());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(),
-                getQuestion(),
-                getAnswer(),
-                getVotes());
     }
 }

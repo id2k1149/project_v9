@@ -36,18 +36,18 @@
         <h1> ${question.id} </h1>
         <h1> ${question.questionTitle} </h1>
 
-        <c:forEach items="${answersList}" var="answer">
+        <c:forEach items="${answersList}" var="diner">
 
             <input type="radio"
-                   id="answer"
-                   name="answer"
-                   value="${answer.id}"
+                   id="diner"
+                   name="diner"
+                   value="${diner.id}"
             />
-            <label for="answer">${answer.id} ${answer.answerTitle}</label>
+            <label for="diner">${diner.id} ${diner.dinerName}</label>
 
             <br>
             <%--        <ul>--%>
-            <%--            {% for each_answer in answer.answer.description_set.all %}--%>
+            <%--            {% for each_answer in diner.diner.description_set.all %}--%>
             <%--            <li>--%>
             <%--                {{ each_answer.text_info }} {{ each_answer.digital_info }}--%>
             <%--            </li>--%>

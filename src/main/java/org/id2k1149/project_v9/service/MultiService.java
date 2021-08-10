@@ -14,37 +14,38 @@ import java.util.Optional;
 @Transactional
 public class MultiService {
 
-    private final QuestionRepository questionRepository;
+
     private final VotesCounterRepository votesCounterRepository;
     private final VoterRepository voterRepository;
     private final UserRepository userRepository;
 
     @Autowired
-    public MultiService(QuestionRepository questionRepository,
+    public MultiService(
                         VotesCounterRepository votesCounterRepository,
                         VoterRepository voterRepository,
                         UserRepository userRepository) {
-        this.questionRepository = questionRepository;
+
         this.votesCounterRepository = votesCounterRepository;
         this.voterRepository = voterRepository;
         this.userRepository = userRepository;
     }
 
+    /*
     public void vote(int id, VotesCounter votesCounter) {
         VotesCounter newVotesCounter = new VotesCounter();
         Question question = questionRepository.getById((long) id);
-        Answer newAnswer = votesCounter.getAnswer();
+        Diner newDiner = votesCounter.getAnswer();
         int votes = 0;
 
         Optional<VotesCounter> optionalVotesCounter = votesCounterRepository
-                .findByQuestionAndAnswer(question, newAnswer);
+                .findByQuestionAndAnswer(question, newDiner);
         if (optionalVotesCounter.isPresent()) {
             newVotesCounter = optionalVotesCounter.get();
             votes = newVotesCounter.getVotes();
         }
         votes += 1;
         newVotesCounter.setQuestion(question);
-        newVotesCounter.setAnswer(newAnswer);
+        newVotesCounter.setAnswer(newDiner);
         newVotesCounter.setVotes(votes);
         votesCounterRepository.save(newVotesCounter);
 
@@ -69,15 +70,17 @@ public class MultiService {
         Optional<Voter> optionalVoter = voterRepository.findByUserAndQuestion(user, question);
         if (optionalVoter.isPresent()) {
             voter = optionalVoter.get();
-            Answer voterAnswer = voter.getAnswer();
+            Diner voterDiner = voter.getAnswer();
             VotesCounter oldVotesCounter = votesCounterRepository
-                    .findByQuestionAndAnswer(question, voterAnswer).get();
+                    .findByQuestionAndAnswer(question, voterDiner).get();
             votes = oldVotesCounter.getVotes() - 1;
             oldVotesCounter.setVotes(votes);
             votesCounterRepository.save(oldVotesCounter);
         }
-        voter.setAnswer(newAnswer);
+        voter.setAnswer(newDiner);
         voterRepository.save(voter);
     }
+
+     */
 
 }

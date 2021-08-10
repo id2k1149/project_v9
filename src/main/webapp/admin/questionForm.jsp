@@ -34,14 +34,14 @@
                 <label class="col-form-label col-sm-4">Answers:</label>
                 <div class="col-sm-8 text-left">
 
-                    <c:forEach items="${answersList}" var="answer" >
+                    <c:forEach items="${answersList}" var="diner" >
                         <div>
                             <input type="checkbox"
-                                   value="${answer.id}"
-                                   id="answer"
-                                   name="answers"
+                                   value="${diner.id}"
+                                   id="diner"
+                                   name="diners"
                             />
-                            <label for="answer">${answer.answerTitle}</label>
+                            <label for="diner">${diner.dinerName}</label>
                         </div>
                     </c:forEach>
 

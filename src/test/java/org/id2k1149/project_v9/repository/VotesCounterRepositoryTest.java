@@ -1,7 +1,7 @@
 package org.id2k1149.project_v9.repository;
 
-import org.id2k1149.project_v9.model.Answer;
-import org.id2k1149.project_v9.model.Info;
+import org.id2k1149.project_v9.model.Diner;
+import org.id2k1149.project_v9.model.Menu;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -22,13 +22,13 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 public class VotesCounterRepositoryTest {
 
     @Autowired
-    private InfoRepository infoRepository;
+    private MenuRepository menuRepository;
 
     @Autowired
-    private DescriptionRepository descriptionRepository;
+    private DishRepository dishRepository;
 
     @Autowired
-    private AnswerRepository answerRepository;
+    private DinerRepository dinerRepository;
 
     @Autowired
     private VotesCounterRepository votesCounterRepository;
@@ -52,7 +52,7 @@ public class VotesCounterRepositoryTest {
     @Test
     public void findByDate() {
         LocalDate today = LocalDate.now();
-        List<Info> optionalInfo = infoRepository.findByDateOfInfo(today);
+        List<Menu> optionalMenu = menuRepository.findByDateOfInfo(today);
     }
 
 
@@ -63,32 +63,32 @@ public class VotesCounterRepositoryTest {
         LocalDate today = LocalDate.now();
 //        LocalDate today = LocalDate.now().minusDays(2);
 
-        List<Info> optionalInfo = infoRepository.findByDateOfInfo(today);
+        List<Menu> optionalMenu = menuRepository.findByDateOfInfo(today);
 
 
-        if (optionalInfo.size() > 0) {
+        if (optionalMenu.size() > 0) {
             return;
         } else {
             Random random = new Random();
 
-            List<Answer> allAnswers = answerRepository.findAll();
-            int max = allAnswers.size();
+            List<Diner> allDiners = dinerRepository.findAll();
+            int max = allDiners.size();
             int min = 2;
             int numberOfElements = random.nextInt((max - min) + 1) + min;
 
-            List<Answer> todayAnswers = new ArrayList<>();
+            List<Diner> todayDiners = new ArrayList<>();
             for (int i = 0; i < numberOfElements; i++) {
-                int randomIndex = random.nextInt(allAnswers.size());
-                Answer randomAnswer = allAnswers.get(randomIndex);
-                allAnswers.remove(randomIndex);
-                todayAnswers.add(randomAnswer);
+                int randomIndex = random.nextInt(allDiners.size());
+                Diner randomDiner = allDiners.get(randomIndex);
+                allDiners.remove(randomIndex);
+                todayDiners.add(randomDiner);
             }
 
-            for (Answer todayAnswer : todayAnswers) {
-                Info newInfo = new Info();
-                newInfo.setDateOfInfo(today);
-                newInfo.setAnswer(todayAnswer);
-                infoRepository.save(newInfo);
+            for (Diner todayDiner : todayDiners) {
+                Menu newMenu = new Menu();
+                newMenu.setDateOfInfo(today);
+                newMenu.setDiner(todayDiner);
+                menuRepository.save(newMenu);
             }
         }
     }
@@ -104,9 +104,9 @@ public class VotesCounterRepositoryTest {
 
         /*
         Map<String, BigDecimal> descriptionMap = new HashMap<>();
-        List<Description> allDescriptions = descriptionRepository.findAll();
+        List<Dish> allDescriptions = descriptionRepository.findAll();
         List<String> items = new ArrayList<>();
-        for (Description allDescription : allDescriptions) {
+        for (Dish allDescription : allDescriptions) {
             items.add(allDescription.getItem());
         }
 
@@ -134,11 +134,11 @@ public class VotesCounterRepositoryTest {
         }
 
 
-        List<Answer> allAnswers = answerRepository.findAll();
+        List<Diner> allAnswers = answerRepository.findAll();
         max = allAnswers.size();
         min = 1;
         int randomInt = random.nextInt((max - min) + 1) + min;
-        Answer randomAnswer = answerRepository.findById(4L).get();
+        Diner randomAnswer = answerRepository.findById(4L).get();
 
          */
 
@@ -188,7 +188,7 @@ public class VotesCounterRepositoryTest {
 //
 //    @Test
 //    public void createNewQuestionWithOneAnswer() {
-//        Answer answerDiner1 = entityManager.find(Answer.class, 3L);
+//        Diner answerDiner1 = entityManager.find(Diner.class, 3L);
 //        Question newQuestion = new Question();
 //        newQuestion.addAnswer(answerDiner1);
 //
@@ -197,8 +197,8 @@ public class VotesCounterRepositoryTest {
 //
 //    @Test
 //    public void createNewQuestionWithTwoAnswers() {
-//        Answer answerDiner1 = entityManager.find(Answer.class, 3L);
-//        Answer answerDiner2 = entityManager.find(Answer.class, 1L);
+//        Diner answerDiner1 = entityManager.find(Diner.class, 3L);
+//        Diner answerDiner2 = entityManager.find(Diner.class, 1L);
 //        Question newQuestion = new Question();
 //        newQuestion.addAnswer(answerDiner1);
 //        newQuestion.addAnswer(answerDiner2);
@@ -209,20 +209,20 @@ public class VotesCounterRepositoryTest {
 //    @Test
 //    public void addAnswerToQuestion() {
 //        Question question = questionRepository.findById(4L).get();
-//        Answer answerDiner3 = entityManager.find(Answer.class, 1L);
+//        Diner answerDiner3 = entityManager.find(Diner.class, 1L);
 //        question.addAnswer(answerDiner3);
 //    }
 //
 //    @Test
 //    public void removeAnswerFromQuestion() {
 //        Question question = questionRepository.findById(6L).get();
-//        Answer answer = answerRepository.getById(3L);
+//        Diner answer = answerRepository.getById(3L);
 //        question.removeAnswer(answer);
 //    }
 //
 //    @Test
 //    public void createNewQuestionWithNewAnswer() {
-//        Answer answer = new Answer("Diner #4");
+//        Diner answer = new Diner("Diner #4");
 //        Question question = new Question();
 //        question.addAnswer(answer);
 //        questionRepository.save(question);

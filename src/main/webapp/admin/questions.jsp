@@ -54,9 +54,9 @@
                     <td>${question.datePublished}</td>
                     <td>${question.questionTitle}</td>
                     <td>
-                        <c:forEach items="${question.answers}" var="answer" >
+                        <c:forEach items="${question.diners}" var="diner" >
                             <div>
-                                ${answer.answerTitle}
+                                ${diner.answerTitle}
                             </div>
                         </c:forEach>
                     </td>

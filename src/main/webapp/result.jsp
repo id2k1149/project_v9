@@ -37,7 +37,7 @@
             <c:forEach items="${sortedList}" var="result">
                 <tr>
                     <td>${result.id}</td>
-                    <td>${result.answer}</td>
+                    <td>${result.diner}</td>
                     <td>${result.votes}</td>
                 </tr>
             </c:forEach>
