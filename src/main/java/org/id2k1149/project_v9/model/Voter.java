@@ -12,8 +12,9 @@ public class Voter {
     private Long id;
     @ManyToOne
     private User user;
-    @ManyToOne
-    private Question question;
+
+    private LocalDate votesDate = LocalDate.now();
+
     @ManyToOne
     private Answer answer;
 
@@ -33,12 +34,12 @@ public class Voter {
         this.user = user;
     }
 
-    public Question getQuestion() {
-        return question;
+    public LocalDate getVotesDate() {
+        return votesDate;
     }
 
-    public void setQuestion(Question question) {
-        this.question = question;
+    public void setVotesDate(LocalDate votesDate) {
+        this.votesDate = votesDate;
     }
 
     public Answer getAnswer() {

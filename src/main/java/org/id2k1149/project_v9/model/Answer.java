@@ -11,9 +11,6 @@ public class Answer {
     private Long id;
     private String answerTitle;
 
-    @ManyToMany(mappedBy = "answers", fetch = FetchType.EAGER)
-    private Set<Question> questions = new HashSet<>();
-
     public Answer() {
     }
 
@@ -41,13 +38,6 @@ public class Answer {
         this.answerTitle = answerTitle;
     }
 
-    public Set<Question> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(Set<Question> questions) {
-        this.questions = questions;
-    }
 
     @Override
     public String toString() {

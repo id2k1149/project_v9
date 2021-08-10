@@ -15,7 +15,7 @@ public class Info {
     private Answer answer;
 
     @ElementCollection
-    @CollectionTable(name = "info_description_mapping",
+    @CollectionTable(name = "info_description",
                     joinColumns = {@JoinColumn(name = "info_id",
                     referencedColumnName = "id")})
     @MapKeyColumn(name = "description_item")
