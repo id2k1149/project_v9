@@ -173,7 +173,7 @@ class UserServiceTest {
     }
 
     @Test
-    void cantDeleteIfStudentNotFound() {
+    void cantDeleteIfUserNotFound() {
         // given
         long id = 10;
         given(testRepository.existsById(id))

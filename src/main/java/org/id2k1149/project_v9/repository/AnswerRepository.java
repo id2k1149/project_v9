@@ -8,5 +8,5 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional(readOnly = true)
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
-
+    Answer findAnswerByTitle(String title);
 }

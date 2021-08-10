@@ -40,12 +40,10 @@ public class UserService {
     }
 
     public User getUser(Long id) {
-        Optional<User> optionalUser = userRepository.findById(id);
-        if (optionalUser.isPresent()) {
+        if (userRepository.findById(id).isPresent()) {
             return userRepository.getById(id);
         } else {
-            throw new IllegalStateException(
-                    "user with id " + id + " does not exist");
+            throw new NotFoundException(id + " does not exist");
         }
     }
 
@@ -71,7 +69,7 @@ public class UserService {
         User userToUpdate;
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isEmpty()) {
-            throw new IllegalStateException(
+            throw new NotFoundException(
                     "user with id " + id + " does not exist");
         } else {
             userToUpdate = optionalUser.get();
@@ -97,9 +95,8 @@ public class UserService {
     }
 
     public void deleteUser(Long id) {
-        if(!userRepository.existsById(id)) {
-            throw new NotFoundException(
-                    "User with id " + id + " does not exists");
+        if(userRepository.findById(id).isEmpty()) {
+            throw new NotFoundException(id + " does not exists");
         }
         userRepository.deleteById(id);
     }

@@ -1,9 +1,9 @@
 package org.id2k1149.project_v9.rest;
 
-
 import org.id2k1149.project_v9.model.Answer;
 import org.id2k1149.project_v9.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,4 +34,16 @@ public class AnswerController {
         answerService.addAnswer(newAnswer);
     }
 
+    @PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void updateUser(
+            @RequestBody Answer answer,
+            @PathVariable("id") Long id
+    ) {
+        answerService.updateAnswer(answer, id);
+    }
+
+    @DeleteMapping(path = "{id}")
+    public void deleteAnswer(@PathVariable("id") Long id) {
+        answerService.deleteAnswer(id);
+    }
 }
