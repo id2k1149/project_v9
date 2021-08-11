@@ -16,9 +16,10 @@ public class Info {
     private Long id;
     private LocalDate dateOfInfo = LocalDate.now();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "answer_id", nullable = false)
-    @NotNull(groups = View.Persist.class)
+    @ManyToOne
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "answer_id", nullable = false)
+//    @NotNull(groups = View.Persist.class)
     private Answer answer;
 
     @ElementCollection
