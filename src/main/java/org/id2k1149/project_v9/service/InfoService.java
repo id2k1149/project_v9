@@ -1,5 +1,6 @@
 package org.id2k1149.project_v9.service;
 
+import org.id2k1149.project_v9.model.Answer;
 import org.id2k1149.project_v9.repository.AnswerRepository;
 import org.id2k1149.project_v9.util.exception.NotFoundException;
 import org.id2k1149.project_v9.model.Info;
@@ -8,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -60,7 +63,15 @@ public class InfoService {
         infoRepository.deleteById(id);
     }
 
-    public List<Info> getByDate(LocalDate now) {
-        return infoRepository.getByDateOfInfo(now);
+    public List<Info> getByDate(LocalDate date) {
+        return infoRepository.getByDateOfInfo(date);
+    }
+
+    public List<Answer> getTodayAnswers() {
+        return infoRepository
+                .getByDateOfInfo(LocalDate.now())
+                .stream()
+                .map(Info::getAnswer)
+                .collect(Collectors.toList());
     }
 }

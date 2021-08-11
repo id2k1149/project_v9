@@ -5,6 +5,7 @@ import org.id2k1149.project_v9.service.InfoService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -22,12 +23,17 @@ public class InfoController {
         return infoService.getAllInfo();
     }
 
+    @GetMapping(path = "/today")
+    public List<Info> getTodayInfo() {
+        return infoService.getByDate(LocalDate.now());
+    }
+
     @GetMapping(path = "{id}")
     public Info getInfo(@PathVariable("id") Long id) {
         return infoService.getInfo(id);
     }
 
-    @PostMapping(value = "/{answerId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "{answerId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addInfo(@RequestBody Info newInfo, @PathVariable Long answerId) {
         infoService.addInfo(newInfo, answerId);
     }

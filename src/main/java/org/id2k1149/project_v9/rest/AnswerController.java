@@ -24,11 +24,6 @@ public class AnswerController {
         this.infoService = infoService;
     }
 
-    @GetMapping("/info")
-    public List<AnswerTo> getAllInfo() {
-        return AnswerUtil.getTos(getAnswers(), infoService.getByDate(LocalDate.now()));
-    }
-
     @GetMapping
     public List<Answer> getAnswers() {
         return answerService.getAnswers();
@@ -55,5 +50,10 @@ public class AnswerController {
     @DeleteMapping(path = "{id}")
     public void deleteAnswer(@PathVariable("id") Long id) {
         answerService.deleteAnswer(id);
+    }
+
+    @GetMapping("/today")
+    public List<AnswerTo> getTodayInfo() {
+        return AnswerUtil.getAnswersTo(infoService.getTodayAnswers(), infoService.getByDate(LocalDate.now()));
     }
 }
