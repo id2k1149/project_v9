@@ -1,17 +1,13 @@
 package org.id2k1149.project_v9.service;
 
-import org.id2k1149.project_v9.exception.BadRequestException;
-import org.id2k1149.project_v9.exception.NotFoundException;
+import org.id2k1149.project_v9.util.exception.BadRequestException;
+import org.id2k1149.project_v9.util.exception.NotFoundException;
 import org.id2k1149.project_v9.model.Answer;
-import org.id2k1149.project_v9.model.Role;
-import org.id2k1149.project_v9.model.User;
 import org.id2k1149.project_v9.repository.AnswerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service

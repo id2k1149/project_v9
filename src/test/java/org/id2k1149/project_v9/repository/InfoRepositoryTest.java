@@ -38,7 +38,7 @@ public class InfoRepositoryTest {
     @Test
     public void findByDate() {
         LocalDate today = LocalDate.now();
-        List<Info> optionalInfo = infoRepository.findByDateOfInfo(today);
+        List<Info> optionalInfo = infoRepository.getByDateOfInfo(today);
     }
 
 
@@ -49,7 +49,7 @@ public class InfoRepositoryTest {
         LocalDate today = LocalDate.now();
 //        LocalDate today = LocalDate.now().minusDays(2);
 
-        List<Info> optionalInfo = infoRepository.findByDateOfInfo(today);
+        List<Info> optionalInfo = infoRepository.getByDateOfInfo(today);
 
 
         if (optionalInfo.size() > 0) {

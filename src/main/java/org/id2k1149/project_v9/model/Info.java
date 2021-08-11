@@ -11,7 +11,8 @@ public class Info {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private LocalDate dateOfInfo = LocalDate.now();
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private Answer answer;
 
     @ElementCollection

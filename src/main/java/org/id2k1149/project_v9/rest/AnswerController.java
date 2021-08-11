@@ -2,10 +2,13 @@ package org.id2k1149.project_v9.rest;
 
 import org.id2k1149.project_v9.model.Answer;
 import org.id2k1149.project_v9.service.AnswerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.id2k1149.project_v9.service.InfoService;
+import org.id2k1149.project_v9.to.AnswerTo;
+import org.id2k1149.project_v9.util.AnswerUtil;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -13,9 +16,17 @@ import java.util.List;
 public class AnswerController {
 
     private final AnswerService answerService;
+    private final InfoService infoService;
 
-    public AnswerController(AnswerService answerService) {
+    public AnswerController(AnswerService answerService,
+                            InfoService infoService) {
         this.answerService = answerService;
+        this.infoService = infoService;
+    }
+
+    @GetMapping("/info")
+    public List<AnswerTo> getAllInfo() {
+        return AnswerUtil.getTos(getAnswers(), infoService.getByDate(LocalDate.now()));
     }
 
     @GetMapping

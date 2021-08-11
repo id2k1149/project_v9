@@ -1,6 +1,6 @@
 package org.id2k1149.project_v9.service;
 
-import org.id2k1149.project_v9.exception.NotFoundException;
+import org.id2k1149.project_v9.util.exception.NotFoundException;
 import org.id2k1149.project_v9.model.Description;
 import org.id2k1149.project_v9.repository.DescriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;

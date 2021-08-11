@@ -8,10 +8,8 @@ public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String title;
-    @OneToMany(mappedBy = "answer")
-    private Collection<Info> info;
 
+    private String title;
 
     public Answer() {
     }
@@ -38,14 +36,6 @@ public class Answer {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Collection<Info> getInfo() {
-        return info;
-    }
-
-    public void setInfo(Collection<Info> info) {
-        this.info = info;
     }
 
     @Override

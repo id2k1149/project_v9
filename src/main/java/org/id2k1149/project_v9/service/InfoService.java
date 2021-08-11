@@ -1,13 +1,13 @@
 package org.id2k1149.project_v9.service;
 
-import org.id2k1149.project_v9.exception.NotFoundException;
+import org.id2k1149.project_v9.util.exception.NotFoundException;
 import org.id2k1149.project_v9.model.Info;
 import org.id2k1149.project_v9.repository.InfoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -52,5 +52,9 @@ public class InfoService {
             throw new NotFoundException(id + " does not exists");
         }
         infoRepository.deleteById(id);
+    }
+
+    public List<Info> getByDate(LocalDate now) {
+        return infoRepository.getByDateOfInfo(now);
     }
 }
