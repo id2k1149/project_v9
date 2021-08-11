@@ -2,7 +2,6 @@ package org.id2k1149.project_v9.rest;
 
 import org.id2k1149.project_v9.model.User;
 import org.id2k1149.project_v9.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 

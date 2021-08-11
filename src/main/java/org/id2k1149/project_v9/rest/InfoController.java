@@ -23,11 +23,6 @@ public class InfoController {
         return infoService.getAllInfo();
     }
 
-    @GetMapping(path = "/today")
-    public List<Info> getTodayInfo() {
-        return infoService.getByDate(LocalDate.now());
-    }
-
     @GetMapping(path = "{id}")
     public Info getInfo(@PathVariable("id") Long id) {
         return infoService.getInfo(id);
@@ -49,5 +44,10 @@ public class InfoController {
     @DeleteMapping(path = "{id}")
     public void deleteInfo(@PathVariable("id") Long id) {
         infoService.deleteInfo(id);
+    }
+
+    @GetMapping(path = "/today")
+    public List<Info> getTodayInfo() {
+        return infoService.getByDate(LocalDate.now());
     }
 }
