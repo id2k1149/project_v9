@@ -1,5 +1,9 @@
 package org.id2k1149.project_v9.model;
 
+import org.id2k1149.project_v9.View;
+
+import javax.validation.constraints.NotNull;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -13,6 +17,8 @@ public class Info {
     private LocalDate dateOfInfo = LocalDate.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "answer_id", nullable = false)
+    @NotNull(groups = View.Persist.class)
     private Answer answer;
 
     @ElementCollection
