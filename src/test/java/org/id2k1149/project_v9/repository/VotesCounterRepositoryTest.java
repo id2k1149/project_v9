@@ -25,9 +25,6 @@ public class VotesCounterRepositoryTest {
     private InfoRepository infoRepository;
 
     @Autowired
-    private DescriptionRepository descriptionRepository;
-
-    @Autowired
     private AnswerRepository answerRepository;
 
     @Autowired

@@ -23,10 +23,10 @@ public class Info {
     private Answer answer;
 
     @ElementCollection
-    @CollectionTable(name = "info_description",
-                    joinColumns = {@JoinColumn(name = "info_id",
-                    referencedColumnName = "id")})
-    @MapKeyColumn(name = "description_item")
+//    @CollectionTable(name = "info_description",
+//                    joinColumns = {@JoinColumn(name = "info_id",
+//                    referencedColumnName = "id")})
+//    @MapKeyColumn(name = "description_item")
     private Map<String, BigDecimal> infoMap;
 
     public Long getId() {
