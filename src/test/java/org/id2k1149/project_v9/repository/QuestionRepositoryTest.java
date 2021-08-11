@@ -2,7 +2,6 @@ package org.id2k1149.project_v9.repository;
 
 import org.id2k1149.project_v9.model.Answer;
 
-import org.id2k1149.project_v9.model.VotesCounter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -18,7 +17,7 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 public class QuestionRepositoryTest {
 
     @Autowired
-    private VotesCounterRepository votesCounterRepository;
+    private CounterRepository counterRepository;
 
     @Autowired
     private AnswerRepository answerRepository;

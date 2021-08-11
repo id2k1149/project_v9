@@ -31,14 +31,14 @@ public class VoterRepositoryTest {
     private AnswerRepository answerRepository;
 
     @Autowired
-    private VotesCounterRepository votesCounterRepository;
+    private CounterRepository counterRepository;
 
     @Autowired
     private TestEntityManager entityManager;
 
     @Test
     public void deleteAllVotes() {
-        votesCounterRepository.deleteAll();
+        counterRepository.deleteAll();
     }
 
 

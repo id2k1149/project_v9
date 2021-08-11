@@ -10,6 +10,6 @@ import java.util.Optional;
 
 @Repository
 @Transactional(readOnly = true)
-public interface VotesCounterRepository extends JpaRepository<VotesCounter, Long> {
+public interface CounterRepository extends JpaRepository<VotesCounter, Long> {
     Optional<VotesCounter> findByAnswer(Answer answer);
 }

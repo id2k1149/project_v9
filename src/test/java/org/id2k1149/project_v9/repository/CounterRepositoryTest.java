@@ -19,7 +19,7 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = NONE)
 @Rollback(false)
-public class VotesCounterRepositoryTest {
+public class CounterRepositoryTest {
 
     @Autowired
     private InfoRepository infoRepository;
@@ -28,14 +28,14 @@ public class VotesCounterRepositoryTest {
     private AnswerRepository answerRepository;
 
     @Autowired
-    private VotesCounterRepository votesCounterRepository;
+    private CounterRepository counterRepository;
 
     @Autowired
     private TestEntityManager entityManager;
 
     @Test
     public void deleteAllVotes() {
-        votesCounterRepository.deleteAll();
+        counterRepository.deleteAll();
     }
 
 
