@@ -13,16 +13,9 @@ public class Info {
     private LocalDate dateOfInfo = LocalDate.now();
 
     @ManyToOne
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "answer_id", nullable = false)
-//    @NotNull(groups = View.Persist.class)
     private Answer answer;
 
     @ElementCollection
-//    @CollectionTable(name = "info_description",
-//                    joinColumns = {@JoinColumn(name = "info_id",
-//                    referencedColumnName = "id")})
-//    @MapKeyColumn(name = "description_item")
     private Map<String, BigDecimal> details;
 
     public Long getId() {

@@ -1,5 +1,6 @@
 package org.id2k1149.project_v9.service;
 
+import org.id2k1149.project_v9.repository.AnswerRepository;
 import org.id2k1149.project_v9.util.exception.NotFoundException;
 import org.id2k1149.project_v9.model.Info;
 import org.id2k1149.project_v9.repository.InfoRepository;
@@ -14,9 +15,12 @@ import java.util.List;
 public class InfoService {
 
     private final InfoRepository infoRepository;
+    private final AnswerRepository answerRepository;
 
-    public InfoService(InfoRepository infoRepository) {
+    public InfoService(InfoRepository infoRepository,
+                       AnswerRepository answerRepository) {
         this.infoRepository = infoRepository;
+        this.answerRepository = answerRepository;
     }
 
     public List<Info> getAllInfo() {
@@ -30,21 +34,23 @@ public class InfoService {
         return infoRepository.getById(id);
     }
 
-    public void addInfo(Info newInfo) {
+    public void addInfo(Info newInfo, Long answerId) {
+        if (answerRepository.findById(answerId).isEmpty()) {
+            throw new NotFoundException(answerId + " does not exist");
+        }
+        newInfo.setAnswer(answerRepository.getById(answerId));
         infoRepository.save(newInfo);
     }
 
-    public void updateInfo(Info info,
-                             Long id) {
-        Info infoToUpdate;
-
+    public void updateInfo(Info info, Long id) {
         if (infoRepository.findById(id).isEmpty()) {
             throw new NotFoundException(id + " does not exist");
-        } else {
-            infoToUpdate = infoRepository.findById(id).get();
         }
-
-        infoRepository.save(info);
+        Info infoToUpdate = infoRepository.findById(id).get();
+        infoToUpdate.setAnswer(info.getAnswer());
+        infoToUpdate.setDateOfInfo(info.getDateOfInfo());
+        infoToUpdate.setDetails(info.getDetails());
+        infoRepository.save(infoToUpdate);
     }
 
     public void deleteInfo(Long id) {

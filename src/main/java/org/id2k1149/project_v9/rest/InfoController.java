@@ -27,9 +27,9 @@ public class InfoController {
         return infoService.getInfo(id);
     }
 
-    @PostMapping
-    public void addInfo(@RequestBody Info newInfo) {
-        infoService.addInfo(newInfo);
+    @PostMapping(value = "/{answerId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void addInfo(@RequestBody Info newInfo, @PathVariable Long answerId) {
+        infoService.addInfo(newInfo, answerId);
     }
 
     @PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)

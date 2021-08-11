@@ -13,8 +13,6 @@ public class VotesCounter {
 
     private LocalDate votesDate = LocalDate.now();
 
-
-
     @ManyToOne
     private Answer answer;
 
