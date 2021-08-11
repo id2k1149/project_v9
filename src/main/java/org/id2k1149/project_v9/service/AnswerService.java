@@ -1,5 +1,8 @@
 package org.id2k1149.project_v9.service;
 
+import org.id2k1149.project_v9.model.Info;
+import org.id2k1149.project_v9.repository.InfoRepository;
+import org.id2k1149.project_v9.to.AnswerTo;
 import org.id2k1149.project_v9.util.exception.BadRequestException;
 import org.id2k1149.project_v9.util.exception.NotFoundException;
 import org.id2k1149.project_v9.model.Answer;
@@ -9,15 +12,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class AnswerService {
 
     private final AnswerRepository answerRepository;
+    private final InfoRepository infoRepository;
 
-    public AnswerService(AnswerRepository answerRepository) {
+    public AnswerService(AnswerRepository answerRepository,
+                         InfoRepository infoRepository) {
         this.answerRepository = answerRepository;
+        this.infoRepository = infoRepository;
     }
 
     public List<Answer> getAnswers() {
@@ -25,11 +32,10 @@ public class AnswerService {
     }
 
     public Answer getAnswer(Long id) {
-        if (answerRepository.findById(id).isPresent()) {
-            return answerRepository.getById(id);
-        } else {
+        if (answerRepository.findById(id).isEmpty()) {
             throw new NotFoundException(id + " does not exist");
         }
+        return answerRepository.getById(id);
     }
 
     public void addAnswer(Answer newAnswer) {
@@ -63,5 +69,15 @@ public class AnswerService {
             throw new NotFoundException(id + " does not exists");
         }
         answerRepository.deleteById(id);
+    }
+
+    public AnswerTo getAllInfoForAnswer(Long id) {
+        Answer answer = getAnswer(id);
+        List<Info> infoList = infoRepository.findAll();
+        List<Info> infoListForAnswer = infoList
+                .stream()
+                .filter(info -> info.getAnswer() == answer)
+                .collect(Collectors.toList());
+        return new AnswerTo(id, answer.getTitle(), infoListForAnswer);
     }
 }

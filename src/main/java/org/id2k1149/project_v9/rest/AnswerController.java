@@ -54,6 +54,12 @@ public class AnswerController {
 
     @GetMapping("/today")
     public List<AnswerTo> getTodayInfo() {
-        return AnswerUtil.getAnswersTo(infoService.getTodayAnswers(), infoService.getByDate(LocalDate.now()));
+        return AnswerUtil.getAnswersTo(infoService.getTodayAnswersInInfo(), infoService.getByDate(LocalDate.now()));
     }
+
+    @GetMapping(path = "{id}/info")
+    public AnswerTo getAllInfoForAnswer(@PathVariable("id") Long id) {
+        return answerService.getAllInfoForAnswer(id);
+    }
+
 }
