@@ -1,9 +1,5 @@
 package org.id2k1149.project_v9.model;
 
-import org.id2k1149.project_v9.View;
-
-import javax.validation.constraints.NotNull;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -27,7 +23,7 @@ public class Info {
 //                    joinColumns = {@JoinColumn(name = "info_id",
 //                    referencedColumnName = "id")})
 //    @MapKeyColumn(name = "description_item")
-    private Map<String, BigDecimal> infoMap;
+    private Map<String, BigDecimal> details;
 
     public Long getId() {
         return id;
@@ -53,11 +49,11 @@ public class Info {
         this.answer = answer;
     }
 
-    public Map<String, BigDecimal> getInfoMap() {
-        return infoMap;
+    public Map<String, BigDecimal> getDetails() {
+        return details;
     }
 
-    public void setInfoMap(Map<String, BigDecimal> infoMap) {
-        this.infoMap = infoMap;
+    public void setDetails(Map<String, BigDecimal> infoMap) {
+        this.details = infoMap;
     }
 }

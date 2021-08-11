@@ -83,7 +83,7 @@ public class InfoRepositoryTest {
                     BigDecimal digitalInfo = BigDecimal.valueOf(Double.valueOf(faker.commerce().price(10, 100)));
                     descriptionMap.put(stringInfo, digitalInfo);
                 }
-                newInfo.setInfoMap(descriptionMap);
+                newInfo.setDetails(descriptionMap);
                 infoRepository.save(newInfo);
             }
         }
