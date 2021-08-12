@@ -1,21 +1,19 @@
 package org.id2k1149.project_v9.service;
 
+import org.id2k1149.project_v9.model.Answer;
 import org.id2k1149.project_v9.model.Info;
+import org.id2k1149.project_v9.repository.AnswerRepository;
 import org.id2k1149.project_v9.repository.InfoRepository;
 import org.id2k1149.project_v9.to.AnswerTo;
 import org.id2k1149.project_v9.to.InfoTo;
 import org.id2k1149.project_v9.util.InfoUtil;
 import org.id2k1149.project_v9.util.exception.BadRequestException;
 import org.id2k1149.project_v9.util.exception.NotFoundException;
-import org.id2k1149.project_v9.model.Answer;
-import org.id2k1149.project_v9.repository.AnswerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional

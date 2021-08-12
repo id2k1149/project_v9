@@ -66,7 +66,7 @@ public class InfoService {
         return infoRepository.getByDateOfInfo(date);
     }
 
-    public List<Answer> getTodayAnswersInInfo() {
+    public List<Answer> getTodayAnswersInfo() {
         return infoRepository
                 .getByDateOfInfo(LocalDate.now())
                 .stream()
