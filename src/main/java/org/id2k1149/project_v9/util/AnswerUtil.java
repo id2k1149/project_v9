@@ -13,16 +13,10 @@ public class AnswerUtil {
     public static List<AnswerTo> getAnswersTo(List<Answer> answers, List<Info> infoList) {
 
         List<AnswerTo> answerToList = new ArrayList<>();
-        for (Answer answer : answers) {
-            List<InfoTo> infoToList = new ArrayList<>();
-            for (Info info : infoList) {
-                if (info.getAnswer() == answer) {
-                    InfoTo infoTo = new InfoTo(info.getId(), info.getDetails());
-                    infoToList.add(infoTo);
-                }
-            }
+        answers.forEach(answer -> {
+            List<InfoTo> infoToList = InfoUtil.getInfoTo(answer, infoList);
             answerToList.add(new AnswerTo(answer.getId(), answer.getTitle(), infoToList));
-        }
+        });
         return answerToList;
     }
 }

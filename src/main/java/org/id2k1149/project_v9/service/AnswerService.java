@@ -4,6 +4,7 @@ import org.id2k1149.project_v9.model.Info;
 import org.id2k1149.project_v9.repository.InfoRepository;
 import org.id2k1149.project_v9.to.AnswerTo;
 import org.id2k1149.project_v9.to.InfoTo;
+import org.id2k1149.project_v9.util.InfoUtil;
 import org.id2k1149.project_v9.util.exception.BadRequestException;
 import org.id2k1149.project_v9.util.exception.NotFoundException;
 import org.id2k1149.project_v9.model.Answer;
@@ -76,14 +77,7 @@ public class AnswerService {
     public AnswerTo getAllInfoForAnswer(Long id) {
         Answer answer = getAnswer(id);
         List<Info> infoList = infoRepository.findAll();
-
-        List<InfoTo> infoToList = new ArrayList<>();
-        for (Info info : infoList) {
-            if (info.getAnswer() == answer) {
-                InfoTo infoTo = new InfoTo(info.getId(), info.getDetails());
-                infoToList.add(infoTo);
-            }
-        }
+        List<InfoTo> infoToList = InfoUtil.getInfoTo(answer, infoList);
         return new AnswerTo(id, answer.getTitle(), infoToList);
     }
 }
