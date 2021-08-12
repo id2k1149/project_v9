@@ -8,23 +8,23 @@ import java.util.List;
 public class AnswerTo extends BaseTo {
     private final String title;
 
-    private final List<Info> info;
+    private final List<InfoTo> infoTo;
 
     @ConstructorProperties({"id", "info"})
     public AnswerTo(Long id,
                     String title,
-                    List<Info> info) {
+                    List<InfoTo> infoTo) {
         super(id);
         this.title = title;
-        this.info = info;
+        this.infoTo = infoTo;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public List<Info> getInfo() {
-        return info;
+    public List<InfoTo> getInfoTo() {
+        return infoTo;
     }
 
     @Override
@@ -32,7 +32,7 @@ public class AnswerTo extends BaseTo {
         return "AnswerTo{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", info=" + info +
+                ", infoTo=" + infoTo +
                 '}';
     }
 }

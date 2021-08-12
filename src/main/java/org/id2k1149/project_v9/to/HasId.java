@@ -7,10 +7,6 @@ public interface HasId {
 
     void setId(Long id);
 
-    default boolean isNew() {
-        return getId() == null;
-    }
-
     default Long id() {
         Assert.notNull(getId(), "Entity must has id");
         return getId();
