@@ -2,7 +2,6 @@ package org.id2k1149.project_v9.rest;
 
 import org.id2k1149.project_v9.model.User;
 import org.id2k1149.project_v9.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +13,6 @@ public class UserController {
 
     private final UserService userService;
 
-    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -46,5 +44,4 @@ public class UserController {
     public void deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
     }
-
 }

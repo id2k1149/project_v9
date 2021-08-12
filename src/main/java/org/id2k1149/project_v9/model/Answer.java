@@ -1,19 +1,18 @@
 package org.id2k1149.project_v9.model;
 
-import javax.persistence.*;
-import java.util.HashSet;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String answerTitle;
 
-    @ManyToMany(mappedBy = "answers", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    private Set<Question> questions = new HashSet<>();
+    private String title;
 
     public Answer() {
     }
@@ -22,8 +21,8 @@ public class Answer {
         this.id = id;
     }
 
-    public Answer(String answerTitle) {
-        this.answerTitle = answerTitle;
+    public Answer(String title) {
+        this.title = title;
     }
 
     public Long getId() {
@@ -34,25 +33,17 @@ public class Answer {
         this.id = answerId;
     }
 
-    public String getAnswerTitle() {
-        return answerTitle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setAnswerTitle(String answerTitle) {
-        this.answerTitle = answerTitle;
-    }
-
-    public Set<Question> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(Set<Question> questions) {
-        this.questions = questions;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override
     public String toString() {
-        return answerTitle;
+        return title;
     }
 
     @Override
@@ -60,16 +51,11 @@ public class Answer {
         if (this == o) return true;
         if (!(o instanceof Answer)) return false;
         Answer answer = (Answer) o;
-        return getId().equals(answer.getId())
-                && getAnswerTitle().equals(answer.getAnswerTitle())
-                && Objects.equals(getQuestions(),
-                answer.getQuestions());
+        return getId().equals(answer.getId()) && getTitle().equals(answer.getTitle());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(),
-                getAnswerTitle(),
-                getQuestions());
+        return Objects.hash(getId(), getTitle());
     }
 }

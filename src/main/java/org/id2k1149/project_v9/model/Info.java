@@ -11,16 +11,13 @@ public class Info {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private LocalDate dateOfInfo;
+    private LocalDate dateOfInfo = LocalDate.now();
+
     @ManyToOne
     private Answer answer;
 
     @ElementCollection
-    @CollectionTable(name = "info_description_mapping",
-                    joinColumns = {@JoinColumn(name = "info_id",
-                    referencedColumnName = "id")})
-    @MapKeyColumn(name = "description_item")
-    private Map<String, BigDecimal> infoMap;
+    private Map<String, BigDecimal> details;
 
     public Long getId() {
         return id;
@@ -46,12 +43,25 @@ public class Info {
         this.answer = answer;
     }
 
-    public Map<String, BigDecimal> getInfoMap() {
-        return infoMap;
+    public Map<String, BigDecimal> getDetails() {
+        return details;
     }
 
-    public void setInfoMap(Map<String, BigDecimal> infoMap) {
-        this.infoMap = infoMap;
+    public void setDetails(Map<String, BigDecimal> infoMap) {
+        this.details = infoMap;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Info)) return false;
+        Info info = (Info) o;
+        return getId().equals(info.getId()) && getDateOfInfo().equals(info.getDateOfInfo()) && getAnswer().equals(info.getAnswer()) && getDetails().equals(info.getDetails());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getDateOfInfo(), getAnswer(), getDetails());
     }
 
     @Override

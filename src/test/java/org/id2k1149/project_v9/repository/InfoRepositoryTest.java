@@ -1,5 +1,6 @@
 package org.id2k1149.project_v9.repository;
 
+import com.github.javafaker.Faker;
 import org.id2k1149.project_v9.model.Answer;
 import org.id2k1149.project_v9.model.Info;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -19,11 +21,10 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 @Rollback(false)
 public class InfoRepositoryTest {
 
-    @Autowired
-    private InfoRepository infoRepository;
+    private final Faker faker = new Faker();
 
     @Autowired
-    private DescriptionRepository descriptionRepository;
+    private InfoRepository infoRepository;
 
     @Autowired
     private AnswerRepository answerRepository;
@@ -38,10 +39,8 @@ public class InfoRepositoryTest {
     @Test
     public void findByDate() {
         LocalDate today = LocalDate.now();
-        List<Info> optionalInfo = infoRepository.findByDateOfInfo(today);
+        List<Info> optionalInfo = infoRepository.getByDateOfInfo(today);
     }
-
-
 
     @Test
     public void getRandomInfo() {
@@ -49,7 +48,7 @@ public class InfoRepositoryTest {
         LocalDate today = LocalDate.now();
 //        LocalDate today = LocalDate.now().minusDays(2);
 
-        List<Info> optionalInfo = infoRepository.findByDateOfInfo(today);
+        List<Info> optionalInfo = infoRepository.getByDateOfInfo(today);
 
 
         if (optionalInfo.size() > 0) {
@@ -74,6 +73,17 @@ public class InfoRepositoryTest {
                 Info newInfo = new Info();
                 newInfo.setDateOfInfo(today);
                 newInfo.setAnswer(todayAnswer);
+
+                max = 5;
+                min = 2;
+                numberOfElements = random.nextInt((max - min) + 1) + min;
+                Map<String, BigDecimal> descriptionMap = new HashMap<>();
+                for (int i = 0; i < numberOfElements; i++) {
+                    String stringInfo = faker.food().dish();
+                    BigDecimal digitalInfo = BigDecimal.valueOf(Double.valueOf(faker.commerce().price(10, 100)));
+                    descriptionMap.put(stringInfo, digitalInfo);
+                }
+                newInfo.setDetails(descriptionMap);
                 infoRepository.save(newInfo);
             }
         }

@@ -19,26 +19,23 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = NONE)
 @Rollback(false)
-public class VotesCounterRepositoryTest {
+public class CounterRepositoryTest {
 
     @Autowired
     private InfoRepository infoRepository;
 
     @Autowired
-    private DescriptionRepository descriptionRepository;
-
-    @Autowired
     private AnswerRepository answerRepository;
 
     @Autowired
-    private VotesCounterRepository votesCounterRepository;
+    private CounterRepository counterRepository;
 
     @Autowired
     private TestEntityManager entityManager;
 
     @Test
     public void deleteAllVotes() {
-        votesCounterRepository.deleteAll();
+        counterRepository.deleteAll();
     }
 
 
@@ -52,7 +49,7 @@ public class VotesCounterRepositoryTest {
     @Test
     public void findByDate() {
         LocalDate today = LocalDate.now();
-        List<Info> optionalInfo = infoRepository.findByDateOfInfo(today);
+        List<Info> optionalInfo = infoRepository.getByDateOfInfo(today);
     }
 
 
@@ -63,7 +60,7 @@ public class VotesCounterRepositoryTest {
         LocalDate today = LocalDate.now();
 //        LocalDate today = LocalDate.now().minusDays(2);
 
-        List<Info> optionalInfo = infoRepository.findByDateOfInfo(today);
+        List<Info> optionalInfo = infoRepository.getByDateOfInfo(today);
 
 
         if (optionalInfo.size() > 0) {

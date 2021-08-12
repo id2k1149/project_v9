@@ -31,14 +31,14 @@ public class VoterRepositoryTest {
     private AnswerRepository answerRepository;
 
     @Autowired
-    private VotesCounterRepository votesCounterRepository;
+    private CounterRepository counterRepository;
 
     @Autowired
     private TestEntityManager entityManager;
 
     @Test
     public void deleteAllVotes() {
-        votesCounterRepository.deleteAll();
+        counterRepository.deleteAll();
     }
 
 
@@ -52,7 +52,7 @@ public class VoterRepositoryTest {
     @Test
     public void findByDate() {
         LocalDate today = LocalDate.now();
-        List<Info> optionalInfo = infoRepository.findByDateOfInfo(today);
+        List<Info> optionalInfo = infoRepository.getByDateOfInfo(today);
     }
 
 
@@ -63,7 +63,7 @@ public class VoterRepositoryTest {
         LocalDate today = LocalDate.now();
 //        LocalDate today = LocalDate.now().minusDays(2);
 
-        List<Info> optionalInfo = infoRepository.findByDateOfInfo(today);
+        List<Info> optionalInfo = infoRepository.getByDateOfInfo(today);
 
 
         if (optionalInfo.size() > 0) {

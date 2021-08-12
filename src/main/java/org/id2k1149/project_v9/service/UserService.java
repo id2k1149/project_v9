@@ -1,11 +1,10 @@
 package org.id2k1149.project_v9.service;
 
-import org.id2k1149.project_v9.exception.BadRequestException;
-import org.id2k1149.project_v9.exception.NotFoundException;
+import org.id2k1149.project_v9.util.exception.BadRequestException;
+import org.id2k1149.project_v9.util.exception.NotFoundException;
 import org.id2k1149.project_v9.model.Role;
 import org.id2k1149.project_v9.model.User;
 import org.id2k1149.project_v9.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,12 +18,11 @@ import java.util.Optional;
 @Transactional
 public class UserService {
 
-    private final static String NOT_FOUND = "User with id %d does not exist";
+    private final static String NOT_FOUND = "user with name %s is not found";
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
     public UserService(UserRepository userRepository,
                        BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
@@ -32,9 +30,6 @@ public class UserService {
     }
 
     public User findByUsername(String username) throws UsernameNotFoundException {
-        if (userRepository.findUserByUsername(username) == null) {
-            throw new NotFoundException("The name " + username + "is not found ");
-        }
         return userRepository.findUserByUsername(username);
     }
 
@@ -46,7 +41,7 @@ public class UserService {
         if (userRepository.findById(id).isPresent()) {
             return userRepository.getById(id);
         } else {
-            throw new NotFoundException(String.format(NOT_FOUND, id));
+            throw new NotFoundException(id + " does not exist");
         }
     }
 
@@ -68,11 +63,15 @@ public class UserService {
     @Transactional
     public void updateUser(User user,
                            Long id
-                            ) {
-        if (userRepository.findById(id).isEmpty()) {
-            throw new NotFoundException(String.format(NOT_FOUND, id));
+    ) {
+        User userToUpdate;
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty()) {
+            throw new NotFoundException(
+                    "user with id " + id + " does not exist");
+        } else {
+            userToUpdate = optionalUser.get();
         }
-        User userToUpdate = userRepository.getById(id);
 
         String newName = user.getUsername();
         if (newName != null && newName.length() > 0 && !Objects.equals(userToUpdate.getUsername(), newName)) {
@@ -80,12 +79,14 @@ public class UserService {
         }
 
         String newPassword = user.getPassword();
-        if (newPassword != null) {
-            assert newName != null;
-            if (newName.length() > 7 && !Objects.equals(userToUpdate.getPassword(), newPassword)) {
-                String encodedPassword = bCryptPasswordEncoder.encode(newPassword);
-                userToUpdate.setPassword(encodedPassword);
-            }
+        if (newPassword != null && newPassword.length() > 5) {
+            String encodedPassword = bCryptPasswordEncoder.encode(newPassword);
+            userToUpdate.setPassword(encodedPassword);
+        }
+
+        Role newRole = user.getRole();
+        if (newRole != null) {
+            userToUpdate.setRole(newRole);
         }
 
         userRepository.save(userToUpdate);
@@ -93,7 +94,7 @@ public class UserService {
 
     public void deleteUser(Long id) {
         if(userRepository.findById(id).isEmpty()) {
-            throw new NotFoundException(String.format(NOT_FOUND, id));
+            throw new NotFoundException(id + " does not exists");
         }
         userRepository.deleteById(id);
     }
