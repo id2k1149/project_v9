@@ -63,8 +63,8 @@
         <h1> Where to have a lunch? </h1>
     </div>
 
-    <c:if test="${error_message != null}">
-        <p><strong>${error_message}</strong></p>
+    <c:if test="${error != null}">
+        <p><strong>${error}</strong></p>
     </c:if>
 
     <h1>${error_message}</h1>

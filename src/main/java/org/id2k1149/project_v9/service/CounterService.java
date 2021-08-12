@@ -1,16 +1,11 @@
 package org.id2k1149.project_v9.service;
 
 import org.id2k1149.project_v9.model.Answer;
-import org.id2k1149.project_v9.model.User;
-import org.id2k1149.project_v9.model.Voter;
 import org.id2k1149.project_v9.model.VotesCounter;
 import org.id2k1149.project_v9.repository.CounterRepository;
 import org.id2k1149.project_v9.util.exception.NotFoundException;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -68,6 +63,10 @@ public class CounterService {
     public void vote(VotesCounter votesCounter) {
         VotesCounter newVotesCounter = new VotesCounter();
         Answer newAnswer = votesCounter.getAnswer();
+
+
+
+
         int votes = 0;
         Optional<VotesCounter> optionalVotesCounter = counterRepository
                 .findByVotesDateAndAnswer(LocalDate.now(), newAnswer);
@@ -79,7 +78,7 @@ public class CounterService {
         newVotesCounter.setAnswer(newAnswer);
         newVotesCounter.setVotes(votes);
         counterRepository.save(newVotesCounter);
-        voterService.voterCheck(newAnswer);
+        voterService.checkVoter(newAnswer);
     }
 
     public List<VotesCounter> getResult() {

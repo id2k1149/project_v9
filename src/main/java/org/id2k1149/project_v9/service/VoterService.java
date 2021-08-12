@@ -67,38 +67,36 @@ public class VoterService {
         voterRepository.deleteById(id);
     }
 
-    public void voterCheck(Answer newAnswer) {
+    public void checkVoter(Answer newAnswer) {
+            Optional<Voter> optionalVoter = checkUser();
+            Voter voter = new Voter();
+            if (optionalVoter.isPresent()) {
+                voter = optionalVoter.get();
+                Answer voterAnswer = voter.getAnswer();
+                VotesCounter oldVotesCounter = counterRepository
+                        .findByVotesDateAndAnswer(LocalDate.now(), voterAnswer)
+                        .get();
+                int votes = oldVotesCounter.getVotes() - 1;
+                oldVotesCounter.setVotes(votes);
+                counterRepository.save(oldVotesCounter);
+
+            voter.setAnswer(newAnswer);
+            voterRepository.save(voter);
+        }
+    }
+
+    public Optional<Voter> checkUser() {
         Object principal = SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
-        String username;
-
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
+        String username = principal instanceof UserDetails ? ((UserDetails) principal).getUsername() : principal.toString();
 
         User user = userRepository.findUserByUsername(username);
 
         Voter voter = new Voter();
         voter.setUser(user);
 
-        Optional<Voter> optionalVoter = voterRepository
-                .findByUserAndVotesDateAndAnswer(user, LocalDate.now(), newAnswer);
-        if (optionalVoter.isPresent()) {
-            voter = optionalVoter.get();
-            Answer voterAnswer = voter.getAnswer();
-            VotesCounter oldVotesCounter = counterRepository
-                    .findByVotesDateAndAnswer(LocalDate.now(), voterAnswer)
-                    .get();
-            int votes = oldVotesCounter.getVotes() - 1;
-            oldVotesCounter.setVotes(votes);
-            counterRepository.save(oldVotesCounter);
-        }
-        voter.setAnswer(newAnswer);
-        voterRepository.save(voter);
+        return voterRepository.findByUserAndVotesDate(user, LocalDate.now());
     }
-
 }

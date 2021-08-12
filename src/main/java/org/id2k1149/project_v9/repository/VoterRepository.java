@@ -13,5 +13,6 @@ import java.util.Optional;
 @Repository
 @Transactional(readOnly = true)
 public interface VoterRepository extends JpaRepository<Voter, Long> {
-    Optional<Voter> findByUserAndVotesDateAndAnswer(User user, LocalDate localDate, Answer answer);
+    Optional<Voter> findByUserAndVotesDate(User user, LocalDate localDate);
+
 }
