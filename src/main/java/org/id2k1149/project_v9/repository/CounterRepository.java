@@ -6,10 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Repository
 @Transactional(readOnly = true)
 public interface CounterRepository extends JpaRepository<VotesCounter, Long> {
-    Optional<VotesCounter> findByAnswer(Answer answer);
+    Optional<VotesCounter> findByVotesDateAndAnswer(LocalDate localDate, Answer answer);
 }

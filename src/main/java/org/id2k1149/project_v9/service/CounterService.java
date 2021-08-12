@@ -1,21 +1,31 @@
 package org.id2k1149.project_v9.service;
 
+import org.id2k1149.project_v9.model.Answer;
+import org.id2k1149.project_v9.model.User;
+import org.id2k1149.project_v9.model.Voter;
 import org.id2k1149.project_v9.model.VotesCounter;
 import org.id2k1149.project_v9.repository.CounterRepository;
 import org.id2k1149.project_v9.util.exception.NotFoundException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
 public class CounterService {
 
     private final CounterRepository counterRepository;
+    private final VoterService voterService;
 
-    public CounterService(CounterRepository counterRepository) {
+    public CounterService(CounterRepository counterRepository,
+                          VoterService voterService) {
         this.counterRepository = counterRepository;
+        this.voterService = voterService;
     }
 
     public List<VotesCounter> getCounters() {
@@ -52,5 +62,19 @@ public class CounterService {
     }
 
     public void vote(VotesCounter votesCounter) {
+        VotesCounter newVotesCounter = new VotesCounter();
+        Answer newAnswer = votesCounter.getAnswer();
+        int votes = 0;
+        Optional<VotesCounter> optionalVotesCounter = counterRepository
+                .findByVotesDateAndAnswer(LocalDate.now(), newAnswer);
+        if (optionalVotesCounter.isPresent()) {
+            newVotesCounter = optionalVotesCounter.get();
+            votes = newVotesCounter.getVotes();
+        }
+        votes += 1;
+        newVotesCounter.setAnswer(newAnswer);
+        newVotesCounter.setVotes(votes);
+        counterRepository.save(newVotesCounter);
+        voterService.voterCheck(newAnswer);
     }
 }

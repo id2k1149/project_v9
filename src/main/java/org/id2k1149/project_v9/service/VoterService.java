@@ -1,24 +1,37 @@
 package org.id2k1149.project_v9.service;
 
+import org.id2k1149.project_v9.model.Answer;
+import org.id2k1149.project_v9.model.User;
 import org.id2k1149.project_v9.model.Voter;
+import org.id2k1149.project_v9.model.VotesCounter;
 import org.id2k1149.project_v9.repository.AnswerRepository;
+import org.id2k1149.project_v9.repository.CounterRepository;
+import org.id2k1149.project_v9.repository.UserRepository;
 import org.id2k1149.project_v9.repository.VoterRepository;
 import org.id2k1149.project_v9.util.exception.NotFoundException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
 public class VoterService {
 
     private final VoterRepository voterRepository;
-    private final AnswerRepository answerRepository;
+    private final UserRepository userRepository;
+    private final CounterRepository counterRepository;
 
-    public VoterService(VoterRepository voterRepository, AnswerRepository answerRepository) {
+    public VoterService(VoterRepository voterRepository,
+                        UserRepository userRepository,
+                        CounterRepository counterRepository) {
         this.voterRepository = voterRepository;
-        this.answerRepository = answerRepository;
+        this.userRepository = userRepository;
+        this.counterRepository = counterRepository;
     }
 
     public List<Voter> getVoters() {
@@ -52,6 +65,40 @@ public class VoterService {
             throw new NotFoundException(id + " does not exists");
         }
         voterRepository.deleteById(id);
+    }
+
+    public void voterCheck(Answer newAnswer) {
+        Object principal = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        String username;
+
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+        User user = userRepository.findUserByUsername(username);
+
+        Voter voter = new Voter();
+        voter.setUser(user);
+
+        Optional<Voter> optionalVoter = voterRepository
+                .findByUserAndVotesDateAndAnswer(user, LocalDate.now(), newAnswer);
+        if (optionalVoter.isPresent()) {
+            voter = optionalVoter.get();
+            Answer voterAnswer = voter.getAnswer();
+            VotesCounter oldVotesCounter = counterRepository
+                    .findByVotesDateAndAnswer(LocalDate.now(), voterAnswer)
+                    .get();
+            int votes = oldVotesCounter.getVotes() - 1;
+            oldVotesCounter.setVotes(votes);
+            counterRepository.save(oldVotesCounter);
+        }
+        voter.setAnswer(newAnswer);
+        voterRepository.save(voter);
     }
 
 }
