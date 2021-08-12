@@ -45,10 +45,9 @@ public class UserWebController {
         }
 
         userService.addUser(userForm);
-
         securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
 
-        return "welcome";
+        return "redirect:/vote";
     }
 
     @GetMapping("/login")

@@ -10,10 +10,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -76,5 +80,25 @@ public class CounterService {
         newVotesCounter.setVotes(votes);
         counterRepository.save(newVotesCounter);
         voterService.voterCheck(newAnswer);
+    }
+
+    public List<VotesCounter> getResult() {
+        List<VotesCounter> votesCounterList = counterRepository.findByVotesDate(LocalDate.now());
+
+        List<VotesCounter> sortedList = votesCounterList.stream()
+                .sorted(Comparator.comparingInt(VotesCounter::getVotes).reversed())
+                .collect(Collectors.toList());
+
+        VotesCounter bestResult = sortedList
+                .stream()
+                .max(Comparator.comparing(VotesCounter::getVotes))
+                .orElseThrow(NoSuchElementException::new);
+
+        int maxVotes = bestResult.getVotes();
+        String result = bestResult.getAnswer().toString();
+
+
+
+        return sortedList;
     }
 }

@@ -8,6 +8,7 @@ import org.id2k1149.project_v9.util.AnswerUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDate;
@@ -37,41 +38,16 @@ public class VoteWebController {
         return "vote";
     }
 
-
-
     @PostMapping("/vote")
     public String vote(VotesCounter votesCounter) {
         counterService.vote(votesCounter);
         return "redirect:/result";
     }
 
-    /*
-
-    @GetMapping("/result/{id}")
-    public String result(@PathVariable("id") int id, Model model) {
-        Question question = questionRepository.findById((long) id).get();
-        List<VotesCounter> votesCounterList = votesCounterRepository.findByQuestion(question);
-
-        List<VotesCounter> sortedList = votesCounterList.stream()
-                .sorted(Comparator.comparingInt(VotesCounter::getVotes).reversed())
-                .collect(Collectors.toList());
-
-        VotesCounter bestResult = sortedList
-                .stream()
-                .max(Comparator.comparing(VotesCounter::getVotes))
-                .orElseThrow(NoSuchElementException::new);
-
-        int maxVotes = bestResult.getVotes();
-        String result = bestResult.getAnswer().toString();
-        question.setResult(result);
-        questionRepository.save(question);
-
+    @GetMapping("/result")
+    public String result(Model model) {
+        List<VotesCounter> sortedList = counterService.getResult();
         model.addAttribute("sortedList", sortedList);
-        model.addAttribute("question", question);
-        model.addAttribute("maxVotes", maxVotes);
-
         return "result";
     }
-
-     */
 }

@@ -60,7 +60,7 @@
                         sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                     <div>
                         <c:if test="${pageContext.request.userPrincipal.name != null}">
-                            <a href="${contextPath}/questions" class="btn btn-primary mr-2 mb-2">
+                            <a href="${contextPath}/vote" class="btn btn-primary mr-2 mb-2">
                                 Vote
                             </a>
                         </c:if>
