@@ -17,7 +17,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import static org.id2k1149.project_v9.util.TimeUtil.checkTime;
 
 @Controller
 public class VoteWebController {
@@ -42,21 +41,17 @@ public class VoteWebController {
     @GetMapping("/vote")
     public String survey(Model model) {
         Optional<Voter> optionalVoter = voterService.checkUser();
-        if (optionalVoter.isPresent()) {
-                model.addAttribute("error", "Your voted today.");
-        }
-        List<AnswerTo> answersList = AnswerUtil
-                .getAnswersTo(infoService.getTodayAnswersInfo(),
-                        infoService.getByDate(LocalDate.now()));
+        if (optionalVoter.isPresent()) model.addAttribute("error", "Your voted today.");
 
-        model.addAttribute("answersList", answersList);
+        List<AnswerTo> answersList = counterService.survey();
+
+        if (answersList.size() > 0) model.addAttribute("answersList", answersList);
+        else model.addAttribute("error", "It is too late too vote.");
         return "vote";
     }
 
     @PostMapping("/vote")
     public String vote(VotesCounter votesCounter) {
-        checkTime();
-
         counterService.vote(votesCounter);
         return "redirect:/result";
     }

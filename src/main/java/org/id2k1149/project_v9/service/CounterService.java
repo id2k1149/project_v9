@@ -3,15 +3,15 @@ package org.id2k1149.project_v9.service;
 import org.id2k1149.project_v9.model.Answer;
 import org.id2k1149.project_v9.model.VotesCounter;
 import org.id2k1149.project_v9.repository.CounterRepository;
+import org.id2k1149.project_v9.to.AnswerTo;
+import org.id2k1149.project_v9.util.AnswerUtil;
 import org.id2k1149.project_v9.util.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Comparator;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.time.LocalTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,11 +20,14 @@ public class CounterService {
 
     private final CounterRepository counterRepository;
     private final VoterService voterService;
+    private final InfoService infoService;
 
     public CounterService(CounterRepository counterRepository,
-                          VoterService voterService) {
+                          VoterService voterService,
+                          InfoService infoService) {
         this.counterRepository = counterRepository;
         this.voterService = voterService;
+        this.infoService = infoService;
     }
 
     public List<VotesCounter> getCounters() {
@@ -60,12 +63,16 @@ public class CounterService {
         counterRepository.deleteById(id);
     }
 
+    public List<AnswerTo> survey() {
+        List<AnswerTo> answerToList = new ArrayList<>();
+        if (LocalTime.now().getHour() < 23) answerToList = AnswerUtil.getAnswersTo(infoService.getTodayAnswersInfo(),
+                infoService.getByDate(LocalDate.now()));
+        return answerToList;
+    }
+
     public void vote(VotesCounter votesCounter) {
         VotesCounter newVotesCounter = new VotesCounter();
         Answer newAnswer = votesCounter.getAnswer();
-
-
-
 
         int votes = 0;
         Optional<VotesCounter> optionalVotesCounter = counterRepository
@@ -100,4 +107,6 @@ public class CounterService {
 
         return sortedList;
     }
+
+
 }
