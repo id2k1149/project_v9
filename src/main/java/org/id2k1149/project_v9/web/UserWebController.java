@@ -62,8 +62,8 @@ public class UserWebController {
         return "auth/login";
     }
 
-    @GetMapping({"/", "/welcome"})
+    @GetMapping({"/", "/index"})
     public String welcome(Model model) {
-        return "welcome";
+        return "index";
     }
 }
