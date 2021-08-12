@@ -51,46 +51,5 @@ public class Info {
         this.details = infoMap;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Info)) return false;
-        Info info = (Info) o;
-        return getId().equals(info.getId()) && getDateOfInfo().equals(info.getDateOfInfo()) && getAnswer().equals(info.getAnswer()) && getDetails().equals(info.getDetails());
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getDateOfInfo(), getAnswer(), getDetails());
-    }
-
-    @Override
-    public String toString() {
-        return "Info{" +
-                "id=" + id +
-                ", dateOfInfo=" + dateOfInfo +
-                ", answer=" + answer +
-                ", infoMap=" + infoMap +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Info)) return false;
-        Info info = (Info) o;
-        return getId().equals(info.getId())
-                && getDateOfInfo().equals(info.getDateOfInfo())
-                && getAnswer().equals(info.getAnswer())
-                && Objects.equals(getInfoMap(),
-                info.getInfoMap());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(),
-                getDateOfInfo(),
-                getAnswer(),
-                getInfoMap());
-    }
 }

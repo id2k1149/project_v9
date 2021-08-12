@@ -46,16 +46,4 @@ public class Answer {
         return title;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Answer)) return false;
-        Answer answer = (Answer) o;
-        return getId().equals(answer.getId()) && getTitle().equals(answer.getTitle());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getTitle());
-    }
 }

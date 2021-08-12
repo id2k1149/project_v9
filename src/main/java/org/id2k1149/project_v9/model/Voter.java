@@ -1,6 +1,7 @@
 package org.id2k1149.project_v9.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 public class Voter {
