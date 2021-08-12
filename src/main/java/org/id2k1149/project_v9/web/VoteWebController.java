@@ -7,13 +7,11 @@ import org.id2k1149.project_v9.service.CounterService;
 import org.id2k1149.project_v9.service.InfoService;
 import org.id2k1149.project_v9.service.VoterService;
 import org.id2k1149.project_v9.to.AnswerTo;
-import org.id2k1149.project_v9.util.AnswerUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,13 +38,14 @@ public class VoteWebController {
 
     @GetMapping("/vote")
     public String survey(Model model) {
-        Optional<Voter> optionalVoter = voterService.checkUser();
-        if (optionalVoter.isPresent()) model.addAttribute("error", "Your voted today.");
-
-        List<AnswerTo> answersList = counterService.survey();
-
-        if (answersList.size() > 0) model.addAttribute("answersList", answersList);
-        else model.addAttribute("error", "It is too late too vote.");
+        List<AnswerTo> answersList = counterService.checkTime();
+        if (answersList.size() > 0) {
+            model.addAttribute("answersList", answersList);
+            Optional<Voter> optionalVoter = voterService.checkUser();
+            if (optionalVoter.isPresent()) model.addAttribute("error1", "Your voted today.");
+        } else {
+            model.addAttribute("error2", "It is too late to vote.");
+        }
         return "vote";
     }
 

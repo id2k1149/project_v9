@@ -63,12 +63,12 @@
         <h1> Where to have a lunch? </h1>
     </div>
 
-    <c:if test="${error != null}">
-        <p><strong>${error}</strong></p>
+    <c:if test="${error1 != null}">
+        <p><strong>${error1}</strong></p>
     </c:if>
-
-    <h1>${error_message}</h1>
-
+    <c:if test="${error2 != null}">
+        <p><strong>${error2}</strong></p>
+    </c:if>
 
     <form action="vote" method="post">
 
@@ -88,7 +88,15 @@
         </c:forEach>
         <br>
         <br>
-        <input type="submit" class="btn btn-primary" value="Vote"/>
+        <c:if test="${error2 == null}">
+            <input type="submit" class="btn btn-primary" value="Vote"/>
+        </c:if>
+        <c:if test="${error2 != null}">
+            <a href="${contextPath}/result" class="btn btn-primary mr-2 mb-2">
+                Result
+            </a>
+        </c:if>
+
     </form>
 
 </div>

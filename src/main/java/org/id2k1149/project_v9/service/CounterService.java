@@ -63,9 +63,9 @@ public class CounterService {
         counterRepository.deleteById(id);
     }
 
-    public List<AnswerTo> survey() {
+    public List<AnswerTo> checkTime() {
         List<AnswerTo> answerToList = new ArrayList<>();
-        if (LocalTime.now().getHour() < 23) answerToList = AnswerUtil.getAnswersTo(infoService.getTodayAnswersInfo(),
+        if (LocalTime.now().getHour() < 11) answerToList = AnswerUtil.getAnswersTo(infoService.getTodayAnswersInfo(),
                 infoService.getByDate(LocalDate.now()));
         return answerToList;
     }
@@ -100,13 +100,6 @@ public class CounterService {
                 .max(Comparator.comparing(VotesCounter::getVotes))
                 .orElseThrow(NoSuchElementException::new);
 
-        int maxVotes = bestResult.getVotes();
-        String result = bestResult.getAnswer().toString();
-
-
-
         return sortedList;
     }
-
-
 }
