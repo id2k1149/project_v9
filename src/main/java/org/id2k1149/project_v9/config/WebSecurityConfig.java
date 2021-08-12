@@ -1,4 +1,4 @@
-package org.id2k1149.project_v9;
+package org.id2k1149.project_v9.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf().disable()
 
             .authorizeRequests()
-                .antMatchers("/", "/index", "/resources/**", "/registration").permitAll()
+                .antMatchers("/", "/welcome", "/resources/**", "/registration").permitAll()
                 .antMatchers("/api/v1/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -38,6 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .formLogin()
                 .loginPage("/login")
                 .permitAll()
+                .defaultSuccessUrl("/vote", true)
                 .and()
 
             .logout()

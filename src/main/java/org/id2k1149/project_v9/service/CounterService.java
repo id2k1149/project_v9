@@ -50,4 +50,7 @@ public class CounterService {
         }
         counterRepository.deleteById(id);
     }
+
+    public void vote(VotesCounter votesCounter) {
+    }
 }

@@ -64,6 +64,6 @@ public class UserWebController {
 
     @GetMapping({"/", "/index"})
     public String welcome(Model model) {
-        return "index";
+        return "welcome";
     }
 }

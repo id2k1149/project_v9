@@ -21,9 +21,6 @@ public class InfoTo extends BaseTo {
 
     @Override
     public String toString() {
-        return "InfoTo{" +
-                "id=" + id +
-                ", details=" + details +
-                '}';
+        return details.toString();
     }
 }
