@@ -1,7 +1,5 @@
 package org.id2k1149.project_v9.to;
 
-import org.id2k1149.project_v9.HasId;
-
 public class BaseTo implements HasId {
     protected Long id;
 
