@@ -1,11 +1,13 @@
 package org.id2k1149.project_v9.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Counter {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -48,8 +50,4 @@ public class Counter {
     public void setVotes(Integer votes) {
         this.votes = votes;
     }
-
-
-
-
 }

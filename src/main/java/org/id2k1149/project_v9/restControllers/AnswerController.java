@@ -61,5 +61,4 @@ public class AnswerController {
     public AnswerTo getAllInfoForAnswer(@PathVariable("id") Long id) {
         return answerService.getAllInfoForAnswer(id);
     }
-
 }

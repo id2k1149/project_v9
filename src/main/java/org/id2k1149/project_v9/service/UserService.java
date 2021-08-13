@@ -8,6 +8,8 @@ import org.id2k1149.project_v9.model.Voter;
 import org.id2k1149.project_v9.repository.UserRepository;
 import org.id2k1149.project_v9.repository.VoterRepository;
 import org.id2k1149.project_v9.to.UserTo;
+import org.id2k1149.project_v9.to.VoterTo;
+import org.id2k1149.project_v9.util.VoterUtil;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,13 +24,9 @@ import java.util.Optional;
 @Service
 @Transactional
 public class UserService {
-
-    private final static String NOT_FOUND = "user with name %s is not found";
-
     private final UserRepository userRepository;
     private final VoterRepository voterRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
 
     public UserService(UserRepository userRepository,
                        VoterRepository voterRepository,
@@ -121,7 +119,8 @@ public class UserService {
     public UserTo getUserAllVotes(Long id) {
         User user = getUser(id);
         List<Voter> voterList = voterRepository.getByUser(user);
+        List<VoterTo> voterToList = VoterUtil.getVoterTo(user, voterList);
 
-        return new UserTo(id, user.getUsername(), voterList);
+        return new UserTo(id, user.getUsername(), voterToList);
     }
 }

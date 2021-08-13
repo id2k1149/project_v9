@@ -50,5 +50,4 @@ public class UserController {
     public UserTo getUserVotes(@PathVariable("id") Long id) {
         return userService.getUserAllVotes(id);
     }
-
 }

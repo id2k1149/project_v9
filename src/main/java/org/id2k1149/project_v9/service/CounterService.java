@@ -14,17 +14,14 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class CounterService {
-
     private final CounterRepository counterRepository;
     private final VoterService voterService;
-    private final InfoService infoService;
 
     public CounterService(CounterRepository counterRepository,
-                          VoterService voterService,
-                          InfoService infoService) {
+                          VoterService voterService
+                          ) {
         this.counterRepository = counterRepository;
         this.voterService = voterService;
-        this.infoService = infoService;
     }
 
     public List<Counter> getCounters() {

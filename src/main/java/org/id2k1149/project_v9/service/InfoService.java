@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class InfoService {
-
     private final InfoRepository infoRepository;
     private final AnswerRepository answerRepository;
 
@@ -78,13 +77,10 @@ public class InfoService {
                 .collect(Collectors.toList());
     }
 
-
     public List<AnswerTo> checkTime() {
         List<AnswerTo> answerToList = new ArrayList<>();
         if (LocalTime.now().getHour() < 24) answerToList = AnswerUtil.getAnswersTo(getTodayAnswersInfo(),
                 getByDate(LocalDate.now()));
         return answerToList;
     }
-
-
 }

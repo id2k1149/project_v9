@@ -1,5 +1,7 @@
 package org.id2k1149.project_v9.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,6 +9,7 @@ import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -45,5 +48,4 @@ public class Answer {
     public String toString() {
         return title;
     }
-
 }

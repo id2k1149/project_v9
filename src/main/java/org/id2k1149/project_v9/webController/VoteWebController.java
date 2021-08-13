@@ -17,7 +17,6 @@ import java.util.Optional;
 
 @Controller
 public class VoteWebController {
-
     private final InfoService infoService;
     private final CounterService counterService;
     private final VoterService voterService;
