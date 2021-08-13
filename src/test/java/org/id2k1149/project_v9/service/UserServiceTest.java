@@ -1,7 +1,7 @@
 package org.id2k1149.project_v9.service;
 
-import org.id2k1149.project_v9.util.exception.BadRequestException;
-import org.id2k1149.project_v9.util.exception.NotFoundException;
+import org.id2k1149.project_v9.exception.BadRequestException;
+import org.id2k1149.project_v9.exception.NotFoundException;
 import org.id2k1149.project_v9.model.User;
 import org.id2k1149.project_v9.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -17,7 +17,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;

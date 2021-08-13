@@ -1,4 +1,4 @@
-package org.id2k1149.project_v9.web;
+package org.id2k1149.project_v9.webController;
 
 import org.id2k1149.project_v9.model.Voter;
 import org.id2k1149.project_v9.model.VotesCounter;
@@ -38,7 +38,7 @@ public class VoteWebController {
 
     @GetMapping("/vote")
     public String survey(Model model) {
-        List<AnswerTo> answersList = counterService.checkTime();
+        List<AnswerTo> answersList = infoService.checkTime();
         if (answersList.size() > 0) {
             model.addAttribute("answersList", answersList);
             Optional<Voter> optionalVoter = voterService.checkUser();
@@ -51,6 +51,11 @@ public class VoteWebController {
 
     @PostMapping("/vote")
     public String vote(VotesCounter votesCounter) {
+        if (answerService.checkAnswer(votesCounter.getAnswer())) {
+            return "redirect:/vote";
+        }
+
+
         counterService.vote(votesCounter);
         return "redirect:/result";
     }

@@ -5,11 +5,8 @@ import org.id2k1149.project_v9.model.User;
 import org.id2k1149.project_v9.model.Voter;
 import org.id2k1149.project_v9.model.VotesCounter;
 import org.id2k1149.project_v9.repository.CounterRepository;
-import org.id2k1149.project_v9.repository.UserRepository;
 import org.id2k1149.project_v9.repository.VoterRepository;
-import org.id2k1149.project_v9.util.exception.NotFoundException;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.id2k1149.project_v9.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

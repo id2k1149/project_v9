@@ -56,25 +56,20 @@
     </c:if>
     <div>
         <h1> Where to have a lunch? </h1>
-
         <c:if test="${error != null}">
             <p><strong>${error}</strong></p>
         </c:if>
-
         <c:if test="${error == null}">
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Answers</th>
                     <th>Votes</th>
                 </tr>
                 </thead>
-
                 <tbody>
                 <c:forEach items="${sortedList}" var="result">
                     <tr>
-                        <td>${result.id}</td>
                         <td>${result.answer}</td>
                         <td>${result.votes}</td>
                     </tr>
@@ -83,12 +78,6 @@
             </table>
         </c:if>
     </div>
-
-
-
-
-
-
 </div>
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
