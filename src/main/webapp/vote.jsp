@@ -17,10 +17,10 @@
         </div>
 
         <c:if test="${error1 != null}">
-            <p style="color:darkred"><strong>${error1}</strong></p>
+            <p style="color:#0d6efd"><strong>${error1}</strong></p>
         </c:if>
         <c:if test="${error2 != null}">
-            <p class="alert-danger"><strong>${error2}</strong></p>
+            <p style="color:#0d6efd"><strong>${error2}</strong></p>
         </c:if>
 
         <form action="vote" method="post">
