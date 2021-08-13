@@ -65,7 +65,7 @@ public class CounterService {
 
     public List<AnswerTo> checkTime() {
         List<AnswerTo> answerToList = new ArrayList<>();
-        if (LocalTime.now().getHour() < 11) answerToList = AnswerUtil.getAnswersTo(infoService.getTodayAnswersInfo(),
+        if (LocalTime.now().getHour() < 23) answerToList = AnswerUtil.getAnswersTo(infoService.getTodayAnswersInfo(),
                 infoService.getByDate(LocalDate.now()));
         return answerToList;
     }

@@ -58,7 +58,12 @@ public class VoteWebController {
     @GetMapping("/result")
     public String result(Model model) {
         List<VotesCounter> sortedList = counterService.getResult();
-        model.addAttribute("sortedList", sortedList);
+        if (sortedList.size() > 0) {
+            model.addAttribute("sortedList", sortedList);
+        } else {
+            model.addAttribute("error", "There is no result");
+        }
+
         return "result";
     }
 }
