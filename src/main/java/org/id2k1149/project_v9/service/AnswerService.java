@@ -74,7 +74,7 @@ public class AnswerService {
 
     public AnswerTo getAllInfoForAnswer(Long id) {
         Answer answer = getAnswer(id);
-        List<Info> infoList = infoRepository.findAll();
+        List<Info> infoList = infoRepository.getByAnswer(answer);
         List<InfoTo> infoToList = InfoUtil.getInfoTo(answer, infoList);
         return new AnswerTo(id, answer.getTitle(), infoToList);
     }

@@ -79,6 +79,7 @@ public class CounterService {
 
     public List<VotesCounter> getResult() {
         List<VotesCounter> votesCounterList = counterRepository.findByDate(LocalDate.now());
+        if (votesCounterList.size() == 0) return votesCounterList;
 
         List<VotesCounter> sortedList = votesCounterList.stream()
                 .sorted(Comparator.comparingInt(VotesCounter::getVotes).reversed())
