@@ -1,6 +1,6 @@
 # project_v9
 
-A voting system for deciding where to have lunch.
+A voting system
 
 2 types of users: admin and regular users
 
