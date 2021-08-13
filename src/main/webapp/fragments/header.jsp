@@ -1,19 +1,33 @@
-<%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
-<nav class="navbar navbar-dark bg-dark py-0">
+<!-- Responsive navbar-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a href="meals" class="navbar-brand">
-            <img src="${contextPath}/resources/static/images/icon-meal.png">
-        </a>
-        <form class="form-inline my-2">
-            <a class="btn btn-info mr-1" href="">button1</a>
-            <a class="btn btn-primary" href="">
-                <span class="fa fa-sign-in"></span>
-            </a>
-        </form>
+        <a class="navbar-brand" href="#">Company polls</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link active" aria-current="page"
+                                        href="${contextPath}/welcome">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="${contextPath}/vote">Vote</a></li>
+                <li class="nav-item"><a class="nav-link" href="${contextPath}/result">Results</a></li>
+                <li class="nav-item">
+                    <c:if test="${pageContext.request.userPrincipal.name != null}">
+                        <form id="logoutForm" method="POST" action="${contextPath}/logout">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        </form>
+                        <a class="nav-link"
+                           onclick="document.forms['logoutForm'].submit()">${pageContext.request.userPrincipal.name}|Logout</a>
+                    </c:if>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>
+<br>
+<br>
 
