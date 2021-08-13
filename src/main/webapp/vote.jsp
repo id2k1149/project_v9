@@ -17,7 +17,7 @@
         </div>
 
         <c:if test="${error1 != null}">
-            <p class="alert-danger"><strong>${error1}</strong></p>
+            <p style="color:darkred"><strong>${error1}</strong></p>
         </c:if>
         <c:if test="${error2 != null}">
             <p class="alert-danger"><strong>${error2}</strong></p>
@@ -33,19 +33,22 @@
                        value="${answer.id}"
                 />
                 <label for="answer">${answer.title}</label>
-
+                <table class="table table-bordered" bgcolor="#708090">
+                    <thead>
+                    <tr>
+                        <th class="text-center">Menu</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${answer.infoTo.get(0).details}" var="entry">
+                        <tr>
+                            <td class="text-left">${entry.key} : ${entry.value}</td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
                 <br>
-                ${answer.infoTo}
-                <%--            <c:forEach items="${answer.title}" var="entry">--%>
-                <%--                ${entry.key} ${entry.value}--%>
-                <%--                <br>--%>
-                <%--            </c:forEach>--%>
-
-                <br>
-                <br>
-
             </c:forEach>
-            <br>
             <br>
             <c:if test="${error2 == null}">
                 <input type="submit" class="btn btn-primary" value="Vote"/>
