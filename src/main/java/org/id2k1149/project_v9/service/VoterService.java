@@ -17,7 +17,6 @@ import java.util.Optional;
 @Service
 @Transactional
 public class VoterService {
-
     private final VoterRepository voterRepository;
     private final CounterRepository counterRepository;
     private final UserService userService;

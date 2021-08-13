@@ -18,7 +18,6 @@ import java.util.Optional;
 @Service
 @Transactional
 public class AnswerService {
-
     private final AnswerRepository answerRepository;
     private final InfoRepository infoRepository;
 

@@ -5,7 +5,6 @@ import java.util.List;
 
 public class AnswerTo extends BaseTo {
     private final String title;
-
     private final List<InfoTo> info;
 
     @ConstructorProperties({"id", "info"})

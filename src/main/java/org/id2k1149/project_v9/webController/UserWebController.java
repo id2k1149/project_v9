@@ -14,12 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class UserWebController {
-
     private final UserService userService;
     private final SecurityService securityService;
     private final UserValidator userValidator;
 
-    @Autowired
     public UserWebController(UserService userService,
                              SecurityService securityService,
                              UserValidator userValidator) {

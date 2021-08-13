@@ -1,11 +1,14 @@
 package org.id2k1149.project_v9.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Map;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Info {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -49,6 +52,4 @@ public class Info {
     public void setDetails(Map<String, BigDecimal> infoMap) {
         this.details = infoMap;
     }
-
-
 }
