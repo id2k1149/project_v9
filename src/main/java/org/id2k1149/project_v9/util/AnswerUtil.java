@@ -7,7 +7,6 @@ import org.id2k1149.project_v9.to.InfoTo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class AnswerUtil {
     public static List<AnswerTo> getAnswersTo(List<Answer> answers, List<Info> infoList) {

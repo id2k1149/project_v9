@@ -4,7 +4,10 @@ import org.id2k1149.project_v9.exception.BadRequestException;
 import org.id2k1149.project_v9.exception.NotFoundException;
 import org.id2k1149.project_v9.model.Role;
 import org.id2k1149.project_v9.model.User;
+import org.id2k1149.project_v9.model.Voter;
 import org.id2k1149.project_v9.repository.UserRepository;
+import org.id2k1149.project_v9.repository.VoterRepository;
+import org.id2k1149.project_v9.to.UserTo;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,11 +26,15 @@ public class UserService {
     private final static String NOT_FOUND = "user with name %s is not found";
 
     private final UserRepository userRepository;
+    private final VoterRepository voterRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+
     public UserService(UserRepository userRepository,
+                       VoterRepository voterRepository,
                        BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
+        this.voterRepository = voterRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -109,5 +116,11 @@ public class UserService {
         String username = principal instanceof UserDetails ? ((UserDetails) principal).getUsername() : principal.toString();
 
         return userRepository.findUserByUsername(username);
+    }
+
+    public UserTo getUserVotes(Long id) {
+        User user = getUser(id);
+        List<Voter> voterList = voterRepository.findByUser(user);
+        return new UserTo(id, user.getUsername(), voterList);
     }
 }

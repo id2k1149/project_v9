@@ -72,10 +72,6 @@ public class AnswerService {
         answerRepository.deleteById(id);
     }
 
-    public boolean checkAnswer(Answer answer) {
-        return answerRepository.findById(answer.getId()).isEmpty();
-    }
-
     public AnswerTo getAllInfoForAnswer(Long id) {
         Answer answer = getAnswer(id);
         List<Info> infoList = infoRepository.findAll();

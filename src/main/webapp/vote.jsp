@@ -95,7 +95,12 @@
             <label for="answer">${answer.title}</label>
 
             <br>
-            ${answer.infoTo}
+            ${answer.infoTo.getDetails()}
+            <c:forEach items="${answer.title}" var="entry">
+                ${entry.key} ${entry.value}
+                <br>
+            </c:forEach>
+
             <br>
             <br>
 

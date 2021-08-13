@@ -2,7 +2,6 @@ package org.id2k1149.project_v9.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Objects;
 
 @Entity
 public class VotesCounter {
@@ -11,7 +10,7 @@ public class VotesCounter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate votesDate = LocalDate.now();
+    private LocalDate date = LocalDate.now();
 
     @ManyToOne
     private Answer answer;
@@ -26,12 +25,12 @@ public class VotesCounter {
         this.id = id;
     }
 
-    public LocalDate getVotesDate() {
-        return votesDate;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setVotesDate(LocalDate votesDate) {
-        this.votesDate = votesDate;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public Answer getAnswer() {

@@ -4,14 +4,13 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Map;
-import java.util.Objects;
 
 @Entity
 public class Info {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private LocalDate dateOfInfo = LocalDate.now();
+    private LocalDate date = LocalDate.now();
 
     @ManyToOne
     private Answer answer;
@@ -27,12 +26,12 @@ public class Info {
         this.id = id;
     }
 
-    public LocalDate getDateOfInfo() {
-        return dateOfInfo;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDateOfInfo(LocalDate dateOfInfo) {
-        this.dateOfInfo = dateOfInfo;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public Answer getAnswer() {

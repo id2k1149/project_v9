@@ -3,9 +3,6 @@ package org.id2k1149.project_v9.to;
 public class BaseTo implements HasId {
     protected Long id;
 
-    public BaseTo() {
-    }
-
     public BaseTo(Long id) {
         this.id = id;
     }

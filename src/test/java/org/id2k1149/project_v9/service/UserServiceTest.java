@@ -4,6 +4,7 @@ import org.id2k1149.project_v9.exception.BadRequestException;
 import org.id2k1149.project_v9.exception.NotFoundException;
 import org.id2k1149.project_v9.model.User;
 import org.id2k1149.project_v9.repository.UserRepository;
+import org.id2k1149.project_v9.repository.VoterRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,19 +30,20 @@ class UserServiceTest {
 
     private final Faker faker = new Faker();
 
-    @Mock private UserRepository testRepository;
+    @Mock private UserRepository userRepository;
+    private VoterRepository voterRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private UserService testUserService;
 
     @BeforeEach
     void setUp() {
         bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        testUserService = new UserService(testRepository, bCryptPasswordEncoder);
+        testUserService = new UserService(userRepository, voterRepository, bCryptPasswordEncoder);
     }
 
     @AfterEach
     void tearDown() {
-        testRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
@@ -69,7 +71,7 @@ class UserServiceTest {
         testUserService.getUsers();
 
         //then
-        verify(testRepository).findAll();
+        verify(userRepository).findAll();
 
     }
 
@@ -117,7 +119,7 @@ class UserServiceTest {
 
         //then
         ArgumentCaptor<User> testUserArgumentCaptor = ArgumentCaptor.forClass(User.class);
-        verify(testRepository).save(testUserArgumentCaptor.capture());
+        verify(userRepository).save(testUserArgumentCaptor.capture());
         User captorUser = testUserArgumentCaptor.getValue();
         assertThat(captorUser).isEqualTo(testUser1);
     }
@@ -149,7 +151,7 @@ class UserServiceTest {
         assertThatThrownBy(() -> testUserService.addUser(newUser))
                 .isInstanceOf(BadRequestException.class);
 
-        verify(testRepository, never()).save(newUser);
+        verify(userRepository, never()).save(newUser);
 
     }
 
@@ -162,20 +164,20 @@ class UserServiceTest {
     void deleteUser() {
         // given
         long id = 10;
-        given(testRepository.existsById(id))
+        given(userRepository.existsById(id))
                 .willReturn(true);
         // when
         testUserService.deleteUser(id);
 
         // then
-        verify(testRepository).deleteById(id);
+        verify(userRepository).deleteById(id);
     }
 
     @Test
     void cantDeleteIfUserNotFound() {
         // given
         long id = 10;
-        given(testRepository.existsById(id))
+        given(userRepository.existsById(id))
                 .willReturn(false);
         // when
         // then
@@ -183,6 +185,6 @@ class UserServiceTest {
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("User with id " + id + " does not exists");
 
-        verify(testRepository, never()).deleteById(any());
+        verify(userRepository, never()).deleteById(any());
     }
 }

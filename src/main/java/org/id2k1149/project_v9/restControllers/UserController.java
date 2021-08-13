@@ -2,6 +2,7 @@ package org.id2k1149.project_v9.restControllers;
 
 import org.id2k1149.project_v9.model.User;
 import org.id2k1149.project_v9.service.UserService;
+import org.id2k1149.project_v9.to.UserTo;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,4 +45,10 @@ public class UserController {
     public void deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
     }
+
+    @GetMapping(path = "{id}/votes")
+    public UserTo getUserVotes(@PathVariable("id") Long id) {
+        return userService.getUserVotes(id);
+    }
+
 }
