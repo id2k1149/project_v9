@@ -17,10 +17,13 @@
         <div>
             <h1> Where to have a lunch? </h1>
             <c:if test="${error != null}">
-                <p class="alert-danger"><strong>${error}</strong></p>
+                <p><strong>${error}</strong></p>
+                <a href="${contextPath}/vote" class="btn btn-primary mr-2 mb-2">
+                    Please vote
+                </a>
             </c:if>
             <c:if test="${error == null}">
-                <table class="table table-bordered" bgcolor="white">
+                <table class="table table-bordered" bgcolor="#708090">
                     <thead>
                     <tr>
                         <th>Answers</th>

@@ -2,7 +2,6 @@ package org.id2k1149.project_v9.webController;
 
 import org.id2k1149.project_v9.model.Voter;
 import org.id2k1149.project_v9.model.VotesCounter;
-import org.id2k1149.project_v9.service.AnswerService;
 import org.id2k1149.project_v9.service.CounterService;
 import org.id2k1149.project_v9.service.InfoService;
 import org.id2k1149.project_v9.service.VoterService;
@@ -21,17 +20,14 @@ public class VoteWebController {
 
     private final InfoService infoService;
     private final CounterService counterService;
-    private final AnswerService answerService;
     private final VoterService voterService;
 
     public VoteWebController(InfoService infoService,
                              CounterService counterService,
-                             AnswerService answerService,
                              VoterService voterService) {
 
         this.infoService = infoService;
         this.counterService = counterService;
-        this.answerService = answerService;
         this.voterService = voterService;
     }
 
@@ -61,12 +57,8 @@ public class VoteWebController {
     @GetMapping("/result")
     public String result(Model model) {
         List<VotesCounter> sortedList = counterService.getResult();
-        if (sortedList.size() > 0) {
-            model.addAttribute("sortedList", sortedList);
-        } else {
-            model.addAttribute("error", "There is no result");
-        }
-
+        if (sortedList.size() > 0) model.addAttribute("sortedList", sortedList);
+        else model.addAttribute("error", "There are no results");
         return "result";
     }
 }
