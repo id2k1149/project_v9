@@ -3,7 +3,7 @@ package org.id2k1149.project_v9.service;
 import org.id2k1149.project_v9.model.Answer;
 import org.id2k1149.project_v9.model.User;
 import org.id2k1149.project_v9.model.Voter;
-import org.id2k1149.project_v9.model.VotesCounter;
+import org.id2k1149.project_v9.model.Counter;
 import org.id2k1149.project_v9.repository.CounterRepository;
 import org.id2k1149.project_v9.repository.VoterRepository;
 import org.id2k1149.project_v9.exception.NotFoundException;
@@ -71,12 +71,12 @@ public class VoterService {
         if (optionalVoter.isPresent()) {
             voter = optionalVoter.get();
             Answer voterAnswer = voter.getAnswer();
-            VotesCounter oldVotesCounter = counterRepository
+            Counter oldCounter = counterRepository
                     .findByDateAndAnswer(LocalDate.now(), voterAnswer)
                     .get();
-            int votes = oldVotesCounter.getVotes() - 1;
-            oldVotesCounter.setVotes(votes);
-            counterRepository.save(oldVotesCounter);
+            int votes = oldCounter.getVotes() - 1;
+            oldCounter.setVotes(votes);
+            counterRepository.save(oldCounter);
         }
         voter.setAnswer(newAnswer);
         voterRepository.save(voter);
