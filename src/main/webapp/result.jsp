@@ -2,75 +2,44 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
-<!DOCTYPE html>
 <html lang="en">
+<jsp:include page="fragments/head.jsp"/>
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
     <title>Result</title>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="${contextPath}/resources/static/assets/favicon.ico"/>
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="${contextPath}/resources/static/css/styles.css" rel="stylesheet"/>
-
 </head>
+
 <body>
 <!-- Responsive navbar-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="#">Company polls</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
-                class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="${contextPath}/welcome">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="${contextPath}/vote">Vote</a></li>
-                <li class="nav-item"><a class="nav-link" href="${contextPath}/result">Results</a></li>
-                <li class="nav-item">
-                    <c:if test="${pageContext.request.userPrincipal.name != null}">
-                        <form id="logoutForm" method="POST" action="${contextPath}/logout">
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        </form>
-                        <a class="nav-link" onclick="document.forms['logoutForm'].submit()">${pageContext.request.userPrincipal.name}|Logout</a>
-                    </c:if>
-                </li>
-            </ul>
+<jsp:include page="fragments/header.jsp"/>
+<!-- Page content-->
+<div class="container">
+    <div class="container text-center">
+        <div>
+            <h1> Where to have a lunch? </h1>
+            <c:if test="${error != null}">
+                <p class="alert-danger"><strong>${error}</strong></p>
+            </c:if>
+            <c:if test="${error == null}">
+                <table class="table table-bordered" bgcolor="white">
+                    <thead>
+                    <tr>
+                        <th>Answers</th>
+                        <th class="text-center">Votes</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${sortedList}" var="result">
+                        <tr>
+                            <td>${result.answer}</td>
+                            <td class="text-center">${result.votes}</td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
         </div>
     </div>
-</nav>
-<!-- Page content-->
-<div class="container text-center">
-    <div>
-        <h1> Where to have a lunch? </h1>
-        <c:if test="${error != null}">
-            <p><strong>${error}</strong></p>
-        </c:if>
-        <c:if test="${error == null}">
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Answers</th>
-                    <th>Votes</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${sortedList}" var="result">
-                    <tr>
-                        <td>${result.answer}</td>
-                        <td>${result.votes}</td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </c:if>
-    </div>
 </div>
-<!-- Bootstrap core JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Core theme JS-->
-<script src="${contextPath}/resources/static/js/scripts.js"></script>
+<jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>
