@@ -4,7 +4,6 @@ import org.id2k1149.project_v9.model.Answer;
 import org.id2k1149.project_v9.model.User;
 import org.id2k1149.project_v9.model.Voter;
 import org.id2k1149.project_v9.model.VotesCounter;
-import org.id2k1149.project_v9.repository.AnswerRepository;
 import org.id2k1149.project_v9.repository.CounterRepository;
 import org.id2k1149.project_v9.repository.UserRepository;
 import org.id2k1149.project_v9.repository.VoterRepository;
@@ -23,15 +22,15 @@ import java.util.Optional;
 public class VoterService {
 
     private final VoterRepository voterRepository;
-    private final UserRepository userRepository;
     private final CounterRepository counterRepository;
+    private final UserService userService;
 
     public VoterService(VoterRepository voterRepository,
-                        UserRepository userRepository,
-                        CounterRepository counterRepository) {
+                        CounterRepository counterRepository,
+                        UserService userService) {
         this.voterRepository = voterRepository;
-        this.userRepository = userRepository;
         this.counterRepository = counterRepository;
+        this.userService = userService;
     }
 
     public List<Voter> getVoters() {
@@ -68,35 +67,29 @@ public class VoterService {
     }
 
     public void checkVoter(Answer newAnswer) {
-            Optional<Voter> optionalVoter = checkUser();
-            Voter voter = new Voter();
-            if (optionalVoter.isPresent()) {
-                voter = optionalVoter.get();
-                Answer voterAnswer = voter.getAnswer();
-                VotesCounter oldVotesCounter = counterRepository
-                        .findByVotesDateAndAnswer(LocalDate.now(), voterAnswer)
-                        .get();
-                int votes = oldVotesCounter.getVotes() - 1;
-                oldVotesCounter.setVotes(votes);
-                counterRepository.save(oldVotesCounter);
-
-            voter.setAnswer(newAnswer);
-            voterRepository.save(voter);
+        User user = userService.findUser();
+        Voter voter = new Voter();
+        voter.setUser(user);
+        Optional<Voter> optionalVoter = checkUser();
+        if (optionalVoter.isPresent()) {
+            voter = optionalVoter.get();
+            Answer voterAnswer = voter.getAnswer();
+            VotesCounter oldVotesCounter = counterRepository
+                    .findByVotesDateAndAnswer(LocalDate.now(), voterAnswer)
+                    .get();
+            int votes = oldVotesCounter.getVotes() - 1;
+            oldVotesCounter.setVotes(votes);
+            counterRepository.save(oldVotesCounter);
         }
+        voter.setAnswer(newAnswer);
+        voterRepository.save(voter);
     }
 
     public Optional<Voter> checkUser() {
-        Object principal = SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal();
-        String username = principal instanceof UserDetails ? ((UserDetails) principal).getUsername() : principal.toString();
-
-        User user = userRepository.findUserByUsername(username);
+        User user = userService.findUser();
 
         Voter voter = new Voter();
         voter.setUser(user);
-
         return voterRepository.findByUserAndVotesDate(user, LocalDate.now());
     }
 }

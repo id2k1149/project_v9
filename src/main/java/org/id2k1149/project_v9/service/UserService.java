@@ -5,6 +5,8 @@ import org.id2k1149.project_v9.util.exception.NotFoundException;
 import org.id2k1149.project_v9.model.Role;
 import org.id2k1149.project_v9.model.User;
 import org.id2k1149.project_v9.repository.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -97,5 +99,15 @@ public class UserService {
             throw new NotFoundException(id + " does not exists");
         }
         userRepository.deleteById(id);
+    }
+
+    public User findUser() {
+        Object principal = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        String username = principal instanceof UserDetails ? ((UserDetails) principal).getUsername() : principal.toString();
+
+        return userRepository.findUserByUsername(username);
     }
 }
