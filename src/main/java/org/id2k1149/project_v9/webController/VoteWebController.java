@@ -51,11 +51,9 @@ public class VoteWebController {
 
     @PostMapping("/vote")
     public String vote(VotesCounter votesCounter) {
-        if (answerService.checkAnswer(votesCounter.getAnswer())) {
+        if (votesCounter.getAnswer() == null) {
             return "redirect:/vote";
         }
-
-
         counterService.vote(votesCounter);
         return "redirect:/result";
     }
