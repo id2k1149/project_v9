@@ -34,7 +34,7 @@
                                 class="form-control"
                                 placeholder="Username"
                                 autofocus="true"></form:input>
-                    <form:errors path="username">errors</form:errors>
+                    <form:errors path="username">${errors}</form:errors>
                 </div>
             </spring:bind>
 
@@ -44,7 +44,7 @@
                                 path="password"
                                 class="form-control"
                                 placeholder="Password"></form:input>
-                    <form:errors path="password">errors</form:errors>
+                    <form:errors path="password">${errors}</form:errors>
                 </div>
             </spring:bind>
 
@@ -54,7 +54,7 @@
                                 path="passwordConfirm"
                                 class="form-control"
                                 placeholder="Confirm your password"></form:input>
-                    <form:errors path="passwordConfirm">errors</form:errors>
+                    <form:errors path="passwordConfirm">${errors}</form:errors>
                 </div>
             </spring:bind>
 
