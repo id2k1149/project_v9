@@ -1,4 +1,4 @@
-package org.id2k1149.project_v9.service;
+package org.id2k1149.project_v9.security;
 
 import org.id2k1149.project_v9.model.User;
 import org.id2k1149.project_v9.repository.UserRepository;
