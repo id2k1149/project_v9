@@ -1,7 +1,7 @@
 package org.id2k1149.project_v9.repository;
 
 import org.id2k1149.project_v9.model.Answer;
-import org.id2k1149.project_v9.model.VotesCounter;
+import org.id2k1149.project_v9.model.Counter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 @Transactional(readOnly = true)
-public interface CounterRepository extends JpaRepository<VotesCounter, Long> {
-    Optional<VotesCounter> findByDateAndAnswer(LocalDate localDate, Answer answer);
-    List<VotesCounter> findByDate(LocalDate localDate);
+public interface CounterRepository extends JpaRepository<Counter, Long> {
+    Optional<Counter> findByDateAndAnswer(LocalDate localDate, Answer answer);
+    List<Counter> findByDate(LocalDate localDate);
 }

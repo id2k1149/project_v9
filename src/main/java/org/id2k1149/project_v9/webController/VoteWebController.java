@@ -1,7 +1,7 @@
 package org.id2k1149.project_v9.webController;
 
 import org.id2k1149.project_v9.model.Voter;
-import org.id2k1149.project_v9.model.VotesCounter;
+import org.id2k1149.project_v9.model.Counter;
 import org.id2k1149.project_v9.service.CounterService;
 import org.id2k1149.project_v9.service.InfoService;
 import org.id2k1149.project_v9.service.VoterService;
@@ -46,17 +46,17 @@ public class VoteWebController {
     }
 
     @PostMapping("/vote")
-    public String vote(VotesCounter votesCounter) {
-        if (votesCounter.getAnswer() == null) {
+    public String vote(Counter counter) {
+        if (counter.getAnswer() == null) {
             return "redirect:/vote";
         }
-        counterService.vote(votesCounter);
+        counterService.vote(counter);
         return "redirect:/result";
     }
 
     @GetMapping("/result")
     public String result(Model model) {
-        List<VotesCounter> sortedList = counterService.getResult();
+        List<Counter> sortedList = counterService.getResult();
         if (sortedList.size() > 0) model.addAttribute("sortedList", sortedList);
         else model.addAttribute("error", "There are no results");
         return "result";

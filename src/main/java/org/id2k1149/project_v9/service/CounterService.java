@@ -1,7 +1,7 @@
 package org.id2k1149.project_v9.service;
 
 import org.id2k1149.project_v9.model.Answer;
-import org.id2k1149.project_v9.model.VotesCounter;
+import org.id2k1149.project_v9.model.Counter;
 import org.id2k1149.project_v9.repository.CounterRepository;
 import org.id2k1149.project_v9.exception.NotFoundException;
 import org.springframework.stereotype.Service;
@@ -27,26 +27,26 @@ public class CounterService {
         this.infoService = infoService;
     }
 
-    public List<VotesCounter> getCounters() {
+    public List<Counter> getCounters() {
         return counterRepository.findAll();
     }
 
-    public VotesCounter getCounter(Long id) {
+    public Counter getCounter(Long id) {
         if (counterRepository.findById(id).isEmpty()) {
             throw new NotFoundException(id + " does not exist");
         }
         return counterRepository.getById(id);
     }
 
-    public void addCounter(VotesCounter newCounter) {
+    public void addCounter(Counter newCounter) {
         counterRepository.save(newCounter);
     }
 
-    public void updateCounter(Long id, VotesCounter counter) {
+    public void updateCounter(Long id, Counter counter) {
         if (counterRepository.findById(id).isEmpty()) {
             throw new NotFoundException(id + " does not exist");
         }
-        VotesCounter counterToUpdate = counterRepository.findById(id).get();
+        Counter counterToUpdate = counterRepository.findById(id).get();
         counterToUpdate.setAnswer(counter.getAnswer());
         counterToUpdate.setDate(counter.getDate());
         counterToUpdate.setVotes(counter.getVotes());
@@ -60,34 +60,34 @@ public class CounterService {
         counterRepository.deleteById(id);
     }
 
-    public void vote(VotesCounter votesCounter) {
-        VotesCounter newVotesCounter = new VotesCounter();
-        Answer newAnswer = votesCounter.getAnswer();
+    public void vote(Counter counter) {
+        Counter newCounter = new Counter();
+        Answer newAnswer = counter.getAnswer();
         int votes = 0;
-        Optional<VotesCounter> optionalVotesCounter = counterRepository
+        Optional<Counter> optionalVotesCounter = counterRepository
                 .findByDateAndAnswer(LocalDate.now(), newAnswer);
         if (optionalVotesCounter.isPresent()) {
-            newVotesCounter = optionalVotesCounter.get();
-            votes = newVotesCounter.getVotes();
+            newCounter = optionalVotesCounter.get();
+            votes = newCounter.getVotes();
         }
         votes += 1;
-        newVotesCounter.setAnswer(newAnswer);
-        newVotesCounter.setVotes(votes);
-        counterRepository.save(newVotesCounter);
+        newCounter.setAnswer(newAnswer);
+        newCounter.setVotes(votes);
+        counterRepository.save(newCounter);
         voterService.checkVoter(newAnswer);
     }
 
-    public List<VotesCounter> getResult() {
-        List<VotesCounter> votesCounterList = counterRepository.findByDate(LocalDate.now());
-        if (votesCounterList.size() == 0) return votesCounterList;
+    public List<Counter> getResult() {
+        List<Counter> counterList = counterRepository.findByDate(LocalDate.now());
+        if (counterList.size() == 0) return counterList;
 
-        List<VotesCounter> sortedList = votesCounterList.stream()
-                .sorted(Comparator.comparingInt(VotesCounter::getVotes).reversed())
+        List<Counter> sortedList = counterList.stream()
+                .sorted(Comparator.comparingInt(Counter::getVotes).reversed())
                 .collect(Collectors.toList());
 
-        VotesCounter bestResult = sortedList
+        Counter bestResult = sortedList
                 .stream()
-                .max(Comparator.comparing(VotesCounter::getVotes))
+                .max(Comparator.comparing(Counter::getVotes))
                 .orElseThrow(NoSuchElementException::new);
 
         return sortedList;

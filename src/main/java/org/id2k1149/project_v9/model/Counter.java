@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-public class VotesCounter {
+public class Counter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

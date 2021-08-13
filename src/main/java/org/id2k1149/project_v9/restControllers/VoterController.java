@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/v1/v")
+@RequestMapping(path = "api/v1/voters")
 public class VoterController {
 
     private final VoterService voterService;
@@ -18,7 +18,7 @@ public class VoterController {
     }
 
     @GetMapping
-    public List<Voter> getUsers() {
+    public List<Voter> getVoters() {
         return voterService.getVoters();
     }
 
