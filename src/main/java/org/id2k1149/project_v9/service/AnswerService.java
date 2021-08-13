@@ -78,4 +78,8 @@ public class AnswerService {
         List<InfoTo> infoToList = InfoUtil.getInfoTo(answer, infoList);
         return new AnswerTo(id, answer.getTitle(), infoToList);
     }
+
+    public boolean checkAnswer(Answer answer) {
+        return answerRepository.findById(answer.getId()).isPresent();
+    }
 }

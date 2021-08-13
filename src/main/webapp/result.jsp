@@ -57,26 +57,31 @@
     <div>
         <h1> Where to have a lunch? </h1>
 
+        <c:if test="${error != null}">
+            <p><strong>${error}</strong></p>
+        </c:if>
 
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Answers</th>
-                <th>Votes</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            <c:forEach items="${sortedList}" var="result">
+        <c:if test="${error == null}">
+            <table class="table table-bordered">
+                <thead>
                 <tr>
-                    <td>${result.id}</td>
-                    <td>${result.answer}</td>
-                    <td>${result.votes}</td>
+                    <th>ID</th>
+                    <th>Answers</th>
+                    <th>Votes</th>
                 </tr>
-            </c:forEach>
-            </tbody>
-        </table>
+                </thead>
+
+                <tbody>
+                <c:forEach items="${sortedList}" var="result">
+                    <tr>
+                        <td>${result.id}</td>
+                        <td>${result.answer}</td>
+                        <td>${result.votes}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </c:if>
     </div>
 
 
