@@ -1,4 +1,4 @@
-package org.id2k1149.project_v9.restControllers;
+package org.id2k1149.project_v9.restController;
 
 import org.id2k1149.project_v9.model.User;
 import org.id2k1149.project_v9.service.UserService;
