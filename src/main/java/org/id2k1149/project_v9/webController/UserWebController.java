@@ -1,8 +1,8 @@
-package org.id2k1149.project_v9.web;
+package org.id2k1149.project_v9.webController;
 
 import org.id2k1149.project_v9.model.User;
 import org.id2k1149.project_v9.security.SecurityService;
-import org.id2k1149.project_v9.security.UserValidator;
+import org.id2k1149.project_v9.validator.UserValidator;
 import org.id2k1149.project_v9.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

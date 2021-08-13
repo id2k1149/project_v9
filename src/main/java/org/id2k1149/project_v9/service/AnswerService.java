@@ -7,8 +7,8 @@ import org.id2k1149.project_v9.repository.InfoRepository;
 import org.id2k1149.project_v9.to.AnswerTo;
 import org.id2k1149.project_v9.to.InfoTo;
 import org.id2k1149.project_v9.util.InfoUtil;
-import org.id2k1149.project_v9.util.exception.BadRequestException;
-import org.id2k1149.project_v9.util.exception.NotFoundException;
+import org.id2k1149.project_v9.exception.BadRequestException;
+import org.id2k1149.project_v9.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,14 +72,14 @@ public class AnswerService {
         answerRepository.deleteById(id);
     }
 
+    public boolean checkAnswer(Answer answer) {
+        return answerRepository.findById(answer.getId()).isEmpty();
+    }
+
     public AnswerTo getAllInfoForAnswer(Long id) {
         Answer answer = getAnswer(id);
         List<Info> infoList = infoRepository.findAll();
         List<InfoTo> infoToList = InfoUtil.getInfoTo(answer, infoList);
         return new AnswerTo(id, answer.getTitle(), infoToList);
-    }
-
-    public boolean checkAnswer(Answer answer) {
-        return answerRepository.findById(answer.getId()).isPresent();
     }
 }

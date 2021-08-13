@@ -1,4 +1,4 @@
-package org.id2k1149.project_v9.rest;
+package org.id2k1149.project_v9.restControllers;
 
 import org.id2k1149.project_v9.model.Info;
 import org.id2k1149.project_v9.service.InfoService;

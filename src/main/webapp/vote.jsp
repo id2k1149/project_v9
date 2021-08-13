@@ -20,6 +20,19 @@
             color: white;
         }
     </style>
+    <style>
+        .error {
+            color: #ff0000;
+        }
+
+        .errorblock {
+            color: #000;
+            background-color: #ffEEEE;
+            border: 3px solid #ff0000;
+            padding: 8px;
+            margin: 16px;
+        }
+    </style>
 </head>
 <body>
 <!-- Responsive navbar-->
@@ -80,6 +93,7 @@
                    value="${answer.id}"
             />
             <label for="answer">${answer.title}</label>
+
             <br>
             ${answer.infoTo}
             <br>
