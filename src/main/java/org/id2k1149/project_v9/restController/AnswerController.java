@@ -6,6 +6,7 @@ import org.id2k1149.project_v9.service.InfoService;
 import org.id2k1149.project_v9.to.AnswerTo;
 import org.id2k1149.project_v9.util.AnswerUtil;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/answers")
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class AnswerController {
 
     private final AnswerService answerService;
@@ -34,6 +36,7 @@ public class AnswerController {
         return answerService.getAnswer(id);
     }
 
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public void addAnswer(@RequestBody Answer newAnswer) {
         answerService.addAnswer(newAnswer);
