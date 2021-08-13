@@ -52,7 +52,7 @@ public class VoterRepositoryTest {
     @Test
     public void findByDate() {
         LocalDate today = LocalDate.now();
-        List<Info> optionalInfo = infoRepository.getByDateOfInfo(today);
+        List<Info> optionalInfo = infoRepository.getByDate(today);
     }
 
 
@@ -63,7 +63,7 @@ public class VoterRepositoryTest {
         LocalDate today = LocalDate.now();
 //        LocalDate today = LocalDate.now().minusDays(2);
 
-        List<Info> optionalInfo = infoRepository.getByDateOfInfo(today);
+        List<Info> optionalInfo = infoRepository.getByDate(today);
 
 
         if (optionalInfo.size() > 0) {
@@ -86,7 +86,7 @@ public class VoterRepositoryTest {
 
             for (Answer todayAnswer : todayAnswers) {
                 Info newInfo = new Info();
-                newInfo.setDateOfInfo(today);
+                newInfo.setDate(today);
                 newInfo.setAnswer(todayAnswer);
                 infoRepository.save(newInfo);
             }

@@ -10,7 +10,7 @@ public class Voter {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private LocalDate votesDate = LocalDate.now();
+    private LocalDate date = LocalDate.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
@@ -34,12 +34,12 @@ public class Voter {
         this.user = user;
     }
 
-    public LocalDate getVotesDate() {
-        return votesDate;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setVotesDate(LocalDate votesDate) {
-        this.votesDate = votesDate;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public Answer getAnswer() {

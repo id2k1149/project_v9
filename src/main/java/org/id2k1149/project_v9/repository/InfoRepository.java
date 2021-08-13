@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 @Transactional(readOnly = true)
 public interface InfoRepository extends JpaRepository<Info, Long> {
-    List<Info> getByDateOfInfo(LocalDate date);
+    List<Info> getByDate(LocalDate date);
 }

@@ -54,7 +54,7 @@ public class InfoService {
         }
         Info infoToUpdate = infoRepository.findById(id).get();
         infoToUpdate.setAnswer(info.getAnswer());
-        infoToUpdate.setDateOfInfo(info.getDateOfInfo());
+        infoToUpdate.setDate(info.getDate());
         infoToUpdate.setDetails(info.getDetails());
         infoRepository.save(infoToUpdate);
     }
@@ -67,12 +67,12 @@ public class InfoService {
     }
 
     public List<Info> getByDate(LocalDate date) {
-        return infoRepository.getByDateOfInfo(date);
+        return infoRepository.getByDate(date);
     }
 
     public List<Answer> getTodayAnswersInfo() {
         return infoRepository
-                .getByDateOfInfo(LocalDate.now())
+                .getByDate(LocalDate.now())
                 .stream()
                 .map(Info::getAnswer)
                 .collect(Collectors.toList());
@@ -81,7 +81,7 @@ public class InfoService {
 
     public List<AnswerTo> checkTime() {
         List<AnswerTo> answerToList = new ArrayList<>();
-        if (LocalTime.now().getHour() < 23) answerToList = AnswerUtil.getAnswersTo(getTodayAnswersInfo(),
+        if (LocalTime.now().getHour() < 24) answerToList = AnswerUtil.getAnswersTo(getTodayAnswersInfo(),
                 getByDate(LocalDate.now()));
         return answerToList;
     }

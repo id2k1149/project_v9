@@ -13,6 +13,6 @@ import java.util.Optional;
 @Repository
 @Transactional(readOnly = true)
 public interface CounterRepository extends JpaRepository<VotesCounter, Long> {
-    Optional<VotesCounter> findByVotesDateAndAnswer(LocalDate localDate, Answer answer);
-    List<VotesCounter> findByVotesDate(LocalDate localDate);
+    Optional<VotesCounter> findByDateAndAnswer(LocalDate localDate, Answer answer);
+    List<VotesCounter> findByDate(LocalDate localDate);
 }

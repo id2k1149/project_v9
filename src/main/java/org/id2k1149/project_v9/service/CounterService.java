@@ -48,7 +48,7 @@ public class CounterService {
         }
         VotesCounter counterToUpdate = counterRepository.findById(id).get();
         counterToUpdate.setAnswer(counter.getAnswer());
-        counterToUpdate.setVotesDate(counter.getVotesDate());
+        counterToUpdate.setDate(counter.getDate());
         counterToUpdate.setVotes(counter.getVotes());
         counterRepository.save(counterToUpdate);
     }
@@ -60,19 +60,12 @@ public class CounterService {
         counterRepository.deleteById(id);
     }
 
-
-
     public void vote(VotesCounter votesCounter) {
         VotesCounter newVotesCounter = new VotesCounter();
         Answer newAnswer = votesCounter.getAnswer();
-
-
-
-
-
         int votes = 0;
         Optional<VotesCounter> optionalVotesCounter = counterRepository
-                .findByVotesDateAndAnswer(LocalDate.now(), newAnswer);
+                .findByDateAndAnswer(LocalDate.now(), newAnswer);
         if (optionalVotesCounter.isPresent()) {
             newVotesCounter = optionalVotesCounter.get();
             votes = newVotesCounter.getVotes();
@@ -85,7 +78,7 @@ public class CounterService {
     }
 
     public List<VotesCounter> getResult() {
-        List<VotesCounter> votesCounterList = counterRepository.findByVotesDate(LocalDate.now());
+        List<VotesCounter> votesCounterList = counterRepository.findByDate(LocalDate.now());
 
         List<VotesCounter> sortedList = votesCounterList.stream()
                 .sorted(Comparator.comparingInt(VotesCounter::getVotes).reversed())

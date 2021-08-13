@@ -51,7 +51,7 @@ public class VoterService {
         }
         Voter voterToUpdate = voterRepository.findById(id).get();
         voterToUpdate.setAnswer(voter.getAnswer());
-        voterToUpdate.setVotesDate(voter.getVotesDate());
+        voterToUpdate.setDate(voter.getDate());
         voterToUpdate.setUser(voter.getUser());
         voterRepository.save(voterToUpdate);
     }
@@ -72,7 +72,7 @@ public class VoterService {
             voter = optionalVoter.get();
             Answer voterAnswer = voter.getAnswer();
             VotesCounter oldVotesCounter = counterRepository
-                    .findByVotesDateAndAnswer(LocalDate.now(), voterAnswer)
+                    .findByDateAndAnswer(LocalDate.now(), voterAnswer)
                     .get();
             int votes = oldVotesCounter.getVotes() - 1;
             oldVotesCounter.setVotes(votes);
@@ -84,9 +84,8 @@ public class VoterService {
 
     public Optional<Voter> checkUser() {
         User user = userService.findUser();
-
         Voter voter = new Voter();
         voter.setUser(user);
-        return voterRepository.findByUserAndVotesDate(user, LocalDate.now());
+        return voterRepository.findByUserAndDate(user, LocalDate.now());
     }
 }

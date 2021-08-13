@@ -9,11 +9,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/votes")
-public class CounterController {
+public class VoteController {
 
     private final CounterService counterService;
 
-    public CounterController(CounterService counterService) {
+    public VoteController(CounterService counterService) {
         this.counterService = counterService;
     }
 
