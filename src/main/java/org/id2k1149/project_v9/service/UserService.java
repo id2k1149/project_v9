@@ -118,9 +118,10 @@ public class UserService {
         return userRepository.findUserByUsername(username);
     }
 
-    public UserTo getUserVotes(Long id) {
+    public UserTo getUserAllVotes(Long id) {
         User user = getUser(id);
-        List<Voter> voterList = voterRepository.findByUser(user);
+        List<Voter> voterList = voterRepository.getByUser(user);
+
         return new UserTo(id, user.getUsername(), voterList);
     }
 }

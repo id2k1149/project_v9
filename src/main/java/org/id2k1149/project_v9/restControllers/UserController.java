@@ -48,7 +48,7 @@ public class UserController {
 
     @GetMapping(path = "{id}/votes")
     public UserTo getUserVotes(@PathVariable("id") Long id) {
-        return userService.getUserVotes(id);
+        return userService.getUserAllVotes(id);
     }
 
 }

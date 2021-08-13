@@ -13,6 +13,7 @@ public class UserUtil {
         List<UserTo> list = new ArrayList<>();
 //        for (Voter voter : voterList) {
 //            if (voter.getUser() == user) {
+//
 //                UserTo userTo = new UserTo(user.getId(), user.getUsername(), );
 //                list.add(userTo);
 //            }

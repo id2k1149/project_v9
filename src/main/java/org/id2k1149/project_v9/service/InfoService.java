@@ -81,7 +81,7 @@ public class InfoService {
 
     public List<AnswerTo> checkTime() {
         List<AnswerTo> answerToList = new ArrayList<>();
-        if (LocalTime.now().getHour() < 11) answerToList = AnswerUtil.getAnswersTo(getTodayAnswersInfo(),
+        if (LocalTime.now().getHour() < 24) answerToList = AnswerUtil.getAnswersTo(getTodayAnswersInfo(),
                 getByDate(LocalDate.now()));
         return answerToList;
     }

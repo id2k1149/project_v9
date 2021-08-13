@@ -49,4 +49,14 @@ public class Voter {
     public void setAnswer(Answer answer) {
         this.answer = answer;
     }
+
+    @Override
+    public String toString() {
+        return "Voter{" +
+                "id=" + id +
+                ", date=" + date +
+                ", user=" + user +
+                ", answer=" + answer +
+                '}';
+    }
 }
