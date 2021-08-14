@@ -38,8 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests().anyRequest().permitAll();
 
-        http
-            .addFilter(null);
+//        http
+//            .addFilter(null);
 //            .antMatchers("/", "/welcome", "/resources/**", "/registration").permitAll()
 //            .antMatchers("/api/v1/**").permitAll()
 //            .anyRequest().authenticated();
