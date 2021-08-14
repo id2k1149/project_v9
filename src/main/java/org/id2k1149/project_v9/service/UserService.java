@@ -23,6 +23,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
+
 public class UserService {
     private final UserRepository userRepository;
     private final VoterRepository voterRepository;
