@@ -10,15 +10,12 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
-
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Qualifier("userDetailsServiceImpl")
     private UserDetailsService userDetailsService;
@@ -39,17 +36,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        http
 //            .sessionManagement().sessionCreationPolicy(STATELESS);
         http
-            .authorizeRequests()
-            .antMatchers("/", "/welcome", "/resources/**", "/registration").permitAll()
-            .antMatchers("/api/v1/**").permitAll()
-            .anyRequest().authenticated()
-            .and()
+            .authorizeRequests().anyRequest().permitAll();
 
+        http
+            .addFilter(null);
+//            .antMatchers("/", "/welcome", "/resources/**", "/registration").permitAll()
+//            .antMatchers("/api/v1/**").permitAll()
+//            .anyRequest().authenticated();
+
+        http
             .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .defaultSuccessUrl("/vote", true)
-                .and()
+            .loginPage("/login")
+            .permitAll()
+            .defaultSuccessUrl("/vote", true)
+            .and()
 
             .logout()
                 .permitAll();
